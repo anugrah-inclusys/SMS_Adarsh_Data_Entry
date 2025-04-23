@@ -1,31 +1,35 @@
 const axios = require("axios");
 const xlsx = require("xlsx");
-const { parseExcelDate, parseAddress, parseFullName } = require("./uploadHelper");
+const {
+  parseExcelDate,
+  parseAddress,
+  parseFullName,
+  parseToString,
+} = require("./uploadHelper");
 const { API_BASE_URL, JWT_TOKEN } = require("../config/config");
 
 async function uploadEnquiry(row) {
   let studentId;
+  const parsedName = parseFullName(row["NAME OF STUDENT"]);
   const parsedAddress = parseAddress(row["ADDRESS"]);
-  const fatherNameParsed = parseFullName(row["FATHER'S NAME"]);
-  const motherNameParsed = parseFullName(row["MOTHER'NAME"]);
+  const fatherParsed = parseFullName(row["FATHER'S NAME"]);
+  const motherParsed = parseFullName(row["MOTHER'NAME"]);
+
   const autosaveSteps = [
     {
       step: 1,
       payload: {
-        name: {
-          first_name: row["NAME OF STUDENT"] || "",
-          last_name: "", // Can be derived if needed
-        },
+        name: parsedName,
         date_of_birth: parseExcelDate(row["DATE OF BIRTH"]),
-        gender: row["SEX"]?.toUpperCase() || "",
+        gender: row["SEX"] || "",
       },
     },
     {
       step: 2,
       payload: {
         family_id: {
-          father_name: fatherNameParsed,
-          mother_name: motherNameParsed,
+          father_name: fatherParsed,
+          mother_name: motherParsed,
         },
       },
     },
@@ -52,7 +56,7 @@ async function uploadEnquiry(row) {
       step: 5,
       payload: {
         assessment: {
-          referred_by: row["REFERRED BY"] || "", // Add this column if applicable
+          referred_by: parseToString(row["REFERRED BY"]) || "", // Add this column if applicable
           preliminary_diagnosis: {
             name: row["DIAGNOSIS"] || "",
           },
@@ -62,55 +66,69 @@ async function uploadEnquiry(row) {
   ];
 
   // Step-by-step autosave
-  for (const { step, payload } of autosaveSteps) {
-    const url = `${API_BASE_URL}/students/enquiry/autosave/${step}`;
-
-    try {
-      const res = await axios.post(url, payload, {
+  const firstStep = autosaveSteps[0];
+  try {
+    const res = await axios.post(
+      `${API_BASE_URL}/students/enquiry/autosave/1`,
+      firstStep.payload,
+      {
         headers: { Authorization: `Bearer ${JWT_TOKEN}` },
-      });
-      studentId = res.data.data._id;
-      console.log(
-        `✅ Step ${step} saved for ${payload.name?.first_name || studentId}`
+      }
+    );
+    studentId = res.data.data._id;
+    console.log(`✅ Step 1 created student ${studentId}`);
+  } catch (err) {
+    console.error(
+      "❌ Failed to create student",
+      err.response?.data || err.message
+    );
+    return;
+  }
+
+  // Subsequent calls → Update student
+  for (let i = 1; i < autosaveSteps.length; i++) {
+    const { step, payload } = autosaveSteps[i];
+    try {
+      const res = await axios.put(
+        `${API_BASE_URL}/students/enquiry/autosave/${studentId}/${step}`,
+        payload,
+        {
+          headers: { Authorization: `Bearer ${JWT_TOKEN}` },
+        }
       );
+      console.log(`✅ Step ${step} updated for ${studentId}`);
     } catch (err) {
       console.error(
-        `❌ Step ${step} failed:`,
+        `❌ Step ${step} failed`,
         err.response?.data || err.message
       );
-      return;
     }
   }
 
   // Final Submission
   const submissionPayload = {
-    name: {
-      first_name: row["NAME OF STUDENT"] || "",
-      last_name: "",
-    },
+    name: parsedName,
     gender: row["SEX"] || "",
     date_of_birth: parseExcelDate(row["DATE OF BIRTH"]),
     contact_info: {
-      phone: row["PHONE NO."] || "",
+      mobile_number: row["PHONE NO."] || "",
+      alternate_mobile_number: "",
+      phone_residence: "",
+      email: "",
     },
     family_id: {
-      father_name: row["FATHER'S NAME"] || "",
-      mother_name: row["MOTHER'NAME"] || "",
+      father_name: fatherParsed,
+      mother_name: motherParsed,
     },
     address_id: {
-      full_address: row["ADDRESS"] || "",
-      panchayat: row["MUNICIPALITY/PANCHAYATH"] || "",
+      ...parsedAddress,
     },
     assessment: {
-      reason: row["DIAGNOSIS"] || "",
-      certificate: row["DIAGNOSIS -CERTIFICATE"] || "",
-      percentage: row["PERCENTAGE"] || "",
+      referred_by: row["REFERRED BY"] || "",
+      preliminary_diagnosis: {
+        name: row["DIAGNOSIS"] || "",
+      },
     },
-    aadhaar: row["ADHAR CARD NO:"] || "",
-    class: `${row["CLASS"] || ""} ${row["CLASS.1"] || ""}`.trim(),
-    religion: row["RELIGION&CASTE"] || "",
-    admin_no: row["ADMN No."] || "",
-    date_of_joining: parseExcelDate(row["DATE OF JOINING"]),
   };
 
   try {
