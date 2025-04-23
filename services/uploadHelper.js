@@ -46,10 +46,15 @@ function parseToString(value = '') {
   return value.toString().replace(/\D/g, ''); // Strip non-numeric characters
 }
 
+function removeSpaces(value = '') {
+  return value.toString().replace(/\s+/g, '').trim();
+}
+
 module.exports = {
   parseExcelDate,
   getFilesForRow,
   parseAddress,
   parseFullName,
-  parseToString
+  parseToString,
+  removeSpaces
 };
