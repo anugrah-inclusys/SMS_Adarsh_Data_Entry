@@ -78,8 +78,8 @@ function mapExcelRowToSteps(row) {
       payload: {
         childProblemDescription: row["DIAGNOSIS"],
         email: "",
-        phone: row["PHONE NO."] || "",
-        mobile_number: "",
+        phone: "",
+        mobile_number: row["PHONE NO."] || "",
       },
     });
   }
@@ -157,8 +157,8 @@ function buildSubmissionPayload(row) {
     admission_info: {
       childProblemDescription: row["DIAGNOSIS"] || "",
       email: "",
-      phone: row["PHONE NO."] || "",
-      mobile_number: "",
+      phone: "",
+      mobile_number: row["PHONE NO."] || "",
     },
   };
 }
@@ -201,9 +201,27 @@ async function uploadAdmission(row, studentId) {
       err.response?.data || err.message
     );
   }
+  // Final approval
+  try {
+    await axios.post(
+      `${API_BASE_URL}/students/admission-form/approve/${studentId}`,
+      {}, // No payload needed
+      {
+        headers: { Authorization: `Bearer ${JWT_TOKEN}` },
+      }
+    );
+    console.log(`🎯 Admission approved for ${row["NAME OF STUDENT"]}`);
+  } catch (err) {
+    console.error(
+      `❌ Approval failed for ${row["NAME OF STUDENT"]}`,
+      err.response?.data || err.message
+    );
+  }
 }
 
-async function runAdmissionUpload(filePath = "./data/admission.csv") {
+async function runAdmissionUpload(
+  filePath = "./output/admission_with_ids.csv"
+) {
   const workbook = xlsx.readFile(filePath);
   const sheet = workbook.Sheets[workbook.SheetNames[0]];
   const rows = xlsx.utils.sheet_to_json(sheet);
