@@ -1,5 +1,7 @@
 const axios = require("axios");
 const xlsx = require("xlsx");
+const { writeFileSync } = require("fs");
+const { utils, writeFile } = require("xlsx");
 const {
   parseExcelDate,
   parseAddress,
@@ -148,6 +150,9 @@ async function uploadEnquiry(row) {
       err.response?.data || err.message
     );
   }
+  finally{
+    return studentId;
+  }
 }
 
 async function runEnquiryUpload(filePath = "./data/enquiry.csv") {
@@ -155,11 +160,25 @@ async function runEnquiryUpload(filePath = "./data/enquiry.csv") {
   const sheet = workbook.Sheets[workbook.SheetNames[0]];
   const rows = xlsx.utils.sheet_to_json(sheet);
 
+  const results = [];
   for (const row of rows) {
-    await uploadEnquiry(row);
+    const studentId = await uploadEnquiry(row);
+    if (studentId) {
+      const { first_name, last_name } = parseFullName(row["NAME OF STUDENT"]);
+      results.push({
+        STUDENT_ID: studentId,
+        NAME: `${first_name} ${last_name}`,
+      });
+    }
   }
 
   console.log("✅ All enquiry records processed");
+  const outputSheet = utils.json_to_sheet(results);
+  const outputWorkbook = utils.book_new();
+  utils.book_append_sheet(outputWorkbook, outputSheet, "Enquiry IDs");
+  writeFile(outputWorkbook, "./output/student_ids.xlsx");
+
+  console.log("✅ All enquiry records processed and student IDs saved.");
 }
 
 module.exports = { runEnquiryUpload };
