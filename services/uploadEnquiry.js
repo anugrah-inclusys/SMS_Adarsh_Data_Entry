@@ -7,6 +7,7 @@ const {
   parseAddress,
   parseFullName,
   parseToString,
+  parsePhoneNumbers,
 } = require("./uploadHelper");
 const { API_BASE_URL, JWT_TOKEN } = require("../config/config");
 
@@ -16,7 +17,7 @@ async function uploadEnquiry(row) {
   const parsedAddress = parseAddress(row["ADDRESS"]);
   const fatherParsed = parseFullName(row["FATHER'S NAME"]);
   const motherParsed = parseFullName(row["MOTHER'NAME"]);
-
+  const { mobile, alternate } = parsePhoneNumbers(row["PHONE NO."]);
   const autosaveSteps = [
     {
       step: 1,
@@ -47,8 +48,8 @@ async function uploadEnquiry(row) {
       step: 4,
       payload: {
         contact_info: {
-          mobile_number: row["PHONE NO."] || "",
-          alternate_mobile_number: "",
+          mobile_number: mobile || "",
+          alternate_mobile_number: alternate || "",
           phone_residence: "",
           email: "",
         },
@@ -113,9 +114,9 @@ async function uploadEnquiry(row) {
     gender: row["SEX"] || "",
     date_of_birth: parseExcelDate(row["DATE OF BIRTH"]),
     contact_info: {
-      mobile_number: row["PHONE NO."] || "",
-      alternate_mobile_number: "",
-      phone_residence: "",
+      mobile_number: mobile || "",
+      alternate_mobile_number: alternate || "",
+      phone_residence: alternate || "",
       email: "",
     },
     family_id: {
@@ -149,8 +150,7 @@ async function uploadEnquiry(row) {
       `❌ Submission failed for ${row["NAME OF STUDENT"]}`,
       err.response?.data || err.message
     );
-  }
-  finally{
+  } finally {
     return studentId;
   }
 }

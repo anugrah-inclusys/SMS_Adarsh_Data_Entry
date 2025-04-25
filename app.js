@@ -8,7 +8,7 @@ const { injectStudentIds } = require("./services/injectStudentIdIntoAdmission");
     // await runStaffUpload();
     await runEnquiryUpload();
     await injectStudentIds({
-      admissionPath: "./data/admission.csv",
+      admissionPath: "./data/enquiry.csv",
       enquiryIdsPath: "./output/student_ids.xlsx",
       outputPath: "./output/admission_with_ids.csv",
     });
