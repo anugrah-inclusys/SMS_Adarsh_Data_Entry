@@ -34,20 +34,29 @@ function parseAddress(fullAddress = "") {
   };
 }
 
-function parseFullName(fullName = '') {
+function parseFullName(fullName = "") {
   const parts = fullName.trim().split(/\s+/);
   return {
-    first_name: parts[0] || '',
-    last_name: parts.slice(1).join(' ') || '',
+    first_name: parts[0] || "",
+    last_name: parts.slice(1).join(" ") || "",
   };
 }
 
-function parseToString(value = '') {
-  return value.toString().replace(/\D/g, ''); // Strip non-numeric characters
+function parseToString(value = "") {
+  return value.toString().replace(/\D/g, "");
 }
 
-function removeSpaces(value = '') {
-  return value.toString().replace(/\s+/g, '').trim();
+function removeSpaces(value = "") {
+  return value.toString().replace(/\s+/g, "").trim();
+}
+
+function parsePhoneNumbers(raw) {
+  const safe = (raw || "").toString();
+  const parts = safe.trim().split(/\s+/);
+  return {
+    mobile: parts[0] || "",
+    alternate: parts[1] || "",
+  };
 }
 
 module.exports = {
@@ -56,5 +65,6 @@ module.exports = {
   parseAddress,
   parseFullName,
   parseToString,
-  removeSpaces
+  removeSpaces,
+  parsePhoneNumbers,
 };

@@ -5,12 +5,14 @@ const {
   parseAddress,
   parseFullName,
   removeSpaces,
+  parsePhoneNumbers,
 } = require("./uploadHelper");
 const { API_BASE_URL, JWT_TOKEN } = require("../config/config");
+const { getUnitClassLookup } = require("./unitClassLookup");
 
 function mapExcelRowToSteps(row) {
   const steps = [];
-
+  const { mobile, alternate } = parsePhoneNumbers(row["PHONE NO."]);
   if (row["NAME OF STUDENT"] || row["ADHAR CARD NO:"]) {
     const parsedName = parseFullName(row["NAME OF STUDENT"]);
     steps.push({
@@ -25,7 +27,7 @@ function mapExcelRowToSteps(row) {
         caste: row["RELIGION&CASTE"]?.split(" - ")[1] || "",
         aadhaarNumber: removeSpaces(row["ADHAR CARD NO:"]) || "",
         disabilityPercentage: row["PERCENTAGE"] || "",
-        category: row["CLASS.1"] || "",
+        category: row["CATEGORY"] || "",
       },
     });
   }
@@ -78,8 +80,8 @@ function mapExcelRowToSteps(row) {
       payload: {
         childProblemDescription: row["DIAGNOSIS"],
         email: "",
-        phone: "",
-        mobile_number: row["PHONE NO."] || "",
+        phone: alternate || "",
+        mobile_number: mobile || "",
       },
     });
   }
@@ -101,10 +103,21 @@ function mapExcelRowToSteps(row) {
   return steps;
 }
 
-function buildSubmissionPayload(row) {
+async function buildSubmissionPayload(row) {
   const parsedName = parseFullName(row["NAME OF STUDENT"]);
   const parsedAddress = parseAddress(row["ADDRESS"]);
+  const { unitMap, classMap } = await getUnitClassLookup();
+  const unitName = (row["UNIT"] || "").trim().toLowerCase();
+  const className = (row["CLASS"] || "").trim().toLowerCase();
+  const unit_id = unitMap[unitName] || "";
+  const class_id = classMap[`${unitName}|${className}`] || "";
+  const { mobile, alternate } = parsePhoneNumbers(row["PHONE NO."]);
 
+  if (!unit_id || !class_id) {
+    console.warn(
+      `⚠️ Missing unit/class ID for ${row["NAME OF STUDENT"]}: ${unitName}, ${className}`
+    );
+  }
   return {
     name: parsedName,
     date_of_birth: parseExcelDate(row["DATE OF BIRTH"]),
@@ -113,14 +126,14 @@ function buildSubmissionPayload(row) {
     encryptedFields: {
       aadhaarNumber: row["ADHAR CARD NO:"] || "",
       caste: row["RELIGION&CASTE"]?.split(" - ")[1] || "",
-      category: "",
+      category: row["CATEGORY"] || "",
       disabilityPercentage: row["PERCENTAGE"] || "",
       religion: row["RELIGION&CASTE"]?.split(" - ")[0] || "",
     },
     contact_info: {
-      phone_residence: row["PHONE NO."] || "",
+      phone_residence: alternate || "",
       email: "",
-      mobile_number: "",
+      mobile_number: mobile || "",
     },
     address_id: {
       permanent: {
@@ -154,12 +167,12 @@ function buildSubmissionPayload(row) {
         scholarshipAmount: "",
       },
     },
-    admission_info: {
-      childProblemDescription: row["DIAGNOSIS"] || "",
-      email: "",
-      phone: "",
-      mobile_number: row["PHONE NO."] || "",
-    },
+    childProblemDescription: row["DIAGNOSIS"] || "",
+    email: "",
+    phone: alternate || "",
+    mobile_number: mobile || "",
+    unit_id: unit_id,
+    class_id: class_id,
   };
 }
 
@@ -185,7 +198,7 @@ async function uploadAdmission(row, studentId) {
   }
 
   // Final submission
-  const submissionPayload = buildSubmissionPayload(row);
+  const submissionPayload = await buildSubmissionPayload(row);
   try {
     await axios.put(
       `${API_BASE_URL}/students/admission-form/submit/${studentId}`,
@@ -202,10 +215,14 @@ async function uploadAdmission(row, studentId) {
     );
   }
   // Final approval
+  const payload = {
+    admission_id: row["ADMN No."],
+    date_of_admission: parseExcelDate(row["DATE OF JOINING"]),
+  };
   try {
     await axios.post(
       `${API_BASE_URL}/students/admission-form/approve/${studentId}`,
-      {}, // No payload needed
+      payload,
       {
         headers: { Authorization: `Bearer ${JWT_TOKEN}` },
       }
