@@ -24,7 +24,7 @@ async function uploadEnquiry(row) {
       payload: {
         name: parsedName,
         date_of_birth: parseExcelDate(row["DATE OF BIRTH"]),
-        gender: row["SEX"] || "",
+        gender: row["SEX"].toLowerCase() || "",
       },
     },
     {

@@ -43,12 +43,13 @@ function parseFullName(fullName = "") {
 }
 
 function parseToString(value = "") {
-  return value.toString().replace(/\D/g, ""); // Strip non-numeric characters
+  return value.toString().replace(/\D/g, "");
 }
 
 function removeSpaces(value = "") {
   return value.toString().replace(/\s+/g, "").trim();
 }
+
 function parsePhoneNumbers(raw) {
   const safe = (raw || "").toString();
   const parts = safe.trim().split(/\s+/);
