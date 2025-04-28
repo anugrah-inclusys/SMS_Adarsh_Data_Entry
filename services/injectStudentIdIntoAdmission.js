@@ -16,7 +16,7 @@ module.exports = {
       }
   
       const updatedAdmissions = admissionRows.map(row => {
-        const name = (row["NAME OF STUDENT"] || "").trim().toLowerCase();
+        const name = (row["Student Name"] || "").trim().toLowerCase();
         const studentId = nameToIdMap[name] || "";
         return {
           ...row,

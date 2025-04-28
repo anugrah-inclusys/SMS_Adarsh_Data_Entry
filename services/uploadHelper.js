@@ -46,6 +46,15 @@ function parseToString(value = "") {
   return value.toString().replace(/\D/g, "");
 }
 
+function parseToNumber(value = "") {
+  if (typeof value !== "string" && typeof value !== "number") {
+    return 0; // Handle invalid types safely
+  }
+
+  const numericString = value.toString().replace(/\D/g, ""); // Remove non-digits
+  return numericString ? parseInt(numericString, 10) : 0; // Parse or return 0
+}
+
 function removeSpaces(value = "") {
   return value.toString().replace(/\s+/g, "").trim();
 }
@@ -67,4 +76,5 @@ module.exports = {
   parseToString,
   removeSpaces,
   parsePhoneNumbers,
+  parseToNumber
 };
