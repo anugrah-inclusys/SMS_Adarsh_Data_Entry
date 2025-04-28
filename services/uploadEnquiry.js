@@ -13,7 +13,7 @@ const { API_BASE_URL, JWT_TOKEN } = require("../config/config");
 
 async function uploadEnquiry(row) {
   let studentId;
-  const parsedName = parseFullName(row["NAME OF STUDENT"]);
+  const parsedName = parseFullName(row["Student Name"]);
   const parsedAddress = parseAddress(row["ADDRESS"]);
   const fatherParsed = parseFullName(row["FATHER'S NAME"]);
   const motherParsed = parseFullName(row["MOTHER'NAME"]);
@@ -143,11 +143,11 @@ async function uploadEnquiry(row) {
       }
     );
     console.log(
-      `🎉 Enquiry submitted: ${row["NAME OF STUDENT"]} (${studentId})`
+      `🎉 Enquiry submitted: ${row["Student Name"]} (${studentId})`
     );
   } catch (err) {
     console.error(
-      `❌ Submission failed for ${row["NAME OF STUDENT"]}`,
+      `❌ Submission failed for ${row["Student Name"]}`,
       err.response?.data || err.message
     );
   } finally {
@@ -164,7 +164,7 @@ async function runEnquiryUpload(filePath = "./data/enquiry.csv") {
   for (const row of rows) {
     const studentId = await uploadEnquiry(row);
     if (studentId) {
-      const { first_name, last_name } = parseFullName(row["NAME OF STUDENT"]);
+      const { first_name, last_name } = parseFullName(row["Student Name"]);
       results.push({
         STUDENT_ID: studentId,
         NAME: `${first_name} ${last_name}`,

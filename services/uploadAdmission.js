@@ -6,6 +6,7 @@ const {
   parseFullName,
   removeSpaces,
   parsePhoneNumbers,
+  parseToNumber,
 } = require("./uploadHelper");
 const { API_BASE_URL, JWT_TOKEN } = require("../config/config");
 const { getUnitClassLookup } = require("./unitClassLookup");
@@ -13,8 +14,8 @@ const { getUnitClassLookup } = require("./unitClassLookup");
 function mapExcelRowToSteps(row) {
   const steps = [];
   const { mobile, alternate } = parsePhoneNumbers(row["PHONE NO."]);
-  if (row["NAME OF STUDENT"] || row["ADHAR CARD NO:"]) {
-    const parsedName = parseFullName(row["NAME OF STUDENT"]);
+  if (row["Student Name"] || row["ADHAR CARD NO:"]) {
+    const parsedName = parseFullName(row["Student Name"]);
     steps.push({
       step: 1,
       payload: {
@@ -91,10 +92,10 @@ function mapExcelRowToSteps(row) {
       step: 7,
       payload: {
         referredTo: "",
-        rehabCharge: row["FEES"],
+        rehabCharge: parseToNumber(row["FEES"]),
         adminCharge: "",
         ptaContribution: "",
-        transportCharge: row["VEHICLE FEE"],
+        transportCharge: parseToNumber(row["VEHICLE FEE"]),
         totalFee: "",
       },
     });
@@ -104,7 +105,7 @@ function mapExcelRowToSteps(row) {
 }
 
 async function buildSubmissionPayload(row) {
-  const parsedName = parseFullName(row["NAME OF STUDENT"]);
+  const parsedName = parseFullName(row["Student Name"]);
   const parsedAddress = parseAddress(row["ADDRESS"]);
   const { unitMap, classMap } = await getUnitClassLookup();
   const unitName = (row["UNIT"] || "").trim().toLowerCase();
@@ -115,7 +116,7 @@ async function buildSubmissionPayload(row) {
 
   if (!unit_id || !class_id) {
     console.warn(
-      `⚠️ Missing unit/class ID for ${row["NAME OF STUDENT"]}: ${unitName}, ${className}`
+      `⚠️ Missing unit/class ID for ${row["Student Name"]}: ${unitName}, ${className}`
     );
   }
   return {
@@ -156,10 +157,10 @@ async function buildSubmissionPayload(row) {
     fees_id: {
       referral_details: {
         referredTo: "",
-        rehabCharge: row["FEES"],
+        rehabCharge: parseToNumber(row["FEES"]),
         adminCharge: "",
         ptaContribution: "",
-        transportCharge: row["VEHICLE FEE"],
+        transportCharge: parseToNumber(row["VEHICLE FEE"]),
         totalFee: "",
       },
       scholarship_details: {
@@ -188,10 +189,10 @@ async function uploadAdmission(row, studentId) {
           headers: { Authorization: `Bearer ${JWT_TOKEN}` },
         }
       );
-      console.log(`✅ Step ${step} uploaded for ${row["NAME OF STUDENT"]}`);
+      console.log(`✅ Step ${step} uploaded for ${row["Student Name"]}`);
     } catch (err) {
       console.error(
-        `❌ Step ${step} failed for ${row["NAME OF STUDENT"]}`,
+        `❌ Step ${step} failed for ${row["Student Name"]}`,
         err.response?.data || err.message
       );
     }
@@ -207,10 +208,10 @@ async function uploadAdmission(row, studentId) {
         headers: { Authorization: `Bearer ${JWT_TOKEN}` },
       }
     );
-    console.log(`🎉 Admission form submitted for ${row["NAME OF STUDENT"]}`);
+    console.log(`🎉 Admission form submitted for ${row["Student Name"]}`);
   } catch (err) {
     console.error(
-      `❌ Final submission failed for ${row["NAME OF STUDENT"]}`,
+      `❌ Final submission failed for ${row["Student Name"]}`,
       err.response?.data || err.message
     );
   }
@@ -227,10 +228,10 @@ async function uploadAdmission(row, studentId) {
         headers: { Authorization: `Bearer ${JWT_TOKEN}` },
       }
     );
-    console.log(`🎯 Admission approved for ${row["NAME OF STUDENT"]}`);
+    console.log(`🎯 Admission approved for ${row["Student Name"]}`);
   } catch (err) {
     console.error(
-      `❌ Approval failed for ${row["NAME OF STUDENT"]}`,
+      `❌ Approval failed for ${row["Student Name"]}`,
       err.response?.data || err.message
     );
   }
@@ -247,7 +248,7 @@ async function runAdmissionUpload(
     const studentId = row["STUDENT ID"] || "";
     if (!studentId) {
       console.warn(
-        `⚠️ Skipping row with missing STUDENT ID: ${row["NAME OF STUDENT"]}`
+        `⚠️ Skipping row with missing STUDENT ID: ${row["Student Name"]}`
       );
       continue;
     }
