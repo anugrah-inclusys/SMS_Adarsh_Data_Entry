@@ -68,6 +68,27 @@ function parsePhoneNumbers(raw) {
   };
 }
 
+
+// if createdAt is a number and convert it into proper 'yyyy-mm-dd'
+function excelDateToYMD(serial) {
+  const utc_days = Math.floor(serial - 25569);
+  const utc_value = utc_days * 86400; 
+  const date_info = new Date(utc_value * 1000);
+  const year = date_info.getFullYear();
+  const month = String(date_info.getMonth() + 1).padStart(2, '0');
+  const day = String(date_info.getDate()).padStart(2, '0');
+  return `${year}-${month}-${day}`;
+}
+
+//createdAt
+function getTodayDate() {
+  const today = new Date();
+  const yyyy = today.getFullYear();
+  const mm = String(today.getMonth() + 1).padStart(2, '0');
+  const dd = String(today.getDate()).padStart(2, '0');
+  return `${yyyy}-${mm}-${dd}`;
+}
+
 module.exports = {
   parseExcelDate,
   getFilesForRow,
@@ -76,5 +97,11 @@ module.exports = {
   parseToString,
   removeSpaces,
   parsePhoneNumbers,
-  parseToNumber
+  parseToNumber,
+  excelDateToYMD,
+  getTodayDate
 };
+
+
+
+
