@@ -7,6 +7,7 @@ const {
   runInitialAssessmentUpload,
 } = require("./services/uploadInitialAssessment");
 const { runSpecialEducationTermUpload } = require("./services/uploadSpecialEducationTerm");
+const { runEvaluationUpload } = require("./services/uploadEvaluation");
 
 (async () => {
   try {
@@ -36,13 +37,18 @@ const { runSpecialEducationTermUpload } = require("./services/uploadSpecialEduca
     //   outputPath: "./output/initial_assessment_with_ids.csv",
     // });
     // await runInitialAssessmentUpload();
+    // await injectStudentIds({
+    //   admissionPath: "./data/special_education_term.csv",
+    //   enquiryIdsPath: "./output/student_ids.xlsx",
+    //   outputPath: "./output/special_education_term_with_ids.csv",
+    // });
+    // await runSpecialEducationTermUpload()
     await injectStudentIds({
-      admissionPath: "./data/special_education_term.csv",
+      admissionPath: "./data/evaluation_form.csv",
       enquiryIdsPath: "./output/student_ids.xlsx",
-      outputPath: "./output/special_education_assessment_with_ids.csv",
-      outputPath: "./output/special_education_term_with_ids.csv",
+      outputPath: "./output/evaluation_form_with_ids.csv",
     });
-    await runSpecialEducationTermUpload()
+    await runEvaluationUpload()
 
     console.log("🎉 Upload complete!");
   } catch (err) {
