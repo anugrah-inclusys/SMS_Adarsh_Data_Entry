@@ -11,7 +11,7 @@ const { runSpecialEducationTermUpload } = require("./services/uploadSpecialEduca
 (async () => {
   try {
     // await runStaffUpload();
-    // // await runEnquiryUpload();
+    // await runEnquiryUpload();
     // await injectStudentIds({
     //   admissionPath: "./data/enquiry.csv",
     //   enquiryIdsPath: "./output/student_ids.xlsx",
