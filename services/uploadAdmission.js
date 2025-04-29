@@ -240,7 +240,7 @@ async function uploadAdmission(row, studentId) {
 async function runAdmissionUpload(
   filePath = "./output/admission_with_ids.csv"
 ) {
-  const workbook = xlsx.readFile(filePath);
+  const workbook = xlsx.readFile(filePath, { cellText: false, cellDates: true, codepage: 65001 });
   const sheet = workbook.Sheets[workbook.SheetNames[0]];
   const rows = xlsx.utils.sheet_to_json(sheet);
 

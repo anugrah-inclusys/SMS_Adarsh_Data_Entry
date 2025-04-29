@@ -10,9 +10,9 @@ function parseExcelDate(value) {
   return new Date(value).toISOString();
 }
 
-function getFilesForRow(row, baseFolder = "staff_files") {
-  const email = String(row.email || "").trim();
-  const dirPath = path.resolve(__dirname, "..", baseFolder, email);
+function getFilesForRow(row, field, baseFolder = "staff_files") {
+  const entity = String(row[field] || "").trim();
+  const dirPath = path.resolve(__dirname, "..", baseFolder, entity);
   if (!fs.existsSync(dirPath)) return [];
   return fs
     .readdirSync(dirPath)
@@ -76,5 +76,5 @@ module.exports = {
   parseToString,
   removeSpaces,
   parsePhoneNumbers,
-  parseToNumber
+  parseToNumber,
 };

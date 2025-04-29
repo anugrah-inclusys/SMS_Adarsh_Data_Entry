@@ -39,7 +39,7 @@ async function uploadStaff(row) {
   form.append("updatedAt", parseExcelDate(row.updatedAt));
 
   // Files
-  const filePaths = getFilesForRow(row);
+  const filePaths = getFilesForRow(row, "email", "./files/staff_files");
   for (const filePath of filePaths) {
     form.append("files", fs.createReadStream(filePath));
   }
@@ -58,7 +58,11 @@ async function uploadStaff(row) {
 }
 
 function runStaffUpload(filePath = "./data/staffs.csv") {
-  const workbook = xlsx.readFile(filePath);
+  const workbook = xlsx.readFile(filePath, {
+    cellText: false,
+    cellDates: true,
+    codepage: 65001,
+  });
   const sheet = workbook.Sheets[workbook.SheetNames[0]];
   const rows = xlsx.utils.sheet_to_json(sheet);
 
