@@ -108,13 +108,13 @@ const {
     // });
     // await runEvaluationUpload();
 
-    // social-skills-checklist
-    await injectStudentIds({
-      admissionPath: "./data/social_skills_checklist.csv",
-      enquiryIdsPath: "./output/student_ids.xlsx",
-      outputPath: "./output/social_skills_checklist_with_ids.csv",
-    });
-    await runSocialSkillsChecklistUpload();
+    // // social-skills-checklist
+    // await injectStudentIds({
+    //   admissionPath: "./data/social_skills_checklist.csv",
+    //   enquiryIdsPath: "./output/student_ids.xlsx",
+    //   outputPath: "./output/social_skills_checklist_with_ids.csv",
+    // });
+    // await runSocialSkillsChecklistUpload();
 
     console.log("🎉 Upload complete!");
   } catch (err) {
