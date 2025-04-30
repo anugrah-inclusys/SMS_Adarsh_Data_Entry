@@ -44,15 +44,15 @@ const {
     // });
     // await runAdmissionUpload();
 
-    //initial assessment
-    await injectStudentIds({
-      admissionPath: "./data/initial_assessment.csv",
-      enquiryIdsPath: "./output/student_ids.xlsx",
-      outputPath: "./output/initial_assessment_with_ids.csv",
-    });
-    await runInitialAssessmentUpload();
+    // //initial assessment
+    // await injectStudentIds({
+    //   admissionPath: "./data/initial_assessment.csv",
+    //   enquiryIdsPath: "./output/student_ids.xlsx",
+    //   outputPath: "./output/initial_assessment_with_ids.csv",
+    // });
+    // await runInitialAssessmentUpload();
 
-    ////special education term assessment
+    // //special education term assessment
     // await injectStudentIds({
     //   admissionPath: "./data/special_education_term.csv",
     //   enquiryIdsPath: "./output/student_ids.xlsx",
@@ -108,13 +108,13 @@ const {
     // });
     // await runEvaluationUpload();
 
-    // // social-skills-checklist
-    // await injectStudentIds({
-    //   admissionPath: "./data/social_skills_checklist.csv",
-    //   enquiryIdsPath: "./output/student_ids.xlsx",
-    //   outputPath: "./output/social_skills_checklist_with_ids.csv",
-    // });
-    // await runSocialSkillsChecklistUpload();
+    // social-skills-checklist
+    await injectStudentIds({
+      admissionPath: "./data/social_skills_checklist.csv",
+      enquiryIdsPath: "./output/student_ids.xlsx",
+      outputPath: "./output/social_skills_checklist_with_ids.csv",
+    });
+    await runSocialSkillsChecklistUpload();
 
     console.log("🎉 Upload complete!");
   } catch (err) {

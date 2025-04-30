@@ -258,6 +258,9 @@ async function uploadInitialAssessment(row) {
     "./files/initial_assessment"
   );
   const pedigreePath = pedigreeFiles.length > 0 ? pedigreeFiles[0] : null;
+  if (!pedigreePath) {
+    console.log(`⚠️ No pedigree file found for ${studentId}`);
+  }
   if (pedigreePath) {
     const form = new FormData();
     form.append("pedigreeFile", fs.createReadStream(pedigreePath));
