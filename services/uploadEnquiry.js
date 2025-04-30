@@ -156,7 +156,7 @@ async function uploadEnquiry(row) {
 }
 
 async function runEnquiryUpload(filePath = "./data/enquiry.csv") {
-  const workbook = xlsx.readFile(filePath);
+  const workbook = xlsx.readFile(filePath, { cellText: false, cellDates: true, codepage: 65001 });
   const sheet = workbook.Sheets[workbook.SheetNames[0]];
   const rows = xlsx.utils.sheet_to_json(sheet);
 

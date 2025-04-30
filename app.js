@@ -18,6 +18,8 @@ const {
   runPsychologyAssessmentUpload,
 } = require('./services/uploadPsychologyAssessment');
 const { runSpeechAssessmentUpload } = require('./services/uploadSpeechAssessment');
+const { runSpecialEducationTermUpload } = require("./services/uploadSpecialEducationTerm");
+const { runEvaluationUpload } = require("./services/uploadEvaluation");
 
 (async () => {
   try {
@@ -35,6 +37,24 @@ const { runSpeechAssessmentUpload } = require('./services/uploadSpeechAssessment
     //   outputPath: "./output/initial_assessment_with_ids.csv",
     // });
     // await runInitialAssessmentUpload();
+    // await injectStudentIds({
+    //   admissionPath: "./data/enquiry.csv",
+    //   enquiryIdsPath: "./output/student_ids.xlsx",
+    //   outputPath: "./output/admission_with_ids.csv",
+    // });
+    // await runAdmissionUpload();
+    // await injectStudentIds({
+    //   admissionPath: "./data/initial_assessment.csv",
+    //   enquiryIdsPath: "./output/student_ids.xlsx",
+    //   outputPath: "./output/initial_assessment_with_ids.csv",
+    // });
+    // await runInitialAssessmentUpload();
+    // await injectStudentIds({
+    //   admissionPath: "./data/special_education_term.csv",
+    //   enquiryIdsPath: "./output/student_ids.xlsx",
+    //   outputPath: "./output/special_education_term_with_ids.csv",
+    // });
+    // await runSpecialEducationTermUpload()
 
     // //special education assessment
     // await injectStudentIds({
@@ -75,6 +95,11 @@ const { runSpeechAssessmentUpload } = require('./services/uploadSpeechAssessment
     //   outputPath: './output/speech_assessment_with_ids.csv',
     // });
     // await runSpeechAssessmentUpload();
+      admissionPath: "./data/evaluation_form.csv",
+      enquiryIdsPath: "./output/student_ids.xlsx",
+      outputPath: "./output/evaluation_form_with_ids.csv",
+    });
+    await runEvaluationUpload()
 
     console.log('🎉 Upload complete!');
   } catch (err) {
