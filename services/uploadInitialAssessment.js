@@ -6,9 +6,12 @@ const {
   parseFullName,
   parsePhoneNumbers,
   parseToNumber,
+  getFilesForRow,
 } = require("./uploadHelper"); // helpers
-const { API_BASE_URL, JWT_TOKEN } = require("../config/config");
+const { API_BASE_URL, JWT_TOKEN, HEADERS } = require("../config/config");
 const { getUnitClassLookup } = require("./unitClassLookup");
+const fs = require("fs");
+const FormData = require("form-data");
 
 async function fetchStudentDetails(studentId) {
   try {
@@ -48,6 +51,7 @@ function mapStep1(row, student) {
       row["demographicData.previousSchoolHistory"] === "TRUE" || false,
     history: row["demographicData.history"] || "",
     medication: row["demographicData.medication"] || "",
+    createdAt: parseExcelDate(row["createdAt"]) || "",
   };
 }
 
@@ -171,12 +175,7 @@ function mapStep7(row, student) {
   };
 }
 
-function mapStep8(row, student, unitClassLookup) {
-  const unitName = (row["unit"] || "").trim().toLowerCase();
-  const className = (row["class"] || "").trim().toLowerCase();
-  const unitId = unitClassLookup.unitMap[unitName] || "";
-  const classId = unitClassLookup.classMap[`${unitName}|${className}`] || "";
-
+function mapStep8(row, student) {
   return {
     student_id: row["_id"] || student?._id || "",
     recommendations:
@@ -187,8 +186,8 @@ function mapStep8(row, student, unitClassLookup) {
     admissionremarks: row["recommendations.admissionremarks"] || "",
     reason: row["recommendations.reason"] || "",
     temp: row["recommendations.temp"] === "TRUE",
-    unit: unitId,
-    class: classId,
+    unit: student?.unit_id,
+    class: student?.class_id,
     testAdministrated: row["recommendations.testAdministrated"] || "",
   };
 }
@@ -213,7 +212,7 @@ async function uploadInitialAssessment(row) {
     mapStep5(row, student),
     mapStep6(row, student),
     mapStep7(row, student),
-    mapStep8(row, student, { unitMap, classMap }),
+    mapStep8(row, student),
   ];
 
   let assessmentId;
@@ -227,7 +226,10 @@ async function uploadInitialAssessment(row) {
     assessmentId = res.data.data._id;
     console.log(`✅ Step 1 created initial assessment ${assessmentId}`);
   } catch (err) {
-    console.error(`❌ Failed creating initial assessment`, err.response?.data || err.message);
+    console.error(
+      `❌ Failed creating initial assessment`,
+      err.response?.data || err.message
+    );
     return;
   }
 
@@ -246,6 +248,39 @@ async function uploadInitialAssessment(row) {
     } catch (err) {
       console.error(
         `❌ Step ${i + 1} failed`,
+        err.response?.data || err.message
+      );
+    }
+  }
+  const pedigreeFiles = getFilesForRow(
+    row,
+    "STUDENT ID",
+    "./files/initial_assessment"
+  );
+  const pedigreePath = pedigreeFiles.length > 0 ? pedigreeFiles[0] : null;
+  if (pedigreePath) {
+    const form = new FormData();
+    form.append("pedigreeFile", fs.createReadStream(pedigreePath));
+    for (const [key, value] of Object.entries(steps[1])) {
+      if (key !== "student_id") {
+        form.append(key, value || "");
+      }
+    }
+    form.append("student_id", studentId);
+    try {
+      await axios.put(
+        `${API_BASE_URL}/students/initial-assessment/autosave/${assessmentId}/2`,
+        form,
+        {
+          headers: HEADERS(form),
+        }
+      );
+      console.log(
+        `📁 Step 2 with file uploaded for ${student.name.first_name}`
+      );
+    } catch (err) {
+      console.error(
+        `❌ Step 2 file upload failed for ${student.name.first_name}`,
         err.response?.data || err.message
       );
     }
@@ -272,7 +307,11 @@ async function uploadInitialAssessment(row) {
 async function runInitialAssessmentUpload(
   filePath = "./output/initial_assessment_with_ids.csv"
 ) {
-  const workbook = xlsx.readFile(filePath, { cellText: false, cellDates: true, codepage: 65001 });
+  const workbook = xlsx.readFile(filePath, {
+    cellText: false,
+    cellDates: true,
+    codepage: 65001,
+  });
   const sheet = workbook.Sheets[workbook.SheetNames[0]];
   const rows = xlsx.utils.sheet_to_json(sheet);
 

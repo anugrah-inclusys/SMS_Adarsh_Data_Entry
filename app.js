@@ -36,21 +36,21 @@ const {
     // //enquiry form
     // await runEnquiryUpload();
 
-    //admission form
-    await injectStudentIds({
-      admissionPath: "./data/enquiry.csv",
-      enquiryIdsPath: "./output/student_ids.xlsx",
-      outputPath: "./output/admission_with_ids.csv",
-    });
-    await runAdmissionUpload();
-
-    // //initial assessment
+    // //admission form
     // await injectStudentIds({
-    //   admissionPath: "./data/initial_assessment.csv",
+    //   admissionPath: "./data/enquiry.csv",
     //   enquiryIdsPath: "./output/student_ids.xlsx",
-    //   outputPath: "./output/initial_assessment_with_ids.csv",
+    //   outputPath: "./output/admission_with_ids.csv",
     // });
-    // await runInitialAssessmentUpload();
+    // await runAdmissionUpload();
+
+    //initial assessment
+    await injectStudentIds({
+      admissionPath: "./data/initial_assessment.csv",
+      enquiryIdsPath: "./output/student_ids.xlsx",
+      outputPath: "./output/initial_assessment_with_ids.csv",
+    });
+    await runInitialAssessmentUpload();
 
     ////special education term assessment
     // await injectStudentIds({
