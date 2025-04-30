@@ -89,6 +89,15 @@ function getTodayDate() {
   return `${yyyy}-${mm}-${dd}`;
 }
 
+
+//To safely preserve string values and avoid conversion issues:
+function getCellAsString(value) {
+  if (value === undefined || value === null) return '';
+  if (typeof value === 'number') return value.toString(); // Handles Excel number/date parsing
+  return String(value).trim();
+}
+
+
 module.exports = {
   parseExcelDate,
   getFilesForRow,
@@ -99,7 +108,8 @@ module.exports = {
   parsePhoneNumbers,
   parseToNumber,
   excelDateToYMD,
-  getTodayDate
+  getTodayDate,
+  getCellAsString
 };
 
 
