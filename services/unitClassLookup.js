@@ -1,5 +1,5 @@
-const axios = require("axios");
-const { API_BASE_URL, JWT_TOKEN } = require("../config/config");
+const axios = require('axios');
+const { API_BASE_URL, JWT_TOKEN } = require('../config/config');
 
 async function getUnitClassLookup() {
   const res = await axios.get(`${API_BASE_URL}/schools/units/view-units`, {
