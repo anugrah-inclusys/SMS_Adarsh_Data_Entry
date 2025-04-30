@@ -20,18 +20,19 @@ const {
 const { runSpeechAssessmentUpload } = require('./services/uploadSpeechAssessment');
 const { runSpecialEducationTermUpload } = require("./services/uploadSpecialEducationTerm");
 const { runEvaluationUpload } = require("./services/uploadEvaluation");
+const { runComprehensiveAssessmentUpload } = require('./services/uploadComprehensiveAssessment');
 
 (async () => {
   try {
 
-    ////staff upload
+    // //staff upload
     // await runStaffUpload();
 
 
-    ////enquiry form
+    // //enquiry form
     // await runEnquiryUpload();
 
-    ////admission form
+    // //admission form
     // await injectStudentIds({
     //   admissionPath: "./data/enquiry.csv",
     //   enquiryIdsPath: "./output/student_ids.xlsx",
@@ -40,7 +41,7 @@ const { runEvaluationUpload } = require("./services/uploadEvaluation");
     // await runAdmissionUpload();
 
 
-    ////initial assessment
+    //initial assessment
     // await injectStudentIds({
     //   admissionPath: "./data/initial_assessment.csv",
     //   enquiryIdsPath: "./output/student_ids.xlsx",
@@ -48,7 +49,7 @@ const { runEvaluationUpload } = require("./services/uploadEvaluation");
     // });
     // await runInitialAssessmentUpload();
 
-////special education term assessment
+//special education term assessment-teacher
     // await injectStudentIds({
     //   admissionPath: "./data/special_education_term.csv",
     //   enquiryIdsPath: "./output/student_ids.xlsx",
@@ -56,7 +57,7 @@ const { runEvaluationUpload } = require("./services/uploadEvaluation");
     // });
     // await runSpecialEducationTermUpload()
 
-    // //special education assessment
+    //special education assessment-teacher
     // await injectStudentIds({
     //   admissionPath: "./data/special_education_assessment.csv",
     //   enquiryIdsPath: "./output/student_ids.xlsx",
@@ -81,12 +82,12 @@ const { runEvaluationUpload } = require("./services/uploadEvaluation");
     // await runOccupationalTherapyAssessmentUpload();
 
     //psychology assessment assessment
-    await injectStudentIds({
-      admissionPath: './data/psychology_assessement.csv',
-      enquiryIdsPath: './output/student_ids.xlsx',
-      outputPath: './output/psychology_assessment_with_ids.csv',
-    });
-    await runPsychologyAssessmentUpload();
+    // await injectStudentIds({
+    //   admissionPath: './data/psychology_assessement.csv',
+    //   enquiryIdsPath: './output/student_ids.xlsx',
+    //   outputPath: './output/psychology_assessment_with_ids.csv',
+    // });
+    // await runPsychologyAssessmentUpload();
 
     // //speech therapy assessment assessment
     // await injectStudentIds({
@@ -95,6 +96,14 @@ const { runEvaluationUpload } = require("./services/uploadEvaluation");
     //   outputPath: './output/speech_assessment_with_ids.csv',
     // });
     // await runSpeechAssessmentUpload();
+
+    //comprehensive assessment
+    await injectStudentIds({
+      admissionPath: './data/comprehensive.csv',
+      enquiryIdsPath: './output/student_ids.xlsx',
+      outputPath: './output/comprehensive_assessment_with_ids.csv',
+    });
+    await runComprehensiveAssessmentUpload();
 
 
     // //evaluation form

@@ -90,6 +90,13 @@ function getTodayDate() {
 }
 
 
+//To safely preserve string values and avoid conversion issues:
+function getCellAsString(value) {
+  if (value === undefined || value === null) return '';
+  if (typeof value === 'number') return value.toString(); // Handles Excel number/date parsing
+  return String(value).trim();
+}
+
 
 
 //preserve the range format (e.g., '1-10') and remove unwanted quotes only, 
@@ -97,6 +104,28 @@ function cleanRangeString(value = "") {
   return value.toString().replace(/^["']+|["']+$/g, "").trim();  // removes surrounding quotes
 }
 
+//convert unit name and class name into unit_id and class_id respectively
+async function getUnitClassLookup() {
+  const res = await axios.get(`${API_BASE_URL}/units/view-units`, {
+    headers: { Authorization: `Bearer ${JWT_TOKEN}` },
+  });
+
+  const units = res.data?.data || [];
+  const unitMap = {};
+  const classMap = {};
+
+  for (const unit of units) {
+    const unitName = unit.unit_name.trim().toLowerCase();
+    unitMap[unitName] = unit._id;
+
+    for (const classItem of unit.classes || []) {
+      const classKey = `${unitName}|${classItem.class_name.trim().toLowerCase()}`;
+      classMap[classKey] = classItem._id;
+    }
+  }
+
+  return { unitMap, classMap };
+}
 
 module.exports = {
   parseExcelDate,
@@ -109,8 +138,11 @@ module.exports = {
   parseToNumber,
   excelDateToYMD,
   getTodayDate,
-  cleanRangeString
+  cleanRangeString,
+  getUnitClassLookup
 };
+
+
 
 
 
