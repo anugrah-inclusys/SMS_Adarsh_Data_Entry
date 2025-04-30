@@ -58,9 +58,15 @@ function mapStep1(row, student, admissionData) {
       row["content.student_details.mailID"] ||
       student?.contact_info?.email ||
       "",
-    fathersName: row["content.family_details.fathersName"] || "",
+    fathersName:
+      row["content.family_details.fathersName"] ||
+      `${student?.family_id?.father_name?.first_name} ${student?.family_id?.father_name?.last_name}` ||
+      "",
     fathersAge: row["content.family_details.fathersAge"] || "",
-    mothersName: row["content.family_details.mothersName"] || "",
+    mothersName:
+      row["content.family_details.mothersName"] ||
+      `${student?.family_id?.mother_name?.first_name} ${student?.family_id?.mother_name?.last_name}` ||
+      "",
     mothersAge: row["content.family_details.mothersAge"] || "",
     fathersEducation: row["content.family_details.fathersEducation"] || "",
     mothersEducation: row["content.family_details.mothersEducation"] || "",
@@ -650,20 +656,6 @@ function mapStep5(row) {
   };
 }
 
-function buildFileForm(row) {
-  const filePaths = getFilesForRow(
-    row,
-    "STUDENT ID",
-    "./files/evaluation_form"
-  );
-  const form = new FormData();
-  if (filePaths.length > 0) {
-    form.append("familyTree", fs.createReadStream(filePaths[0]));
-    return form;
-  }
-  return null;
-}
-
 async function uploadEvaluation(row) {
   const studentId = row["STUDENT ID"];
   if (!studentId) {
@@ -725,23 +717,43 @@ async function uploadEvaluation(row) {
   }
 
   // Upload family tree (Step 3)
-  const fileForm = buildFileForm(row);
-  if (fileForm) {
+
+  const pedigreeFiles = getFilesForRow(
+    row,
+    "STUDENT ID",
+    "./files/evaluation_form"
+  );
+  const pedigreePath = pedigreeFiles.length > 0 ? pedigreeFiles[0] : null;
+  if (!pedigreePath) {
+    console.log(`⚠️ No family tree file found for ${studentId}`);
+  }
+
+  if (pedigreePath) {
+    const form = new FormData();
+    form.append("familyTree", fs.createReadStream(pedigreePath));
+    for (const [key, value] of Object.entries(steps[2])) {
+      if (key !== "student_id") {
+        form.append(key, value || "");
+      }
+    }
+    form.append("student_id", studentId);
     try {
       await axios.put(
         `${API_BASE_URL}/students/evaluation-form/autosave/${assessmentId}/3`,
-        fileForm,
-        { headers: HEADERS(fileForm) }
+        form,
+        {
+          headers: HEADERS(form),
+        }
       );
-      console.log(`✅ Step 3 family tree uploaded for ${assessmentId}`);
+      console.log(
+        `📁 Step 3 with file uploaded for ${student.name.first_name}`
+      );
     } catch (err) {
       console.error(
-        `❌ Step 3 file upload failed for ${assessmentId}`,
+        `❌ Step 3 file upload failed for ${student.name.first_name}`,
         err.response?.data || err.message
       );
     }
-  } else {
-    console.log(`ℹ️ No family tree file found for ${assessmentId}`);
   }
 
   try {

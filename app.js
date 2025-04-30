@@ -1,37 +1,42 @@
-const { runEnquiryUpload } = require('./services/uploadEnquiry');
-const { runStaffUpload } = require('./services/uploadStaff');
-const { runAdmissionUpload } = require('./services/uploadAdmission');
+const { runEnquiryUpload } = require("./services/uploadEnquiry");
+const { runStaffUpload } = require("./services/uploadStaff");
+const { runAdmissionUpload } = require("./services/uploadAdmission");
 const {
   runSpecialEducationAssessmentUpload,
-} = require('./services/uploadSpecialEducationAssessment');
+} = require("./services/uploadSpecialEducationAssessment");
 const {
   runPhysiotherapyAssessmentUpload,
-} = require('./services/uploadPhysioTherapyAssessment');
+} = require("./services/uploadPhysioTherapyAssessment");
 const {
   runOccupationalTherapyAssessmentUpload,
-} = require('./services/uploadOccupationaltherapyAssessment');
-const { injectStudentIds } = require('./services/injectStudentIdIntoAdmission');
+} = require("./services/uploadOccupationaltherapyAssessment");
+const { injectStudentIds } = require("./services/injectStudentIdIntoAdmission");
 const {
   runInitialAssessmentUpload,
-} = require('./services/uploadInitialAssessment');
+} = require("./services/uploadInitialAssessment");
 const {
   runPsychologyAssessmentUpload,
-} = require('./services/uploadPsychologyAssessment');
-const { runSpeechAssessmentUpload } = require('./services/uploadSpeechAssessment');
-const { runSpecialEducationTermUpload } = require("./services/uploadSpecialEducationTerm");
+} = require("./services/uploadPsychologyAssessment");
+const {
+  runSpeechAssessmentUpload,
+} = require("./services/uploadSpeechAssessment");
+const {
+  runSpecialEducationTermUpload,
+} = require("./services/uploadSpecialEducationTerm");
 const { runEvaluationUpload } = require("./services/uploadEvaluation");
+const {
+  runSocialSkillsChecklistUpload,
+} = require("./services/uploadSocialSkillsChecklist");
 
 (async () => {
   try {
-
     ////staff upload
     // await runStaffUpload();
 
-
-    ////enquiry form
+    // //enquiry form
     // await runEnquiryUpload();
 
-    ////admission form
+    // //admission form
     // await injectStudentIds({
     //   admissionPath: "./data/enquiry.csv",
     //   enquiryIdsPath: "./output/student_ids.xlsx",
@@ -39,8 +44,7 @@ const { runEvaluationUpload } = require("./services/uploadEvaluation");
     // });
     // await runAdmissionUpload();
 
-
-    ////initial assessment
+    // //initial assessment
     // await injectStudentIds({
     //   admissionPath: "./data/initial_assessment.csv",
     //   enquiryIdsPath: "./output/student_ids.xlsx",
@@ -48,7 +52,7 @@ const { runEvaluationUpload } = require("./services/uploadEvaluation");
     // });
     // await runInitialAssessmentUpload();
 
-////special education term assessment
+    // //special education term assessment
     // await injectStudentIds({
     //   admissionPath: "./data/special_education_term.csv",
     //   enquiryIdsPath: "./output/student_ids.xlsx",
@@ -81,12 +85,12 @@ const { runEvaluationUpload } = require("./services/uploadEvaluation");
     // await runOccupationalTherapyAssessmentUpload();
 
     //psychology assessment assessment
-    await injectStudentIds({
-      admissionPath: './data/psychology_assessement.csv',
-      enquiryIdsPath: './output/student_ids.xlsx',
-      outputPath: './output/psychology_assessment_with_ids.csv',
-    });
-    await runPsychologyAssessmentUpload();
+    // await injectStudentIds({
+    //   admissionPath: './data/psychology_assessement.csv',
+    //   enquiryIdsPath: './output/student_ids.xlsx',
+    //   outputPath: './output/psychology_assessment_with_ids.csv',
+    // });
+    // await runPsychologyAssessmentUpload();
 
     // //speech therapy assessment assessment
     // await injectStudentIds({
@@ -96,17 +100,24 @@ const { runEvaluationUpload } = require("./services/uploadEvaluation");
     // });
     // await runSpeechAssessmentUpload();
 
-
     // //evaluation form
     // await injectStudentIds({
     //   admissionPath: "./data/evaluation_form.csv",
     //   enquiryIdsPath: "./output/student_ids.xlsx",
     //   outputPath: "./output/evaluation_form_with_ids.csv",
     // });
-    // await runEvaluationUpload()
+    // await runEvaluationUpload();
 
-    console.log('🎉 Upload complete!');
+    // // social-skills-checklist
+    // await injectStudentIds({
+    //   admissionPath: "./data/social_skills_checklist.csv",
+    //   enquiryIdsPath: "./output/student_ids.xlsx",
+    //   outputPath: "./output/social_skills_checklist_with_ids.csv",
+    // });
+    // await runSocialSkillsChecklistUpload();
+
+    console.log("🎉 Upload complete!");
   } catch (err) {
-    console.error('🚨 Upload failed!', err);
+    console.error("🚨 Upload failed!", err);
   }
 })();
