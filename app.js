@@ -33,18 +33,18 @@ const {
     ////staff upload
     // await runStaffUpload();
 
-    ////enquiry form
+    // //enquiry form
     // await runEnquiryUpload();
 
-    ////admission form
-    // await injectStudentIds({
-    //   admissionPath: "./data/enquiry.csv",
-    //   enquiryIdsPath: "./output/student_ids.xlsx",
-    //   outputPath: "./output/admission_with_ids.csv",
-    // });
-    // await runAdmissionUpload();
+    //admission form
+    await injectStudentIds({
+      admissionPath: "./data/enquiry.csv",
+      enquiryIdsPath: "./output/student_ids.xlsx",
+      outputPath: "./output/admission_with_ids.csv",
+    });
+    await runAdmissionUpload();
 
-    ////initial assessment
+    // //initial assessment
     // await injectStudentIds({
     //   admissionPath: "./data/initial_assessment.csv",
     //   enquiryIdsPath: "./output/student_ids.xlsx",
@@ -108,13 +108,13 @@ const {
     // });
     // await runEvaluationUpload();
 
-    // social-skills-checklist
-    await injectStudentIds({
-      admissionPath: "./data/social_skills_checklist.csv",
-      enquiryIdsPath: "./output/student_ids.xlsx",
-      outputPath: "./output/social_skills_checklist_with_ids.csv",
-    });
-    await runSocialSkillsChecklistUpload();
+    // // social-skills-checklist
+    // await injectStudentIds({
+    //   admissionPath: "./data/social_skills_checklist.csv",
+    //   enquiryIdsPath: "./output/student_ids.xlsx",
+    //   outputPath: "./output/social_skills_checklist_with_ids.csv",
+    // });
+    // await runSocialSkillsChecklistUpload();
 
     console.log("🎉 Upload complete!");
   } catch (err) {
