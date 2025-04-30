@@ -23,32 +23,32 @@ const { runEvaluationUpload } = require("./services/uploadEvaluation");
 
 (async () => {
   try {
+
+    ////staff upload
     // await runStaffUpload();
+
+
+    ////enquiry form
     // await runEnquiryUpload();
+
+    ////admission form
     // await injectStudentIds({
     //   admissionPath: "./data/enquiry.csv",
     //   enquiryIdsPath: "./output/student_ids.xlsx",
     //   outputPath: "./output/admission_with_ids.csv",
     // });
     // await runAdmissionUpload();
+
+
+    ////initial assessment
     // await injectStudentIds({
     //   admissionPath: "./data/initial_assessment.csv",
     //   enquiryIdsPath: "./output/student_ids.xlsx",
     //   outputPath: "./output/initial_assessment_with_ids.csv",
     // });
     // await runInitialAssessmentUpload();
-    // await injectStudentIds({
-    //   admissionPath: "./data/enquiry.csv",
-    //   enquiryIdsPath: "./output/student_ids.xlsx",
-    //   outputPath: "./output/admission_with_ids.csv",
-    // });
-    // await runAdmissionUpload();
-    // await injectStudentIds({
-    //   admissionPath: "./data/initial_assessment.csv",
-    //   enquiryIdsPath: "./output/student_ids.xlsx",
-    //   outputPath: "./output/initial_assessment_with_ids.csv",
-    // });
-    // await runInitialAssessmentUpload();
+
+////special education term assessment
     // await injectStudentIds({
     //   admissionPath: "./data/special_education_term.csv",
     //   enquiryIdsPath: "./output/student_ids.xlsx",
@@ -95,11 +95,15 @@ const { runEvaluationUpload } = require("./services/uploadEvaluation");
     //   outputPath: './output/speech_assessment_with_ids.csv',
     // });
     // await runSpeechAssessmentUpload();
-      admissionPath: "./data/evaluation_form.csv",
-      enquiryIdsPath: "./output/student_ids.xlsx",
-      outputPath: "./output/evaluation_form_with_ids.csv",
-    });
-    await runEvaluationUpload()
+
+
+    // //evaluation form
+    // await injectStudentIds({
+    //   admissionPath: "./data/evaluation_form.csv",
+    //   enquiryIdsPath: "./output/student_ids.xlsx",
+    //   outputPath: "./output/evaluation_form_with_ids.csv",
+    // });
+    // await runEvaluationUpload()
 
     console.log('🎉 Upload complete!');
   } catch (err) {
