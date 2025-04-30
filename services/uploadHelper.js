@@ -90,11 +90,11 @@ function getTodayDate() {
 }
 
 
-//To safely preserve string values and avoid conversion issues:
-function getCellAsString(value) {
-  if (value === undefined || value === null) return '';
-  if (typeof value === 'number') return value.toString(); // Handles Excel number/date parsing
-  return String(value).trim();
+
+
+//preserve the range format (e.g., '1-10') and remove unwanted quotes only, 
+function cleanRangeString(value = "") {
+  return value.toString().replace(/^["']+|["']+$/g, "").trim();  // removes surrounding quotes
 }
 
 
@@ -109,7 +109,7 @@ module.exports = {
   parseToNumber,
   excelDateToYMD,
   getTodayDate,
-  getCellAsString
+  cleanRangeString
 };
 
 

@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const FormData = require('form-data');
 const { API_BASE_URL, JWT_TOKEN } = require('../config/config');
-const { getTodayDate, excelDateToYMD } = require('./uploadHelper');
+const { getTodayDate, excelDateToYMD,cleanRangeString } = require('./uploadHelper');
 
 async function uploadOccupationalTherapyAssessment(row) {
   const studentId = row['Student ID'] || row['STUDENT ID'];
@@ -272,6 +272,95 @@ async function uploadOccupationalTherapyAssessment(row) {
           row['content.sensoryScreening.vestibular.oblivious_to_risks'] || '',
         frequent_movement:
           row['content.sensoryScreening.vestibular.frequent_movement'] || '',
+        avoid_touch: row['content.sensoryScreening.tactile.avoid_touch'] || '',
+        avoid_messy_play:
+          row['content.sensoryScreening.tactile.avoid_messy_play'] || '',
+        irritated_by_textures:
+          row['content.sensoryScreening.tactile.irritated_by_textures'] || '',
+        irritated_by_proximity:
+          row['content.sensoryScreening.tactile.irritated_by_proximity'] || '',
+        appears_active:
+          row['content.sensoryScreening.tactile.appears_active'] || '',
+        difficulty_small_objects:
+          row['content.sensoryScreening.tactile.difficulty_small_objects'] ||
+          '',
+        hand_exploration:
+          row['content.sensoryScreening.tactile.hand_exploration'] || '',
+        mouth_objects:
+          row['content.sensoryScreening.tactile.mouth_objects'] || '',
+
+        pressure_handling:
+          row[
+            'content.sensoryScreening.ProprioceptiveScreening.pressure_handling'
+          ] || '',
+        body_positioning:
+          row[
+            'content.sensoryScreening.ProprioceptiveScreening.body_positioning'
+          ] || '',
+        enjoy_rough_play:
+          row[
+            'content.sensoryScreening.ProprioceptiveScreening.enjoy_rough_play'
+          ] || '',
+        seek_deep_pressure:
+          row[
+            'content.sensoryScreening.ProprioceptiveScreening.seek_deep_pressure'
+          ] || '',
+        relax_with_massage:
+          row[
+            'content.sensoryScreening.ProprioceptiveScreening.relax_with_massage'
+          ] || '',
+
+        uncomfortable_sunlight:
+          row[
+            'content.sensoryScreening.VisualScreening.uncomfortable_sunlight'
+          ] || '',
+        sensitive_lighting_changes:
+          row[
+            'content.sensoryScreening.VisualScreening.sensitive_lighting_changes'
+          ] || '',
+        sensory_integration:
+          row['content.sensoryScreening.VisualScreening.sensory_integration'] ||
+          '',
+        turnaway_television:
+          row['content.sensoryScreening.VisualScreening.turnaway_television'] ||
+          '',
+        focus_moving_objects:
+          row[
+            'content.sensoryScreening.VisualScreening.focus_moving_objects'
+          ] || '',
+        difficulty_scanning:
+          row['content.sensoryScreening.VisualScreening.difficulty_scanning'] ||
+          '',
+        notice_new_people:
+          row['content.sensoryScreening.VisualScreening.notice_new_people'] ||
+          '',
+
+        upset_loud_noises:
+          row['content.sensoryScreening.AuditoryScreening.upset_loud_noises'] ||
+          '',
+        hum_screen_noise:
+          row['content.sensoryScreening.AuditoryScreening.hum_screen_noise'] ||
+          '',
+        respond_to_voice:
+          row['content.sensoryScreening.AuditoryScreening.respond_to_voice'] ||
+          '',
+
+        dislike_strong_sensations:
+          row[
+            'content.sensoryScreening.OlfactoryGustatoryScreening.dislike_strong_sensations'
+          ] || '',
+        crave_strong_sensations:
+          row[
+            'content.sensoryScreening.OlfactoryGustatoryScreening.crave_strong_sensations'
+          ] || '',
+        smear_feces:
+          row[
+            'content.sensoryScreening.OlfactoryGustatoryScreening.smear_feces'
+          ] || '',
+        eat_non_edible:
+          row[
+            'content.sensoryScreening.OlfactoryGustatoryScreening.eat_non_edible'
+          ] || '',
       },
     },
   ];
@@ -327,7 +416,8 @@ async function uploadOccupationalTherapyAssessment(row) {
       {
         goals: row['content.plan_of_action.goals'] || '',
         activities: row['content.plan_of_action.activities'] || '',
-        sessionsPerWeek: row['content.plan_of_action.sessionsPerWeek'] || '',
+        sessionsPerWeek: cleanRangeString(row['content.plan_of_action.sessionsPerWeek']) || '',
+
       },
       { headers: { Authorization: `Bearer ${JWT_TOKEN}` } }
     );

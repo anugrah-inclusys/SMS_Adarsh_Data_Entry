@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const FormData = require('form-data');
 const { API_BASE_URL, JWT_TOKEN } = require('../config/config');
-const { getTodayDate, excelDateToYMD } = require('./uploadHelper');
+const { getTodayDate, excelDateToYMD,cleanRangeString } = require('./uploadHelper');
 
 async function uploadSpeechAssessment(row) {
   const studentId = row['Student ID'] || row['STUDENT ID'];
@@ -174,7 +174,7 @@ async function uploadSpeechAssessment(row) {
         payload: {
           goals: row['content.plan_of_action.goals'] || '',
           activities: row['content.plan_of_action.activities'] || '',
-          sessions_per_week: row['content.plan_of_action.sessions_per_week'] || '',
+          sessions_per_week: cleanRangeString(row['content.plan_of_action.sessions_per_week']) || '',
         },
       },
     ];
