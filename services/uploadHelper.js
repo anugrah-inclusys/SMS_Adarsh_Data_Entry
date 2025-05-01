@@ -90,12 +90,6 @@ function getTodayDate() {
 }
 
 
-//To safely preserve string values and avoid conversion issues:
-function getCellAsString(value) {
-  if (value === undefined || value === null) return '';
-  if (typeof value === 'number') return value.toString(); // Handles Excel number/date parsing
-  return String(value).trim();
-}
 
 
 
