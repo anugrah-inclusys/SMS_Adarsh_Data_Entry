@@ -7,9 +7,12 @@ const {
   removeSpaces,
   parsePhoneNumbers,
   parseToNumber,
+  getAdmissionFilesForRow,
 } = require("./uploadHelper");
-const { API_BASE_URL, JWT_TOKEN } = require("../config/config");
+const { API_BASE_URL, JWT_TOKEN, HEADERS } = require("../config/config");
 const { getUnitClassLookup } = require("./unitClassLookup");
+const fs = require("fs");
+const FormData = require("form-data");
 
 function mapExcelRowToSteps(row) {
   const steps = [];
@@ -197,6 +200,41 @@ async function uploadAdmission(row, studentId) {
       );
     }
   }
+  async function uploadAdmissionDocumentsStep6(row, studentId) {
+    const fileMap = getAdmissionFilesForRow(row, "STUDENT ID");
+    if (Object.keys(fileMap).length === 0) {
+      console.log(`ℹ️ No Step 6 files found for ${studentId}`);
+      return;
+    }
+    const requiredFiles = ["aadhaar", "photo"];
+    for (const req of requiredFiles) {
+      if (!fileMap[req]) {
+        console.warn(`⚠️ Missing required file '${req}' for ${studentId}`);
+      }
+    }
+
+    const form = new FormData();
+    for (const [fieldName, filePath] of Object.entries(fileMap)) {
+      form.append(fieldName, fs.createReadStream(filePath));
+    }
+
+    try {
+      await axios.put(
+        `${API_BASE_URL}/students/admission-form/autosave/${studentId}/6`,
+        form,
+        {
+          headers: HEADERS(form),
+        }
+      );
+      console.log(`✅ Step 6 files uploaded for ${row["Student Name"]}`);
+    } catch (err) {
+      console.error(
+        `❌ Step 6 file upload failed for ${row["Student Name"]}`,
+        err.response?.data || err.message
+      );
+    }
+  }
+  await uploadAdmissionDocumentsStep6(row, studentId);
 
   // Final submission
   const submissionPayload = await buildSubmissionPayload(row);
@@ -240,7 +278,11 @@ async function uploadAdmission(row, studentId) {
 async function runAdmissionUpload(
   filePath = "./output/admission_with_ids.csv"
 ) {
-  const workbook = xlsx.readFile(filePath, { cellText: false, cellDates: true, codepage: 65001 });
+  const workbook = xlsx.readFile(filePath, {
+    cellText: false,
+    cellDates: true,
+    codepage: 65001,
+  });
   const sheet = workbook.Sheets[workbook.SheetNames[0]];
   const rows = xlsx.utils.sheet_to_json(sheet);
 

@@ -19,6 +19,38 @@ function getFilesForRow(row, field, baseFolder = "staff_files") {
     .map((fileName) => path.join(dirPath, fileName));
 }
 
+function getAdmissionFilesForRow(row, field, baseFolder = "files/admission") {
+  const studentId = String(row[field] || "").trim();
+  const dirPath = path.resolve(__dirname, "..", baseFolder, studentId);
+  if (!fs.existsSync(dirPath)) return {};
+
+  const expectedFields = [
+    "aadhaar",
+    "disability_certificate",
+    "birth_certificate",
+    "admission_form",
+    "photo",
+  ];
+
+  const files = {};
+  for (const field of expectedFields) {
+    const subdirPath = path.join(dirPath, field);
+
+    if (fs.existsSync(subdirPath) && fs.statSync(subdirPath).isDirectory()) {
+      const insideFiles = fs.readdirSync(subdirPath);
+      if (insideFiles.length > 0) {
+        const firstFile = insideFiles[0];
+        const fullFilePath = path.join(subdirPath, firstFile);
+        if (fs.statSync(fullFilePath).isFile()) {
+          files[field] = fullFilePath;
+        }
+      }
+    }
+  }
+
+  return files;
+}
+
 function parseAddress(fullAddress = "") {
   const segments = fullAddress.split(",").map((s) => s.trim());
   const lastSegment = segments[segments.length - 1];
@@ -68,15 +100,14 @@ function parsePhoneNumbers(raw) {
   };
 }
 
-
 // if createdAt is a number and convert it into proper 'yyyy-mm-dd'
 function excelDateToYMD(serial) {
   const utc_days = Math.floor(serial - 25569);
-  const utc_value = utc_days * 86400; 
+  const utc_value = utc_days * 86400;
   const date_info = new Date(utc_value * 1000);
   const year = date_info.getFullYear();
-  const month = String(date_info.getMonth() + 1).padStart(2, '0');
-  const day = String(date_info.getDate()).padStart(2, '0');
+  const month = String(date_info.getMonth() + 1).padStart(2, "0");
+  const day = String(date_info.getDate()).padStart(2, "0");
   return `${year}-${month}-${day}`;
 }
 
@@ -84,11 +115,10 @@ function excelDateToYMD(serial) {
 function getTodayDate() {
   const today = new Date();
   const yyyy = today.getFullYear();
-  const mm = String(today.getMonth() + 1).padStart(2, '0');
-  const dd = String(today.getDate()).padStart(2, '0');
+  const mm = String(today.getMonth() + 1).padStart(2, "0");
+  const dd = String(today.getDate()).padStart(2, "0");
   return `${yyyy}-${mm}-${dd}`;
 }
-
 
 
 
