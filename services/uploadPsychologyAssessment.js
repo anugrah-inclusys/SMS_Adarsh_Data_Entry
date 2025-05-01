@@ -3,7 +3,7 @@ const xlsx = require('xlsx');
 const fs = require('fs');
 const FormData = require('form-data');
 const { API_BASE_URL, JWT_TOKEN } = require('../config/config');
-const { getTodayDate, excelDateToYMD,getCellAsString } = require('./uploadHelper');
+const { getTodayDate, excelDateToYMD,cleanRangeString } = require('./uploadHelper');
 
 
 
@@ -69,11 +69,11 @@ async function uploadPsychologyAssessment(row) {
     {
         step: 4,
         payload: {
-          reading: getCellAsString(row['content.academic_skills.reading']),
-          writing: getCellAsString(row['content.academic_skills.writing']),
-          counting: getCellAsString(row['content.academic_skills.counting']),
-          academicReadiness: getCellAsString(row['content.academic_skills.academicReadiness']),
-          coCurricularActivities: getCellAsString(row['content.academic_skills.coCurricularActivities']),
+          reading: row['content.academic_skills.reading'],
+          writing: row['content.academic_skills.writing'],
+          counting: cleanRangeString(row['content.academic_skills.counting']) || '',
+          academicReadiness: row['content.academic_skills.academicReadiness'],
+          coCurricularActivities: row['content.academic_skills.coCurricularActivities'],
         },
       },
       
@@ -221,7 +221,7 @@ async function uploadPsychologyAssessment(row) {
       {
         goals: row['content.plan_of_action.goals'] || '',
         activities: row['content.plan_of_action.activities'] || '',
-        sessionsPerWeek: row['content.plan_of_action.sessionsPerWeek'] || '',
+        sessionsPerWeek:cleanRangeString(row['content.plan_of_action.sessionsPerWeek'] ) || '',
       },
       { headers: { Authorization: `Bearer ${JWT_TOKEN}` } }
     );

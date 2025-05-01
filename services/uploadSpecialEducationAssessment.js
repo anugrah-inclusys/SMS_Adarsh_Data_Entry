@@ -1,10 +1,12 @@
+//permision -teacher
+
 const axios = require('axios');
 const xlsx = require('xlsx');
 const fs = require('fs');
 const path = require('path');
 const FormData = require('form-data');
 const { API_BASE_URL, JWT_TOKEN } = require('../config/config');
-const { getTodayDate, excelDateToYMD} = require('./uploadHelper');
+const { getTodayDate, excelDateToYMD,cleanRangeString} = require('./uploadHelper');
 
 async function uploadSpecialEducationAssessment(row) {
   const studentId = row['STUDENT ID'];
@@ -178,7 +180,7 @@ async function uploadSpecialEducationAssessment(row) {
       {
         goals: row['content.treatmentPlan.goals'] || '',
         activities: row['content.treatmentPlan.activities'] || '',
-        sessionsPerWeek: row['content.treatmentPlan.sessionsPerWeek'] || '',
+        sessionsPerWeek: cleanRangeString(row['content.treatmentPlan.sessionsPerWeek']) || '',
       },
       { headers: { Authorization: `Bearer ${JWT_TOKEN}` } }
     );
