@@ -28,7 +28,12 @@ const {
   runSocialSkillsChecklistUpload,
 } = require("./services/uploadSocialSkillsChecklist");
 const { runADLChecklistUpload } = require("./services/uploadADLChecklist");
-const { runSensoryChecklistUpload } = require("./services/uploadSensoryChecklist");
+const {
+  runSensoryChecklistUpload,
+} = require("./services/uploadSensoryChecklist");
+const {
+  runLifeSkillsChecklistUpload,
+} = require("./services/uploadLifeSkillsChecklist");
 
 (async () => {
   try {
@@ -118,21 +123,29 @@ const { runSensoryChecklistUpload } = require("./services/uploadSensoryChecklist
     // });
     // await runSocialSkillsChecklistUpload();
 
-    // adl-checklist
+    // // adl-checklist
+    // await injectStudentIds({
+    //   admissionPath: "./data/adl_checklist.csv",
+    //   enquiryIdsPath: "./output/student_ids.xlsx",
+    //   outputPath: "./output/adl_checklist_with_ids.csv",
+    // });
+    // await runADLChecklistUpload();
+
+    // // sensory_dysfunction-checklist
+    // await injectStudentIds({
+    //   admissionPath: "./data/sensory_dysfunction.csv",
+    //   enquiryIdsPath: "./output/student_ids.xlsx",
+    //   outputPath: "./output/sensory_dysfunction_with_ids.csv",
+    // });
+    // await runSensoryChecklistUpload();
+
+    // life_skills_checklist-checklist
     await injectStudentIds({
-      admissionPath: "./data/adl_checklist.csv",
+      admissionPath: "./data/life_skills_checklist.csv",
       enquiryIdsPath: "./output/student_ids.xlsx",
-      outputPath: "./output/adl_checklist_with_ids.csv",
+      outputPath: "./output/life_skills_checklist_with_ids.csv",
     });
-    await runADLChecklistUpload();
-    
-    // sensory_dysfunction-checklist
-    await injectStudentIds({
-      admissionPath: "./data/sensory_dysfunction.csv",
-      enquiryIdsPath: "./output/student_ids.xlsx",
-      outputPath: "./output/sensory_dysfunction_with_ids.csv",
-    });
-    await runSensoryChecklistUpload();
+    await runLifeSkillsChecklistUpload();
 
     console.log("🎉 Upload complete!");
   } catch (err) {
