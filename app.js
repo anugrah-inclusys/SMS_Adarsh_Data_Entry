@@ -28,6 +28,8 @@ const {
   runSocialSkillsChecklistUpload,
 } = require("./services/uploadSocialSkillsChecklist");
 const { runComprehensiveAssessmentUpload } = require('./services/uploadComprehensiveAssessment');
+const { runTechnicalTermUpload } = require("./services/uploadTechnicalTerm");
+const { runTechnicalTermReportUpload } = require("./services/uploadTechnicalTermReport.JS");
 
 (async () => {
   try {
@@ -103,13 +105,29 @@ const { runComprehensiveAssessmentUpload } = require('./services/uploadComprehen
     // });
     // await runSpeechAssessmentUpload();
 
-    //comprehensive assessment
+    ////comprehensive assessment
+    // await injectStudentIds({
+    //   admissionPath: './data/comprehensive.csv',
+    //   enquiryIdsPath: './output/student_ids.xlsx',
+    //   outputPath: './output/comprehensive_assessment_with_ids.csv',
+    // });
+    // await runComprehensiveAssessmentUpload();
+
+    // //Technical term assessment
+    // await injectStudentIds({
+    //   admissionPath: './data/technicalTermAssessment.csv',
+    //   enquiryIdsPath: './output/student_ids.xlsx',
+    //   outputPath: './output/technical_term_assessment_with_ids.csv',
+    // });
+    // await runTechnicalTermUpload();
+
+    //Technical term report
     await injectStudentIds({
-      admissionPath: './data/comprehensive.csv',
+      admissionPath: './data/technicalTermReport.csv',
       enquiryIdsPath: './output/student_ids.xlsx',
-      outputPath: './output/comprehensive_assessment_with_ids.csv',
+      outputPath: './output/technical_term_report_with_ids.csv',
     });
-    await runComprehensiveAssessmentUpload();
+    await runTechnicalTermReportUpload();
 
 
     // //evaluation form
