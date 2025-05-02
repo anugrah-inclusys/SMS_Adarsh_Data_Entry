@@ -28,6 +28,7 @@ const {
   runSocialSkillsChecklistUpload,
 } = require("./services/uploadSocialSkillsChecklist");
 const { runADLChecklistUpload } = require("./services/uploadADLChecklist");
+const { runSensoryChecklistUpload } = require("./services/uploadSensoryChecklist");
 
 (async () => {
   try {
@@ -124,6 +125,14 @@ const { runADLChecklistUpload } = require("./services/uploadADLChecklist");
       outputPath: "./output/adl_checklist_with_ids.csv",
     });
     await runADLChecklistUpload();
+    
+    // sensory_dysfunction-checklist
+    await injectStudentIds({
+      admissionPath: "./data/sensory_dysfunction.csv",
+      enquiryIdsPath: "./output/student_ids.xlsx",
+      outputPath: "./output/sensory_dysfunction_with_ids.csv",
+    });
+    await runSensoryChecklistUpload();
 
     console.log("🎉 Upload complete!");
   } catch (err) {
