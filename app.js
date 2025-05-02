@@ -27,6 +27,7 @@ const { runEvaluationUpload } = require("./services/uploadEvaluation");
 const {
   runSocialSkillsChecklistUpload,
 } = require("./services/uploadSocialSkillsChecklist");
+const { runADLChecklistUpload } = require("./services/uploadADLChecklist");
 
 (async () => {
   try {
@@ -115,6 +116,14 @@ const {
     //   outputPath: "./output/social_skills_checklist_with_ids.csv",
     // });
     // await runSocialSkillsChecklistUpload();
+
+    // adl-checklist
+    await injectStudentIds({
+      admissionPath: "./data/adl_checklist.csv",
+      enquiryIdsPath: "./output/student_ids.xlsx",
+      outputPath: "./output/adl_checklist_with_ids.csv",
+    });
+    await runADLChecklistUpload();
 
     console.log("🎉 Upload complete!");
   } catch (err) {
