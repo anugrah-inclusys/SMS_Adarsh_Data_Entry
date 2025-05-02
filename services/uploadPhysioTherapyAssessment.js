@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const FormData = require('form-data');
 const { API_BASE_URL, JWT_TOKEN } = require('../config/config');
-const { getTodayDate, excelDateToYMD } = require('./uploadHelper');
+const { getTodayDate, excelDateToYMD,cleanRangeString } = require('./uploadHelper');
 
 async function uploadPhysiotherapyAssessment(row) {
   const studentId = row['Student ID'] || row['STUDENT ID'] || row['student id'];
@@ -187,7 +187,7 @@ console.log(studentId)
       {
         goals: row['content.planOfAction.goals'] || '',
         activities: row['content.planOfAction.activities'] || '',
-        sessionsPerWeek: row['content.planOfAction.sessionsPerWeek'] || '',
+        sessionsPerWeek: cleanRangeString(row['content.planOfAction.sessionsPerWeek']) || '',
       },
       { headers: { Authorization: `Bearer ${JWT_TOKEN}` } }
     );

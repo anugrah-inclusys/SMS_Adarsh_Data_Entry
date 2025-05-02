@@ -34,11 +34,14 @@ const {
 const {
   runLifeSkillsChecklistUpload,
 } = require("./services/uploadLifeSkillsChecklist");
+const { runComprehensiveAssessmentUpload } = require('./services/uploadComprehensiveAssessment');
 
 (async () => {
   try {
-    ////staff upload
+
+    // //staff upload
     // await runStaffUpload();
+
 
     // //enquiry form
     // await runEnquiryUpload();
@@ -67,7 +70,7 @@ const {
     // });
     // await runSpecialEducationTermUpload()
 
-    // //special education assessment
+    //special education assessment-teacher
     // await injectStudentIds({
     //   admissionPath: "./data/special_education_assessment.csv",
     //   enquiryIdsPath: "./output/student_ids.xlsx",
@@ -106,6 +109,15 @@ const {
     //   outputPath: './output/speech_assessment_with_ids.csv',
     // });
     // await runSpeechAssessmentUpload();
+
+    //comprehensive assessment
+    await injectStudentIds({
+      admissionPath: './data/comprehensive.csv',
+      enquiryIdsPath: './output/student_ids.xlsx',
+      outputPath: './output/comprehensive_assessment_with_ids.csv',
+    });
+    await runComprehensiveAssessmentUpload();
+
 
     // //evaluation form
     // await injectStudentIds({
