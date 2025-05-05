@@ -73,7 +73,7 @@ const { runSpecialEducationReportUpload } = require("./services/uploadSpecialEdu
     // });
     // await runSpecialEducationTermUpload()
 
-    //special education assessment-teacher
+    //// special education assessment-teacher
     // await injectStudentIds({
     //   admissionPath: "./data/special_education_assessment.csv",
     //   enquiryIdsPath: "./output/student_ids.xlsx",
@@ -97,7 +97,7 @@ const { runSpecialEducationReportUpload } = require("./services/uploadSpecialEdu
     // });
     // await runOccupationalTherapyAssessmentUpload();
 
-    //psychology assessment assessment
+    ////psychology assessment assessment
     // await injectStudentIds({
     //   admissionPath: './data/psychology_assessement.csv',
     //   enquiryIdsPath: './output/student_ids.xlsx',
@@ -178,13 +178,13 @@ const { runSpecialEducationReportUpload } = require("./services/uploadSpecialEdu
     // });
     // await runSensoryChecklistUpload();
 
-    // life_skills_checklist-checklist
-    await injectStudentIds({
-      admissionPath: "./data/life_skills_checklist.csv",
-      enquiryIdsPath: "./output/student_ids.xlsx",
-      outputPath: "./output/life_skills_checklist_with_ids.csv",
-    });
-    await runLifeSkillsChecklistUpload();
+    // // life_skills_checklist-checklist
+    // await injectStudentIds({
+    //   admissionPath: "./data/life_skills_checklist.csv",
+    //   enquiryIdsPath: "./output/student_ids.xlsx",
+    //   outputPath: "./output/life_skills_checklist_with_ids.csv",
+    // });
+    // await runLifeSkillsChecklistUpload();
 
     console.log("🎉 Upload complete!");
   } catch (err) {

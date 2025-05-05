@@ -15,7 +15,7 @@ async function fetchStudentDetails(studentId) {
         headers: { Authorization: `Bearer ${JWT_TOKEN}` },
       }
     );
-    console.log(res.data)
+    console.log(res.data);
     return res.data;
   } catch (err) {
     console.error(
@@ -27,24 +27,27 @@ async function fetchStudentDetails(studentId) {
 }
 // Step 1: Personal Information Mapping
 function mapStep1(row, student) {
-  
-    return {
-        student_id: row["student_id"] || student?._id || "",
-        name:
-        row["Student Name"] ||
-        `${student?.name?.first_name} ${student?.name?.last_name}` ||
-        "",
-      dob: parseExcelDate(row["dob"]) || student?.date_of_birth || null,
-      age: row["age"] || student?.age || "",
-      gender: student?.encryptedFields?.gender || row["gender"] || "Not specified",
-      dateOfIEP: parseExcelDate(row["dateOfIEP"]) || null,
-      provisionalDiagnosis: student?.assessment?.preliminary_diagnosis.name || row["provisionalDiagnosis"] || "",
-      associatedProblems: row["associatedProblems"] || "",
-      medication: row["medication"] || "",
-    };
-  }
-  
-  
+  return {
+    student_id: row['student_id'] || student?._id || '',
+    name:
+      row['Student Name'] ||
+      `${student?.name?.first_name} ${student?.name?.last_name}` ||
+      '',
+    dob: parseExcelDate(row['dob']) || student?.date_of_birth || null,
+    age: row['age'] || student?.age || '',
+    gender:
+      student?.encryptedFields?.gender || row['gender'] || 'Not specified',
+    dateOfIEP: parseExcelDate(row['dateOfIEP']) || null,
+    provisionalDiagnosis:
+      student?.assessment?.preliminary_diagnosis.name ||
+      row['provisionalDiagnosis'] ||
+      '',
+    associatedProblems: row['associatedProblems'] || '',
+    medication: row['medication'] || '',
+    createdAt: parseExcelDate(row["createdAt"]) ||  "",
+  };
+}
+
 function getStepData(step, row) {
   switch (step) {
     case 2:
@@ -94,8 +97,8 @@ function getStepData(step, row) {
     case 7:
       return {
         preVocation: {
-          presentLevel: row['preVocation.remarks'] || '',
-          longTermGoal: row['preVocation.goalsAchieved'] || '',
+          remarks: row['preVocation.remarks'] || '',
+          goalsAchieved: row['preVocation.goalsAchieved'] || '',
           shortTermGoal: row['preVocation.shortTermGoal'] || '',
         },
       };
