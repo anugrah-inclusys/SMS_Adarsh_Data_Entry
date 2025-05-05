@@ -30,6 +30,7 @@ const {
 const { runComprehensiveAssessmentUpload } = require('./services/uploadComprehensiveAssessment');
 const { runTechnicalTermUpload } = require("./services/uploadTechnicalTerm");
 const { runTechnicalTermReportUpload } = require("./services/uploadTechnicalTermReport.JS");
+const { runSpecialEducationReportUpload } = require("./services/uploadSpecialEducationReport");
 
 (async () => {
   try {
@@ -121,13 +122,21 @@ const { runTechnicalTermReportUpload } = require("./services/uploadTechnicalTerm
     // });
     // await runTechnicalTermUpload();
 
-    //Technical term report
+    // //Technical term report
+    // await injectStudentIds({
+    //   admissionPath: './data/technicalTermReport.csv',
+    //   enquiryIdsPath: './output/student_ids.xlsx',
+    //   outputPath: './output/technical_term_report_with_ids.csv',
+    // });
+    // await runTechnicalTermReportUpload();
+
+    //special education term report
     await injectStudentIds({
-      admissionPath: './data/technicalTermReport.csv',
+      admissionPath: './data/specialEducationTermReport.csv',
       enquiryIdsPath: './output/student_ids.xlsx',
-      outputPath: './output/technical_term_report_with_ids.csv',
+      outputPath: './output/special_education_report_with_ids.csv',
     });
-    await runTechnicalTermReportUpload();
+    await runSpecialEducationReportUpload();
 
 
     // //evaluation form
