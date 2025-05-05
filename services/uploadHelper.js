@@ -120,12 +120,12 @@ function getTodayDate() {
   return `${yyyy}-${mm}-${dd}`;
 }
 
-
-
-
-//preserve the range format (e.g., '1-10') and remove unwanted quotes only, 
+//preserve the range format (e.g., '1-10') and remove unwanted quotes only,
 function cleanRangeString(value = "") {
-  return value.toString().replace(/^["']+|["']+$/g, "").trim();  // removes surrounding quotes
+  return value
+    .toString()
+    .replace(/^["']+|["']+$/g, "")
+    .trim(); // removes surrounding quotes
 }
 
 //convert unit name and class name into unit_id and class_id respectively
@@ -143,7 +143,9 @@ async function getUnitClassLookup() {
     unitMap[unitName] = unit._id;
 
     for (const classItem of unit.classes || []) {
-      const classKey = `${unitName}|${classItem.class_name.trim().toLowerCase()}`;
+      const classKey = `${unitName}|${classItem.class_name
+        .trim()
+        .toLowerCase()}`;
       classMap[classKey] = classItem._id;
     }
   }
@@ -154,6 +156,7 @@ async function getUnitClassLookup() {
 module.exports = {
   parseExcelDate,
   getFilesForRow,
+  getAdmissionFilesForRow,
   parseAddress,
   parseFullName,
   parseToString,
@@ -164,11 +167,4 @@ module.exports = {
   getTodayDate,
   cleanRangeString,
   getUnitClassLookup,
-  getAdmissionFilesForRow
 };
-
-
-
-
-
-

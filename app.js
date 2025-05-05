@@ -41,10 +41,8 @@ const { runSpecialEducationReportUpload } = require("./services/uploadSpecialEdu
 
 (async () => {
   try {
-
     // //staff upload
     // await runStaffUpload();
-
 
     // //enquiry form
     // await runEnquiryUpload();
@@ -137,13 +135,13 @@ const { runSpecialEducationReportUpload } = require("./services/uploadSpecialEdu
     // });
     // await runTechnicalTermReportUpload();
 
-    //special education term report
-    await injectStudentIds({
-      admissionPath: './data/specialEducationTermReport.csv',
-      enquiryIdsPath: './output/student_ids.xlsx',
-      outputPath: './output/special_education_report_with_ids.csv',
-    });
-    await runSpecialEducationReportUpload();
+    // //special education term report
+    // await injectStudentIds({
+    //   admissionPath: './data/specialEducationTermReport.csv',
+    //   enquiryIdsPath: './output/student_ids.xlsx',
+    //   outputPath: './output/special_education_report_with_ids.csv',
+    // });
+    // await runSpecialEducationReportUpload();
 
 
     // //evaluation form

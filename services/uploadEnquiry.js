@@ -142,9 +142,7 @@ async function uploadEnquiry(row) {
         headers: { Authorization: `Bearer ${JWT_TOKEN}` },
       }
     );
-    console.log(
-      `🎉 Enquiry submitted: ${row["Student Name"]} (${studentId})`
-    );
+    console.log(`🎉 Enquiry submitted: ${row["Student Name"]} (${studentId})`);
   } catch (err) {
     console.error(
       `❌ Submission failed for ${row["Student Name"]}`,
@@ -156,7 +154,11 @@ async function uploadEnquiry(row) {
 }
 
 async function runEnquiryUpload(filePath = "./data/enquiry.csv") {
-  const workbook = xlsx.readFile(filePath, { cellText: false, cellDates: true, codepage: 65001 });
+  const workbook = xlsx.readFile(filePath, {
+    cellText: false,
+    cellDates: true,
+    codepage: 65001,
+  });
   const sheet = workbook.Sheets[workbook.SheetNames[0]];
   const rows = xlsx.utils.sheet_to_json(sheet);
 
