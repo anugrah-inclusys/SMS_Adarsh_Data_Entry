@@ -1,14 +1,14 @@
-const axios = require('axios');
-const xlsx = require('xlsx');
-const fs = require('fs');
-const FormData = require('form-data');
-const { API_BASE_URL, JWT_TOKEN } = require('../config/config');
+const axios = require("axios");
+const xlsx = require("xlsx");
+const fs = require("fs");
+const FormData = require("form-data");
+const { API_BASE_URL, JWT_TOKEN } = require("../config/config");
 const {
   excelDateToYMD,
   cleanRangeString,
   getTodayDate,
-} = require('./uploadHelper');
-const { getUnitClassLookup } = require('./unitClassLookup');
+} = require("./uploadHelper");
+const { getUnitClassLookup } = require("./unitClassLookup");
 
 async function fetchStudentDetails(studentId) {
   try {
@@ -29,13 +29,13 @@ async function fetchStudentDetails(studentId) {
 }
 
 async function uploadComprehensiveAssessment(row) {
-  const studentId = row['Student ID'] || row['STUDENT ID'] || row['student id'];
+  const studentId = row["Student ID"] || row["STUDENT ID"] || row["student id"];
   if (!studentId) {
-    console.warn(`⚠️ Skipping row without Student ID: ${row['Student Name']}`);
+    console.warn(`⚠️ Skipping row without Student ID: ${row["Student Name"]}`);
     return;
   }
 
-  let assessmentId = '';
+  let assessmentId = "";
 
   // Step 1: Create Comprehensive Form
   try {
@@ -44,16 +44,16 @@ async function uploadComprehensiveAssessment(row) {
       {
         student_id: studentId,
         assessment_details:
-          row['content.sections.special_education.assessment_details'] || '',
-          assessment_date: row['assessment_date']
-          ? excelDateToYMD(row['assessment_date'])
-          : '', // Set to empty string if not provided
+          row["content.sections.special_education.assessment_details"] || "",
+        assessment_date: row["assessment_date"]
+          ? excelDateToYMD(row["assessment_date"])
+          : "", // Set to empty string if not provided
       },
       { headers: { Authorization: `Bearer ${JWT_TOKEN}` } }
     );
     assessmentId = res.data.data._id;
     console.log(
-      `✅ Step 1 created comprehensive form for ${row['Student Name']}`
+      `✅ Step 1 created comprehensive form for ${row["Student Name"]}`
     );
   } catch (err) {
     console.error(`❌ Step 1 failed`, err.response?.data || err.message);
@@ -62,18 +62,18 @@ async function uploadComprehensiveAssessment(row) {
 
   // Resolve unit/class IDs from name (Step 10)
   const { unitMap, classMap } = await getUnitClassLookup();
-  const unitName = (row['content.unit_id'] || '').trim().toLowerCase();
-  const className = (row['content.class_id'] || '').trim().toLowerCase();
-  const unit_id = unitMap[unitName] || '';
-  const class_id = classMap[`${unitName}|${className}`] || '';
+  const unitName = (row["content.unit_id"] || "").trim().toLowerCase();
+  const className = (row["content.class_id"] || "").trim().toLowerCase();
+  const unit_id = unitMap[unitName] || "";
+  const class_id = classMap[`${unitName}|${className}`] || "";
   const student = await fetchStudentDetails(studentId);
   if (!student) return;
 
-  console.log('🚀 Step 10 Payload:', {
+  console.log("🚀 Step 10 Payload:", {
     unit_id,
     class_id,
-    provisional_diagnosis: row['content.provisional_diagnosis'] || '',
-    remarks: row['content.remarks'] || '',
+    provisional_diagnosis: row["content.provisional_diagnosis"] || "",
+    remarks: row["content.remarks"] || "",
   });
 
   const steps = [
@@ -82,15 +82,15 @@ async function uploadComprehensiveAssessment(row) {
       payload: {
         activities_of_daily_living:
           row[
-            'content.sections.special_education.activities_of_daily_living'
-          ] || '',
+            "content.sections.special_education.activities_of_daily_living"
+          ] || "",
       },
     },
     {
       step: 3,
       payload: {
         medical_history:
-          row['content.sections.special_education.medical_history'] || '',
+          row["content.sections.special_education.medical_history"] || "",
       },
     },
     {
@@ -98,44 +98,44 @@ async function uploadComprehensiveAssessment(row) {
       payload: {
         extra_curricular_activities:
           row[
-            'content.sections.special_education.extra_curricular_activities'
-          ] || '',
+            "content.sections.special_education.extra_curricular_activities"
+          ] || "",
       },
     },
     {
       step: 5,
       payload: {
         assessment_details:
-          row['content.sections.physiotherapy.assessment_details'] || '',
+          row["content.sections.physiotherapy.assessment_details"] || "",
       },
     },
     {
       step: 6,
       payload: {
         assessment_details:
-          row['content.sections.occupational_therapy.assessment_details'] || '',
+          row["content.sections.occupational_therapy.assessment_details"] || "",
       },
     },
     {
       step: 7,
       payload: {
         sensory_dysfunction:
-          row['content.sections.occupational_therapy.sensory_dysfunction'] ||
-          '',
+          row["content.sections.occupational_therapy.sensory_dysfunction"] ||
+          "",
       },
     },
     {
       step: 8,
       payload: {
         assessment_details:
-          row['content.sections.speech_and_language.assessment_details'] || '',
+          row["content.sections.speech_and_language.assessment_details"] || "",
       },
     },
     {
       step: 9,
       payload: {
         assessment_details:
-          row['content.sections.psychology.assessment_details'] || '',
+          row["content.sections.psychology.assessment_details"] || "",
       },
     },
     {
@@ -143,8 +143,8 @@ async function uploadComprehensiveAssessment(row) {
       payload: {
         unit_id: unit_id || student?.unit_id,
         class_id: class_id || student?.class_id,
-        provisional_diagnosis: row['content.provisional_diagnosis'] || '',
-        remarks: row['content.remarks'] || '',
+        provisional_diagnosis: row["content.provisional_diagnosis"] || "",
+        remarks: row["content.remarks"] || "",
       },
     },
   ];
@@ -156,7 +156,7 @@ async function uploadComprehensiveAssessment(row) {
         payload,
         { headers: { Authorization: `Bearer ${JWT_TOKEN}` } }
       );
-      console.log(`✅ Step ${step} saved for ${row['Student Name']}`);
+      console.log(`✅ Step ${step} saved for ${row["Student Name"]}`);
     } catch (err) {
       console.error(
         `❌ Step ${step} failed`,
@@ -174,7 +174,7 @@ async function uploadComprehensiveAssessment(row) {
     );
 
     console.log(
-      `🎉 Comprehensive Assessment submitted for ${row['Student Name']}`
+      `🎉 Comprehensive Assessment submitted for ${row["Student Name"]}`
     );
   } catch (err) {
     console.error(
@@ -191,7 +191,7 @@ async function uploadComprehensiveAssessment(row) {
       {},
       { headers: { Authorization: `Bearer ${JWT_TOKEN}` } }
     );
-    console.log(`🎯 Class change approved for ${row['Student Name']}`);
+    console.log(`🎯 Class change approved for ${row["Student Name"]}`);
   } catch (err) {
     console.error(`❌ Approval failed`, err.response?.data || err.message);
   }
@@ -222,7 +222,7 @@ async function uploadComprehensiveAssessment(row) {
 // }
 
 async function runComprehensiveAssessmentUpload(
-  filePath = './output/comprehensive_assessment_with_ids.csv'
+  filePath = "./output/comprehensive_assessment_with_ids.csv"
 ) {
   if (!fs.existsSync(filePath)) {
     console.error(`❌ File not found: ${filePath}`);
@@ -240,7 +240,7 @@ async function runComprehensiveAssessmentUpload(
     await uploadComprehensiveAssessment(row);
   }
 
-  console.log('✅ All Comprehensive Assessments processed');
+  console.log("✅ All Comprehensive Assessments processed");
 }
 
 module.exports = { runComprehensiveAssessmentUpload };

@@ -34,14 +34,14 @@ const {
 const {
   runLifeSkillsChecklistUpload,
 } = require("./services/uploadLifeSkillsChecklist");
-const { runComprehensiveAssessmentUpload } = require('./services/uploadComprehensiveAssessment');
+const {
+  runComprehensiveAssessmentUpload,
+} = require("./services/uploadComprehensiveAssessment");
 
 (async () => {
   try {
-
     // //staff upload
     // await runStaffUpload();
-
 
     // //enquiry form
     // await runEnquiryUpload();
@@ -110,14 +110,13 @@ const { runComprehensiveAssessmentUpload } = require('./services/uploadComprehen
     // });
     // await runSpeechAssessmentUpload();
 
-    //comprehensive assessment
-    await injectStudentIds({
-      admissionPath: './data/comprehensive.csv',
-      enquiryIdsPath: './output/student_ids.xlsx',
-      outputPath: './output/comprehensive_assessment_with_ids.csv',
-    });
-    await runComprehensiveAssessmentUpload();
-
+    // //comprehensive assessment
+    // await injectStudentIds({
+    //   admissionPath: './data/comprehensive.csv',
+    //   enquiryIdsPath: './output/student_ids.xlsx',
+    //   outputPath: './output/comprehensive_assessment_with_ids.csv',
+    // });
+    // await runComprehensiveAssessmentUpload();
 
     // //evaluation form
     // await injectStudentIds({
@@ -151,13 +150,13 @@ const { runComprehensiveAssessmentUpload } = require('./services/uploadComprehen
     // });
     // await runSensoryChecklistUpload();
 
-    // life_skills_checklist-checklist
-    await injectStudentIds({
-      admissionPath: "./data/life_skills_checklist.csv",
-      enquiryIdsPath: "./output/student_ids.xlsx",
-      outputPath: "./output/life_skills_checklist_with_ids.csv",
-    });
-    await runLifeSkillsChecklistUpload();
+    // // life_skills_checklist-checklist
+    // await injectStudentIds({
+    //   admissionPath: "./data/life_skills_checklist.csv",
+    //   enquiryIdsPath: "./output/student_ids.xlsx",
+    //   outputPath: "./output/life_skills_checklist_with_ids.csv",
+    // });
+    // await runLifeSkillsChecklistUpload();
 
     console.log("🎉 Upload complete!");
   } catch (err) {
