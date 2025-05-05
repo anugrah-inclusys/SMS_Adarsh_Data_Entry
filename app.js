@@ -35,6 +35,9 @@ const {
   runLifeSkillsChecklistUpload,
 } = require("./services/uploadLifeSkillsChecklist");
 const { runComprehensiveAssessmentUpload } = require('./services/uploadComprehensiveAssessment');
+const { runTechnicalTermUpload } = require("./services/uploadTechnicalTerm");
+const { runTechnicalTermReportUpload } = require("./services/uploadTechnicalTermReport.JS");
+const { runSpecialEducationReportUpload } = require("./services/uploadSpecialEducationReport");
 
 (async () => {
   try {
@@ -70,7 +73,7 @@ const { runComprehensiveAssessmentUpload } = require('./services/uploadComprehen
     // });
     // await runSpecialEducationTermUpload()
 
-    //special education assessment-teacher
+    //// special education assessment-teacher
     // await injectStudentIds({
     //   admissionPath: "./data/special_education_assessment.csv",
     //   enquiryIdsPath: "./output/student_ids.xlsx",
@@ -94,7 +97,7 @@ const { runComprehensiveAssessmentUpload } = require('./services/uploadComprehen
     // });
     // await runOccupationalTherapyAssessmentUpload();
 
-    //psychology assessment assessment
+    ////psychology assessment assessment
     // await injectStudentIds({
     //   admissionPath: './data/psychology_assessement.csv',
     //   enquiryIdsPath: './output/student_ids.xlsx',
@@ -110,13 +113,37 @@ const { runComprehensiveAssessmentUpload } = require('./services/uploadComprehen
     // });
     // await runSpeechAssessmentUpload();
 
-    //comprehensive assessment
+    ////comprehensive assessment
+    // await injectStudentIds({
+    //   admissionPath: './data/comprehensive.csv',
+    //   enquiryIdsPath: './output/student_ids.xlsx',
+    //   outputPath: './output/comprehensive_assessment_with_ids.csv',
+    // });
+    // await runComprehensiveAssessmentUpload();
+
+    // //Technical term assessment
+    // await injectStudentIds({
+    //   admissionPath: './data/technicalTermAssessment.csv',
+    //   enquiryIdsPath: './output/student_ids.xlsx',
+    //   outputPath: './output/technical_term_assessment_with_ids.csv',
+    // });
+    // await runTechnicalTermUpload();
+
+    // //Technical term report
+    // await injectStudentIds({
+    //   admissionPath: './data/technicalTermReport.csv',
+    //   enquiryIdsPath: './output/student_ids.xlsx',
+    //   outputPath: './output/technical_term_report_with_ids.csv',
+    // });
+    // await runTechnicalTermReportUpload();
+
+    //special education term report
     await injectStudentIds({
-      admissionPath: './data/comprehensive.csv',
+      admissionPath: './data/specialEducationTermReport.csv',
       enquiryIdsPath: './output/student_ids.xlsx',
-      outputPath: './output/comprehensive_assessment_with_ids.csv',
+      outputPath: './output/special_education_report_with_ids.csv',
     });
-    await runComprehensiveAssessmentUpload();
+    await runSpecialEducationReportUpload();
 
 
     // //evaluation form
@@ -151,13 +178,13 @@ const { runComprehensiveAssessmentUpload } = require('./services/uploadComprehen
     // });
     // await runSensoryChecklistUpload();
 
-    // life_skills_checklist-checklist
-    await injectStudentIds({
-      admissionPath: "./data/life_skills_checklist.csv",
-      enquiryIdsPath: "./output/student_ids.xlsx",
-      outputPath: "./output/life_skills_checklist_with_ids.csv",
-    });
-    await runLifeSkillsChecklistUpload();
+    // // life_skills_checklist-checklist
+    // await injectStudentIds({
+    //   admissionPath: "./data/life_skills_checklist.csv",
+    //   enquiryIdsPath: "./output/student_ids.xlsx",
+    //   outputPath: "./output/life_skills_checklist_with_ids.csv",
+    // });
+    // await runLifeSkillsChecklistUpload();
 
     console.log("🎉 Upload complete!");
   } catch (err) {

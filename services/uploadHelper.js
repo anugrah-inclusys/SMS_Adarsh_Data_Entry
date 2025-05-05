@@ -163,7 +163,8 @@ module.exports = {
   excelDateToYMD,
   getTodayDate,
   cleanRangeString,
-  getUnitClassLookup
+  getUnitClassLookup,
+  getAdmissionFilesForRow
 };
 
 
