@@ -34,9 +34,10 @@ const {
 const {
   runLifeSkillsChecklistUpload,
 } = require("./services/uploadLifeSkillsChecklist");
-const {
-  runComprehensiveAssessmentUpload,
-} = require("./services/uploadComprehensiveAssessment");
+const { runComprehensiveAssessmentUpload } = require('./services/uploadComprehensiveAssessment');
+const { runTechnicalTermUpload } = require("./services/uploadTechnicalTerm");
+const { runTechnicalTermReportUpload } = require("./services/uploadTechnicalTermReport.JS");
+const { runSpecialEducationReportUpload } = require("./services/uploadSpecialEducationReport");
 
 (async () => {
   try {
@@ -70,7 +71,7 @@ const {
     // });
     // await runSpecialEducationTermUpload()
 
-    //special education assessment-teacher
+    //// special education assessment-teacher
     // await injectStudentIds({
     //   admissionPath: "./data/special_education_assessment.csv",
     //   enquiryIdsPath: "./output/student_ids.xlsx",
@@ -94,7 +95,7 @@ const {
     // });
     // await runOccupationalTherapyAssessmentUpload();
 
-    //psychology assessment assessment
+    ////psychology assessment assessment
     // await injectStudentIds({
     //   admissionPath: './data/psychology_assessement.csv',
     //   enquiryIdsPath: './output/student_ids.xlsx',
@@ -110,13 +111,38 @@ const {
     // });
     // await runSpeechAssessmentUpload();
 
-    // //comprehensive assessment
+    ////comprehensive assessment
     // await injectStudentIds({
     //   admissionPath: './data/comprehensive.csv',
     //   enquiryIdsPath: './output/student_ids.xlsx',
     //   outputPath: './output/comprehensive_assessment_with_ids.csv',
     // });
     // await runComprehensiveAssessmentUpload();
+
+    // //Technical term assessment
+    // await injectStudentIds({
+    //   admissionPath: './data/technicalTermAssessment.csv',
+    //   enquiryIdsPath: './output/student_ids.xlsx',
+    //   outputPath: './output/technical_term_assessment_with_ids.csv',
+    // });
+    // await runTechnicalTermUpload();
+
+    // //Technical term report
+    // await injectStudentIds({
+    //   admissionPath: './data/technicalTermReport.csv',
+    //   enquiryIdsPath: './output/student_ids.xlsx',
+    //   outputPath: './output/technical_term_report_with_ids.csv',
+    // });
+    // await runTechnicalTermReportUpload();
+
+    // //special education term report
+    // await injectStudentIds({
+    //   admissionPath: './data/specialEducationTermReport.csv',
+    //   enquiryIdsPath: './output/student_ids.xlsx',
+    //   outputPath: './output/special_education_report_with_ids.csv',
+    // });
+    // await runSpecialEducationReportUpload();
+
 
     // //evaluation form
     // await injectStudentIds({
