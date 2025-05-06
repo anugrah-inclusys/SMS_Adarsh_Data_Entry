@@ -3,17 +3,18 @@ const xlsx = require("xlsx");
 const fs = require("fs");
 const path = require("path");
 const FormData = require("form-data");
-const { API_BASE_URL, JWT_TOKEN } = require("../config/config");
+const { API_BASE_URL, JWT_TOKEN,HEADERS } = require("../config/config");
 const {
   getTodayDate,
   excelDateToYMD,
   cleanRangeString,
+  getFilesForRow,
 } = require("./uploadHelper");
 
 async function uploadSpeechAssessment(row) {
   const studentId = row["Student ID"] || row["STUDENT ID"];
   if (!studentId) {
-    console.warn(`⚠️ Skipping row without Student ID: ${row["Student Name"]}`);
+    console.warn(`⚠️ Skipping row without Student ID: ${row["STUDENT ID"]}`);
     return;
   }
 
@@ -42,11 +43,11 @@ async function uploadSpeechAssessment(row) {
 
     assessmentId = res.data.data._id;
     console.log(
-      `✅ Step 1 created speech assessment for ${row["Student Name"]}`
+      `✅ Step 1 created speech assessment for ${row["STUDENT ID"]}`
     );
   } catch (err) {
     console.error(
-      `❌ Step 1 failed for ${row["Student Name"]}`,
+      `❌ Step 1 failed for ${row["STUDENT ID"]}`,
       err.response?.data || err.message
     );
     return;
@@ -201,9 +202,16 @@ async function uploadSpeechAssessment(row) {
     {
       step: 11,
       payload: {
-        group_play: row["content.play_skills.group_play"] === "true",
-        solo_play: row["content.play_skills.solo_play"] === "true",
-        both: row["content.play_skills.both"] === "true",
+     
+        group_play:   String(
+          row["content.play_skills.group_play"] || ""
+        ).toLowerCase() === "true",
+        solo_play:   String(
+          row["content.play_skills.solo_play"] || ""
+        ).toLowerCase() === "true",
+        both:   String(
+          row["content.play_skills.both"] || ""
+        ).toLowerCase() === "true",
       },
     },
     {
@@ -244,14 +252,45 @@ async function uploadSpeechAssessment(row) {
         payload,
         { headers: { Authorization: `Bearer ${JWT_TOKEN}` } }
       );
-      console.log(`✅ Step ${step} saved for ${row["Student Name"]}`);
+      console.log(`✅ Step ${step} saved for ${row["STUDENT ID"]}`);
     } catch (err) {
       console.error(
-        `❌ Step ${step} failed for ${row["Student Name"]}`,
+        `❌ Step ${step} failed for ${row["STUDENT ID"]}`,
         err.response?.data || err.message
       );
     }
   }
+
+  // Step 15: Upload files if available
+    const filePaths = getFilesForRow(
+      row,
+      "STUDENT ID",
+      "./files/speech_assessment"
+    ); // customize logic if needed
+    if (filePaths.length > 0) {
+      const form = new FormData();
+      for (const filePath of filePaths) {
+        form.append("files", fs.createReadStream(filePath));
+      }
+      try {
+        await axios.put(
+          `${API_BASE_URL}/students/speech-assessment/autosave/${assessmentId}/15`,
+          form,
+          {
+            headers: HEADERS(form),
+          }
+        );
+        console.log(`✅ Step 15 files uploaded for ${assessmentId}`);
+      } catch (err) {
+        console.error(
+          `❌ Step 15 file upload failed for ${assessmentId}`,
+          err.response?.data || err.message
+        );
+      }
+    } else {
+      console.log(`ℹ️ No files found for Step 15 upload for ${assessmentId}`);
+    }
+  
 
   // Step 17: Submit
   try {
@@ -260,7 +299,7 @@ async function uploadSpeechAssessment(row) {
       {},
       { headers: { Authorization: `Bearer ${JWT_TOKEN}` } }
     );
-    console.log(`🎉 Speech Assessment submitted for ${row["Student Name"]}`);
+    console.log(`🎉 Speech Assessment submitted for ${row["STUDENT ID"]}`);
   } catch (err) {
     console.error(
       `❌ Final submission failed`,
@@ -272,9 +311,13 @@ async function uploadSpeechAssessment(row) {
 async function runSpeechAssessmentUpload(
   filePath = "./output/speech_assessment_with_ids.csv"
 ) {
-  const workbook = xlsx.readFile(filePath);
-  const sheet = workbook.Sheets[workbook.SheetNames[0]];
-  const rows = xlsx.utils.sheet_to_json(sheet);
+  const workbook = xlsx.readFile(filePath, {
+      cellText: false,
+      cellDates: true,
+      codepage: 65001,
+    });
+    const sheet = workbook.Sheets[workbook.SheetNames[0]];
+    const rows = xlsx.utils.sheet_to_json(sheet);
 
   for (const row of rows) {
     await uploadSpeechAssessment(row);

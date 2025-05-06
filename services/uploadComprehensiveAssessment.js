@@ -31,9 +31,25 @@ async function fetchStudentDetails(studentId) {
 async function uploadComprehensiveAssessment(row) {
   const studentId = row["Student ID"] || row["STUDENT ID"] || row["student id"];
   if (!studentId) {
-    console.warn(`⚠️ Skipping row without Student ID: ${row["Student Name"]}`);
+    console.warn(`⚠️ Skipping row without Student ID: ${student.name.first_name}`);
     return;
   }
+
+    // Resolve unit/class IDs from name (Step 10)
+    const { unitMap, classMap } = await getUnitClassLookup();
+    const unitName = (row["content.unit_id"] || "").trim().toLowerCase();
+    const className = (row["content.class_id"] || "").trim().toLowerCase();
+    const unit_id = unitMap[unitName] || "";
+    const class_id = classMap[`${unitName}|${className}`] || "";
+    const student = await fetchStudentDetails(studentId);
+    if (!student) return;
+  
+    console.log("🚀 Step 10 Payload:", {
+      unit_id,
+      class_id,
+      provisional_diagnosis: row["content.provisional_diagnosis"] || "",
+      remarks: row["content.remarks"] || "",
+    });
 
   let assessmentId = "";
 
@@ -53,28 +69,14 @@ async function uploadComprehensiveAssessment(row) {
     );
     assessmentId = res.data.data._id;
     console.log(
-      `✅ Step 1 created comprehensive form for ${row["Student Name"]}`
+      `✅ Step 1 created comprehensive form for ${student.name.first_name}`
     );
   } catch (err) {
     console.error(`❌ Step 1 failed`, err.response?.data || err.message);
     return;
   }
 
-  // Resolve unit/class IDs from name (Step 10)
-  const { unitMap, classMap } = await getUnitClassLookup();
-  const unitName = (row["content.unit_id"] || "").trim().toLowerCase();
-  const className = (row["content.class_id"] || "").trim().toLowerCase();
-  const unit_id = unitMap[unitName] || "";
-  const class_id = classMap[`${unitName}|${className}`] || "";
-  const student = await fetchStudentDetails(studentId);
-  if (!student) return;
 
-  console.log("🚀 Step 10 Payload:", {
-    unit_id,
-    class_id,
-    provisional_diagnosis: row["content.provisional_diagnosis"] || "",
-    remarks: row["content.remarks"] || "",
-  });
 
   const steps = [
     {
@@ -156,7 +158,7 @@ async function uploadComprehensiveAssessment(row) {
         payload,
         { headers: { Authorization: `Bearer ${JWT_TOKEN}` } }
       );
-      console.log(`✅ Step ${step} saved for ${row["Student Name"]}`);
+      console.log(`✅ Step ${step} saved for ${student.name.first_name}`);
     } catch (err) {
       console.error(
         `❌ Step ${step} failed`,
@@ -174,7 +176,7 @@ async function uploadComprehensiveAssessment(row) {
     );
 
     console.log(
-      `🎉 Comprehensive Assessment submitted for ${row["Student Name"]}`
+      `🎉 Comprehensive Assessment submitted for ${student.name.first_name}`
     );
   } catch (err) {
     console.error(
@@ -191,7 +193,7 @@ async function uploadComprehensiveAssessment(row) {
       {},
       { headers: { Authorization: `Bearer ${JWT_TOKEN}` } }
     );
-    console.log(`🎯 Class change approved for ${row["Student Name"]}`);
+    console.log(`🎯 Class change approved for ${student.name.first_name}`);
   } catch (err) {
     console.error(`❌ Approval failed`, err.response?.data || err.message);
   }
@@ -229,12 +231,14 @@ async function runComprehensiveAssessmentUpload(
     return;
   }
 
-  const workbook = xlsx.readFile(filePath, {
-    cellText: false,
-    cellDates: true,
-  });
-  const sheet = workbook.Sheets[workbook.SheetNames[0]];
-  const rows = xlsx.utils.sheet_to_json(sheet);
+ const workbook = xlsx.readFile(filePath, {
+      cellText: false,
+      cellDates: true,
+      codepage: 65001,
+    });
+    const sheet = workbook.Sheets[workbook.SheetNames[0]];
+    const rows = xlsx.utils.sheet_to_json(sheet);
+
 
   for (const row of rows) {
     await uploadComprehensiveAssessment(row);

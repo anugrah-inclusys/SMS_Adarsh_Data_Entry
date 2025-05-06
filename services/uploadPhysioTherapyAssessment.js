@@ -3,11 +3,12 @@ const xlsx = require("xlsx");
 const fs = require("fs");
 const path = require("path");
 const FormData = require("form-data");
-const { API_BASE_URL, JWT_TOKEN } = require("../config/config");
+const { API_BASE_URL, JWT_TOKEN,HEADERS } = require("../config/config");
 const {
   getTodayDate,
   excelDateToYMD,
   cleanRangeString,
+  getFilesForRow,
 } = require("./uploadHelper");
 
 async function uploadPhysiotherapyAssessment(row) {
@@ -15,7 +16,7 @@ async function uploadPhysiotherapyAssessment(row) {
 
   console.log(studentId);
   if (!studentId) {
-    console.warn(`⚠️ Skipping row without Student ID: ${row["Student Name"]}`);
+    console.warn(`⚠️ Skipping row without Student ID: ${row["STUDENT ID"]}`);
     return;
   }
 
@@ -46,11 +47,11 @@ async function uploadPhysiotherapyAssessment(row) {
     );
     assessmentId = res.data.data._id;
     console.log(
-      `✅ Step 1 created physiotherapy assessment for ${row["Student Name"]}`
+      `✅ Step 1 created physiotherapy assessment for ${row["STUDENT ID"]}`
     );
   } catch (err) {
     console.error(
-      `❌ Step 1 failed for ${row["Student Name"]}`,
+      `❌ Step 1 failed for ${row["STUDENT ID"]}`,
       err.response?.data || err.message
     );
     return;
@@ -147,10 +148,10 @@ async function uploadPhysiotherapyAssessment(row) {
         payload,
         { headers: { Authorization: `Bearer ${JWT_TOKEN}` } }
       );
-      console.log(`✅ Step ${step} saved for ${row["Student Name"]}`);
+      console.log(`✅ Step ${step} saved for ${row["STUDENT ID"]}`);
     } catch (err) {
       console.error(
-        `❌ Step ${step} failed for ${row["Student Name"]}`,
+        `❌ Step ${step} failed for ${row["STUDENT ID"]}`,
         err.response?.data || err.message
       );
     }
@@ -177,7 +178,7 @@ async function uploadPhysiotherapyAssessment(row) {
           },
         }
       );
-      console.log(`✅ Step 4 files uploaded for ${row['Student Name']}`);
+      console.log(`✅ Step 4 files uploaded for ${row['STUDENT ID']}`);
     } catch (err) {
       console.error(`❌ Step 4 file upload failed`, err.response?.data || err.message);
     }
@@ -196,13 +197,44 @@ async function uploadPhysiotherapyAssessment(row) {
       },
       { headers: { Authorization: `Bearer ${JWT_TOKEN}` } }
     );
-    console.log(`✅ Step 5 plan of action saved for ${row["Student Name"]}`);
+    console.log(`✅ Step 5 plan of action saved for ${row["STUDENT ID"]}`);
   } catch (err) {
     console.error(
-      `❌ Step 5 failed for ${row["Student Name"]}`,
+      `❌ Step 5 failed for ${row["STUDENT ID"]}`,
       err.response?.data || err.message
     );
   }
+
+
+     // Step 4: Upload files if available
+     const filePaths = getFilesForRow(
+      row,
+      "STUDENT ID",
+      "./files/physiotherapy_assessment"
+    ); // customize logic if needed
+    if (filePaths.length > 0) {
+      const form = new FormData();
+      for (const filePath of filePaths) {
+        form.append("files", fs.createReadStream(filePath));
+      }
+      try {
+        await axios.put(
+          `${API_BASE_URL}/students/physiotherapy-assessment/autosave/${assessmentId}/4`,
+          form,
+          {
+            headers: HEADERS(form),
+          }
+        );
+        console.log(`✅ Step 4 files uploaded for ${assessmentId}`);
+      } catch (err) {
+        console.error(
+          `❌ Step 4 file upload failed for ${assessmentId}`,
+          err.response?.data || err.message
+        );
+      }
+    } else {
+      console.log(`ℹ️ No files found for Step 4 upload for ${assessmentId}`);
+    }
 
   // Step 6: Submit
   try {
@@ -212,7 +244,7 @@ async function uploadPhysiotherapyAssessment(row) {
       { headers: { Authorization: `Bearer ${JWT_TOKEN}` } }
     );
     console.log(
-      `🎉 Physiotherapy Assessment submitted for ${row["Student Name"]}`
+      `🎉 Physiotherapy Assessment submitted for ${row["STUDENT ID"]}`
     );
   } catch (err) {
     console.error(
@@ -225,9 +257,14 @@ async function uploadPhysiotherapyAssessment(row) {
 async function runPhysiotherapyAssessmentUpload(
   filePath = "./output/physiotherapy_assessment_with_ids.csv"
 ) {
-  const workbook = xlsx.readFile(filePath);
+  const workbook = xlsx.readFile(filePath, {
+    cellText: false,
+    cellDates: true,
+    codepage: 65001,
+  });
   const sheet = workbook.Sheets[workbook.SheetNames[0]];
   const rows = xlsx.utils.sheet_to_json(sheet);
+
 
   for (const row of rows) {
     await uploadPhysiotherapyAssessment(row);
