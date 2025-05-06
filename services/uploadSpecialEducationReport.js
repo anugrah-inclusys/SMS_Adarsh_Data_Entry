@@ -4,8 +4,8 @@ const FormData = require('form-data');
 const fs = require('fs');
 const path = require('path');
 
-const { parseExcelDate, getFilesForRow } = require('./uploadHelper');
-const { API_BASE_URL, JWT_TOKEN, HEADERS } = require('../config/config');
+const { parseExcelDate } = require('./uploadHelper');
+const { API_BASE_URL, JWT_TOKEN} = require('../config/config');
 
 async function fetchStudentDetails(studentId) {
   try {
@@ -15,7 +15,7 @@ async function fetchStudentDetails(studentId) {
         headers: { Authorization: `Bearer ${JWT_TOKEN}` },
       }
     );
-    console.log(res.data);
+
     return res.data;
   } catch (err) {
     console.error(
@@ -164,35 +164,35 @@ async function uploadSpecialEducationReport(row) {
   }
 
   // Step 8: File Upload
-  const filePaths = getFilesForRow(
-    row,
-    'STUDENT ID',
-    './files/special_education'
-  );
-  if (filePaths.length > 0) {
-    const form = new FormData();
-    for (const filePath of filePaths) {
-      form.append('files', fs.createReadStream(filePath));
-    }
+  // const filePaths = getFilesForRow(
+  //   row,
+  //   'STUDENT ID',
+  //   './files/special_education'
+  // );
+  // if (filePaths.length > 0) {
+  //   const form = new FormData();
+  //   for (const filePath of filePaths) {
+  //     form.append('files', fs.createReadStream(filePath));
+  //   }
 
-    try {
-      await axios.put(
-        `${API_BASE_URL}/students/special-education-report/autosave/${assessmentId}/8`,
-        form,
-        {
-          headers: HEADERS(form),
-        }
-      );
-      console.log(`✅ Step 8 files uploaded for ${assessmentId}`);
-    } catch (err) {
-      console.error(
-        `❌ Step 8 file upload failed`,
-        err.response?.data || err.message
-      );
-    }
-  } else {
-    console.log(`ℹ️ No files found for Step 8 for ${assessmentId}`);
-  }
+  //   try {
+  //     await axios.put(
+  //       `${API_BASE_URL}/students/special-education-report/autosave/${assessmentId}/8`,
+  //       form,
+  //       {
+  //         headers: HEADERS(form),
+  //       }
+  //     );
+  //     console.log(`✅ Step 8 files uploaded for ${assessmentId}`);
+  //   } catch (err) {
+  //     console.error(
+  //       `❌ Step 8 file upload failed`,
+  //       err.response?.data || err.message
+  //     );
+  //   }
+  // } else {
+  //   console.log(`ℹ️ No files found for Step 8 for ${assessmentId}`);
+  // }
 
   // Final Submission
   try {

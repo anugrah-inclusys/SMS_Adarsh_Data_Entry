@@ -3,17 +3,18 @@ const xlsx = require("xlsx");
 const fs = require("fs");
 const path = require("path");
 const FormData = require("form-data");
-const { API_BASE_URL, JWT_TOKEN } = require("../config/config");
+const { API_BASE_URL, JWT_TOKEN,HEADERS } = require("../config/config");
 const {
   getTodayDate,
   excelDateToYMD,
   cleanRangeString,
+  getFilesForRow,
 } = require("./uploadHelper");
 
 async function uploadOccupationalTherapyAssessment(row) {
   const studentId = row["Student ID"] || row["STUDENT ID"];
   if (!studentId) {
-    console.warn(`⚠️ Skipping row without Student ID: ${row["Student Name"]}`);
+    console.warn(`⚠️ Skipping row without Student ID: ${row["STUDENT ID"]}`);
     return;
   }
 
@@ -241,11 +242,11 @@ async function uploadOccupationalTherapyAssessment(row) {
 
     assessmentId = res.data.data._id;
     console.log(
-      `✅ Step 1 created occupational therapy assessment for ${row["Student Name"]}`
+      `✅ Step 1 created occupational therapy assessment for ${row["STUDENT ID"]}`
     );
   } catch (err) {
     console.error(
-      `❌ Step 1 failed for ${row["Student Name"]}`,
+      `❌ Step 1 failed for ${row["STUDENT ID"]}`,
       err.response?.data || err.message
     );
     return;
@@ -376,10 +377,10 @@ async function uploadOccupationalTherapyAssessment(row) {
         payload,
         { headers: { Authorization: `Bearer ${JWT_TOKEN}` } }
       );
-      console.log(`✅ Step ${step} saved for ${row["Student Name"]}`);
+      console.log(`✅ Step ${step} saved for ${row["STUDENT ID"]}`);
     } catch (err) {
       console.error(
-        `❌ Step ${step} failed for ${row["Student Name"]}`,
+        `❌ Step ${step} failed for ${row["STUDENT ID"]}`,
         err.response?.data || err.message
       );
     }
@@ -406,7 +407,7 @@ async function uploadOccupationalTherapyAssessment(row) {
           },
         }
       );
-      console.log(`✅ Step 3 files uploaded for ${row['Student Name']}`);
+      console.log(`✅ Step 3 files uploaded for ${row['STUDENT ID']}`);
     } catch (err) {
       console.error(`❌ Step 3 file upload failed`, err.response?.data || err.message);
     }
@@ -425,12 +426,42 @@ async function uploadOccupationalTherapyAssessment(row) {
       },
       { headers: { Authorization: `Bearer ${JWT_TOKEN}` } }
     );
-    console.log(`✅ Step 4 plan of action saved for ${row["Student Name"]}`);
+    console.log(`✅ Step 4 plan of action saved for ${row["STUDENT ID"]}`);
   } catch (err) {
     console.error(
-      `❌ Step 4 failed for ${row["Student Name"]}`,
+      `❌ Step 4 failed for ${row["STUDENT ID"]}`,
       err.response?.data || err.message
     );
+  }
+
+  // Step 3: Upload files if available
+  const filePaths = getFilesForRow(
+    row,
+    "STUDENT ID",
+    "./files/occupationalTherapy_assessment"
+  ); // customize logic if needed
+  if (filePaths.length > 0) {
+    const form = new FormData();
+    for (const filePath of filePaths) {
+      form.append("files", fs.createReadStream(filePath));
+    }
+    try {
+      await axios.put(
+        `${API_BASE_URL}/students/occupational-therapy/autosave/${assessmentId}/3`,
+        form,
+        {
+          headers: HEADERS(form),
+        }
+      );
+      console.log(`✅ Step 3 files uploaded for ${assessmentId}`);
+    } catch (err) {
+      console.error(
+        `❌ Step 3 file upload failed for ${assessmentId}`,
+        err.response?.data || err.message
+      );
+    }
+  } else {
+    console.log(`ℹ️ No files found for Step 3 upload for ${assessmentId}`);
   }
 
   // Step 5: Submit
@@ -441,7 +472,7 @@ async function uploadOccupationalTherapyAssessment(row) {
       { headers: { Authorization: `Bearer ${JWT_TOKEN}` } }
     );
     console.log(
-      `🎉 Occupational Therapy Assessment submitted for ${row["Student Name"]}`
+      `🎉 Occupational Therapy Assessment submitted for ${row["STUDENT ID"]}`
     );
   } catch (err) {
     console.error(
@@ -454,10 +485,13 @@ async function uploadOccupationalTherapyAssessment(row) {
 async function runOccupationalTherapyAssessmentUpload(
   filePath = "./output/occupational_therapy_assessment_with_ids.csv"
 ) {
-  const workbook = xlsx.readFile(filePath);
-  const sheet = workbook.Sheets[workbook.SheetNames[0]];
-  const rows = xlsx.utils.sheet_to_json(sheet);
-
+  const workbook = xlsx.readFile(filePath, {
+      cellText: false,
+      cellDates: true,
+      codepage: 65001,
+    });
+    const sheet = workbook.Sheets[workbook.SheetNames[0]];
+    const rows = xlsx.utils.sheet_to_json(sheet);
   for (const row of rows) {
     await uploadOccupationalTherapyAssessment(row);
   }

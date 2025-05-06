@@ -5,9 +5,8 @@ const fs = require("fs");
 
 const {
   parseExcelDate,
-  getFilesForRow,
 } = require("./uploadHelper");
-const { API_BASE_URL, JWT_TOKEN, HEADERS } = require("../config/config");
+const { API_BASE_URL, JWT_TOKEN} = require("../config/config");
 
 async function fetchStudentDetails(studentId) {
   try {
@@ -89,27 +88,27 @@ async function uploadTechnicalTermReport(row) {
   }
 
   // Step 2: Upload documents
-  const filePaths = getFilesForRow(row, "STUDENT ID", "./files/technical_report");
-  if (filePaths.length > 0) {
-    const form = new FormData();
-    for (const filePath of filePaths) {
-      form.append("files", fs.createReadStream(filePath));
-    }
-    try {
-      await axios.put(
-        `${API_BASE_URL}/students/technical-report/autosave/${assessmentId}/2`,
-        form,
-        {
-          headers: HEADERS(form),
-        }
-      );
-      console.log(`✅ Step 2 files uploaded for ${assessmentId}`);
-    } catch (err) {
-      console.error(`❌ Step 2 file upload failed`, err.response?.data || err.message);
-    }
-  } else {
-    console.log(`ℹ️ No files found for Step 2 for ${assessmentId}`);
-  }
+  // const filePaths = getFilesForRow(row, "STUDENT ID", "./files/technical_report");
+  // if (filePaths.length > 0) {
+  //   const form = new FormData();
+  //   for (const filePath of filePaths) {
+  //     form.append("files", fs.createReadStream(filePath));
+  //   }
+  //   try {
+  //     await axios.put(
+  //       `${API_BASE_URL}/students/technical-report/autosave/${assessmentId}/2`,
+  //       form,
+  //       {
+  //         headers: HEADERS(form),
+  //       }
+  //     );
+  //     console.log(`✅ Step 2 files uploaded for ${assessmentId}`);
+  //   } catch (err) {
+  //     console.error(`❌ Step 2 file upload failed`, err.response?.data || err.message);
+  //   }
+  // } else {
+  //   console.log(`ℹ️ No files found for Step 2 for ${assessmentId}`);
+  // }
 
   // Final submission
   try {

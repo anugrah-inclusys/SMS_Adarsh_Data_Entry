@@ -5,17 +5,19 @@ const xlsx = require("xlsx");
 const fs = require("fs");
 const path = require("path");
 const FormData = require("form-data");
-const { API_BASE_URL, JWT_TOKEN } = require("../config/config");
+const { API_BASE_URL, JWT_TOKEN,HEADERS } = require("../config/config");
 const {
   getTodayDate,
   excelDateToYMD,
   cleanRangeString,
+  getFilesForRow,
 } = require("./uploadHelper");
+
 
 async function uploadSpecialEducationAssessment(row) {
   const studentId = row["STUDENT ID"];
   if (!studentId) {
-    console.warn(`⚠️ Skipping row without Student ID: ${row["Student Name"]}`);
+    console.warn(`⚠️ Skipping row without Student ID: ${row["STUDENT ID"]}`);
     return;
   }
 
@@ -42,10 +44,10 @@ async function uploadSpecialEducationAssessment(row) {
     );
     assessmentId = res.data.data._id;
     // console.log(res.data,'assessmentId')
-    console.log(`✅ Step 1 created assessment for ${row["Student Name"]}`);
+    console.log(`✅ Step 1 created assessment for ${row["STUDENT ID"]}`);
   } catch (err) {
     console.error(
-      `❌ Step 1 failed for ${row["Student Name"]}`,
+      `❌ Step 1 failed for ${row["STUDENT ID"]}`,
       err.response?.data || err.message
     );
     return;
@@ -138,10 +140,10 @@ async function uploadSpecialEducationAssessment(row) {
         payload,
         { headers: { Authorization: `Bearer ${JWT_TOKEN}` } }
       );
-      console.log(`✅ Step ${step} saved for ${row["Student Name"]}`);
+      console.log(`✅ Step ${step} saved for ${row["STUDENT ID"]}`);
     } catch (err) {
       console.error(
-        `❌ Step ${step} failed for ${row["Student Name"]}`,
+        `❌ Step ${step} failed for ${row["STUDENT ID"]}`,
         err.response?.data || err.message
       );
     }
@@ -171,9 +173,9 @@ async function uploadSpecialEducationAssessment(row) {
   //         },
   //       }
   //     );
-  //     console.log(`✅ Step 9 files uploaded for ${row["Student Name"]}`);
+  //     console.log(`✅ Step 9 files uploaded for ${row["STUDENT ID"]}`);
   //   } catch (err) {
-  //     console.error(`❌ Step 9 file upload failed for ${row["Student Name"]}`, err.response?.data || err.message);
+  //     console.error(`❌ Step 9 file upload failed for ${row["STUDENT ID"]}`, err.response?.data || err.message);
   //   }
   // }
 
@@ -189,12 +191,43 @@ async function uploadSpecialEducationAssessment(row) {
       },
       { headers: { Authorization: `Bearer ${JWT_TOKEN}` } }
     );
-    console.log(`✅ Step 10 treatment plan saved for ${row["Student Name"]}`);
+    console.log(`✅ Step 10 treatment plan saved for ${row["STUDENT ID"]}`);
   } catch (err) {
     console.error(
-      `❌ Step 10 failed for ${row["Student Name"]}`,
+      `❌ Step 10 failed for ${row["STUDENT ID"]}`,
       err.response?.data || err.message
     );
+  }
+
+
+   // Step 9: Upload files if available
+   const filePaths = getFilesForRow(
+    row,
+    "STUDENT ID",
+    "./files/special_education_assessment"
+  ); // customize logic if needed
+  if (filePaths.length > 0) {
+    const form = new FormData();
+    for (const filePath of filePaths) {
+      form.append("files", fs.createReadStream(filePath));
+    }
+    try {
+      await axios.put(
+        `${API_BASE_URL}/students/special-education-assessment/autosave/${assessmentId}/9`,
+        form,
+        {
+          headers: HEADERS(form),
+        }
+      );
+      console.log(`✅ Step 9 files uploaded for ${assessmentId}`);
+    } catch (err) {
+      console.error(
+        `❌ Step 9 file upload failed for ${assessmentId}`,
+        err.response?.data || err.message
+      );
+    }
+  } else {
+    console.log(`ℹ️ No files found for Step 9 upload for ${assessmentId}`);
   }
 
   // Step 11: Submit
@@ -204,7 +237,7 @@ async function uploadSpecialEducationAssessment(row) {
       {},
       { headers: { Authorization: `Bearer ${JWT_TOKEN}` } }
     );
-    console.log(`🎉 Assessment submitted for ${row["Student Name"]}`);
+    console.log(`🎉 Assessment submitted for ${row["STUDENT ID"]}`);
   } catch (err) {
     console.error(
       `❌ Final submission failed`,
