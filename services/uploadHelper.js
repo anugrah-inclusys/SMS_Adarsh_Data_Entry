@@ -80,11 +80,13 @@ function parseToString(value = "") {
 
 function parseToNumber(value = "") {
   if (typeof value !== "string" && typeof value !== "number") {
-    return 0; // Handle invalid types safely
+    return 0;
   }
 
-  const numericString = value.toString().replace(/\D/g, ""); // Remove non-digits
-  return numericString ? parseInt(numericString, 10) : 0; // Parse or return 0
+  const strValue = value.toString();
+  const match = strValue.match(/-?\d+(\.\d+)?/); // Match integer or float (with optional minus)
+
+  return match ? parseFloat(match[0]) : 0;
 }
 
 function removeSpaces(value = "") {
