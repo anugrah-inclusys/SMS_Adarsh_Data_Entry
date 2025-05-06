@@ -189,6 +189,7 @@ function mapStep8(row, student) {
     unit: student?.unit_id,
     class: student?.class_id,
     testAdministrated: row["recommendations.testAdministrated"] || "",
+   
   };
 }
 
