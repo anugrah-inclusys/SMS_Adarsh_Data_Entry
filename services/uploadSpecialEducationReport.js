@@ -166,7 +166,7 @@ async function uploadSpecialEducationReport(row) {
   // Step 8: File Upload
   // const filePaths = getFilesForRow(
   //   row,
-  //   'STUDENT ID',
+  //   'ADMISSION ID',
   //   './files/special_education'
   // );
   // if (filePaths.length > 0) {

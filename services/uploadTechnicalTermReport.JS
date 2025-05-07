@@ -88,7 +88,7 @@ async function uploadTechnicalTermReport(row) {
   }
 
   // Step 2: Upload documents
-  // const filePaths = getFilesForRow(row, "STUDENT ID", "./files/technical_report");
+  // const filePaths = getFilesForRow(row, "ADMISSION ID", "./files/technical_report");
   // if (filePaths.length > 0) {
   //   const form = new FormData();
   //   for (const filePath of filePaths) {

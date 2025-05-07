@@ -264,7 +264,7 @@ async function uploadSpeechAssessment(row) {
   // Step 15: Upload files if available
     const filePaths = getFilesForRow(
       row,
-      "STUDENT ID",
+      "ADMISSION ID",
       "./files/speech_assessment"
     ); // customize logic if needed
     if (filePaths.length > 0) {

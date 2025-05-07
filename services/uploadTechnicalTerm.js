@@ -110,7 +110,7 @@ async function uploadTechnicalTerm(row) {
   }
 
   // Step 3: File Upload
-  const filePaths = getFilesForRow(row, "STUDENT ID", "./files/technical_term");
+  const filePaths = getFilesForRow(row, "ADMISSION ID", "./files/technical_term");
   if (filePaths.length > 0) {
     const form = new FormData();
     for (const filePath of filePaths) {

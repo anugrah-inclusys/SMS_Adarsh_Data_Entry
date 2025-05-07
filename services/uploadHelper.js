@@ -11,18 +11,25 @@ function parseExcelDate(value) {
 }
 
 function getFilesForRow(row, field, baseFolder = "staff_files") {
-  const entity = String(row[field] || "").trim();
-  const dirPath = path.resolve(__dirname, "..", baseFolder, entity);
+  let rawId = String(row[field] || "").trim();
+  if (!rawId) return [];
+
+  const normalizedId = rawId.replace(/\//g, "-"); // becomes ACT-59-24
+  const dirPath = path.resolve(__dirname, "..", baseFolder);
+
   if (!fs.existsSync(dirPath)) return [];
+
   return fs
     .readdirSync(dirPath)
+    .filter((fileName) => fileName.startsWith(normalizedId + "."))
     .map((fileName) => path.join(dirPath, fileName));
 }
 
 function getAdmissionFilesForRow(row, field, baseFolder = "files/admission") {
-  const studentId = String(row[field] || "").trim();
-  const dirPath = path.resolve(__dirname, "..", baseFolder, studentId);
-  if (!fs.existsSync(dirPath)) return {};
+  let admissionId = String(row[field] || "").trim();
+  if (!admissionId) return {};
+
+  const admissionIdFormatted = admissionId.replace(/\//g, "-"); // ACT/12/23 => ACT-12-23
 
   const expectedFields = [
     "aadhaar",
@@ -33,17 +40,21 @@ function getAdmissionFilesForRow(row, field, baseFolder = "files/admission") {
   ];
 
   const files = {};
-  for (const field of expectedFields) {
-    const subdirPath = path.join(dirPath, field);
 
-    if (fs.existsSync(subdirPath) && fs.statSync(subdirPath).isDirectory()) {
-      const insideFiles = fs.readdirSync(subdirPath);
-      if (insideFiles.length > 0) {
-        const firstFile = insideFiles[0];
-        const fullFilePath = path.join(subdirPath, firstFile);
-        if (fs.statSync(fullFilePath).isFile()) {
-          files[field] = fullFilePath;
-        }
+  for (const field of expectedFields) {
+    const subdirPath = path.resolve(__dirname, "..", baseFolder, field);
+
+    if (!fs.existsSync(subdirPath) || !fs.statSync(subdirPath).isDirectory())
+      continue;
+
+    const matchedFile = fs
+      .readdirSync(subdirPath)
+      .find((file) => file.startsWith(admissionIdFormatted));
+
+    if (matchedFile) {
+      const fullFilePath = path.join(subdirPath, matchedFile);
+      if (fs.statSync(fullFilePath).isFile()) {
+        files[field] = fullFilePath;
       }
     }
   }

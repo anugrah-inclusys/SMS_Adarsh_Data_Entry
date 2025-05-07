@@ -25,13 +25,13 @@ function mapExcelRowToSteps(row) {
         firstName: parsedName.first_name,
         lastName: parsedName.last_name,
         dob: parseExcelDate(row["DATE OF BIRTH"]),
-        age: row["AGE"],
+        age: row["AGE"].replace(" YRS", "").trim(),
         gender: row["SEX"],
         religion: row["RELIGION&CASTE"]?.split(" - ")[0] || "",
         caste: row["RELIGION&CASTE"]?.split(" - ")[1] || "",
         aadhaarNumber: removeSpaces(row["ADHAR CARD NO:"]) || "",
         disabilityPercentage: row["PERCENTAGE"] || "",
-        category: row["CATEGORY"] || "",
+        category: row["CLASS.1"] || "",
       },
     });
   }
@@ -125,12 +125,12 @@ async function buildSubmissionPayload(row) {
   return {
     name: parsedName,
     date_of_birth: parseExcelDate(row["DATE OF BIRTH"]),
-    age: row["AGE"],
+    age: row["AGE"].replace(" YRS", "").trim(),
     gender: row["SEX"],
     encryptedFields: {
       aadhaarNumber: row["ADHAR CARD NO:"] || "",
       caste: row["RELIGION&CASTE"]?.split(" - ")[1] || "",
-      category: row["CATEGORY"] || "",
+      category: row["CLASS.1"] || "",
       disabilityPercentage: row["PERCENTAGE"] || "",
       religion: row["RELIGION&CASTE"]?.split(" - ")[0] || "",
     },
@@ -201,7 +201,7 @@ async function uploadAdmission(row, studentId) {
     }
   }
   async function uploadAdmissionDocumentsStep6(row, studentId) {
-    const fileMap = getAdmissionFilesForRow(row, "STUDENT ID");
+    const fileMap = getAdmissionFilesForRow(row, "ADMISSION ID");
     if (Object.keys(fileMap).length === 0) {
       console.log(`ℹ️ No Step 6 files found for ${studentId}`);
       return;
@@ -253,26 +253,26 @@ async function uploadAdmission(row, studentId) {
       err.response?.data || err.message
     );
   }
-  // Final approval
-  const payload = {
-    admission_id: row["ADMN No."],
-    date_of_admission: parseExcelDate(row["DATE OF JOINING"]),
-  };
-  try {
-    await axios.post(
-      `${API_BASE_URL}/students/admission-form/approve/${studentId}`,
-      payload,
-      {
-        headers: { Authorization: `Bearer ${JWT_TOKEN}` },
-      }
-    );
-    console.log(`🎯 Admission approved for ${row["Student Name"]}`);
-  } catch (err) {
-    console.error(
-      `❌ Approval failed for ${row["Student Name"]}`,
-      err.response?.data || err.message
-    );
-  }
+  // // Final approval
+  // const payload = {
+  //   admission_id: row["ADMN No."],
+  //   date_of_admission: parseExcelDate(row["DATE OF JOINING"]),
+  // };
+  // try {
+  //   await axios.post(
+  //     `${API_BASE_URL}/students/admission-form/approve/${studentId}`,
+  //     payload,
+  //     {
+  //       headers: { Authorization: `Bearer ${JWT_TOKEN}` },
+  //     }
+  //   );
+  //   console.log(`🎯 Admission approved for ${row["Student Name"]}`);
+  // } catch (err) {
+  //   console.error(
+  //     `❌ Approval failed for ${row["Student Name"]}`,
+  //     err.response?.data || err.message
+  //   );
+  // }
 }
 
 async function runAdmissionUpload(

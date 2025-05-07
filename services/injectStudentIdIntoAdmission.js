@@ -14,13 +14,20 @@ module.exports = {
       const normalizedName = entry.NAME?.trim().toLowerCase();
       if (normalizedName) nameToIdMap[normalizedName] = entry.STUDENT_ID;
     }
+    const nameToAdmissionIdMap = {};
+    for (const entry of enquiryMap) {
+      const normalizedName = entry.NAME?.trim().toLowerCase();
+      if (normalizedName) nameToAdmissionIdMap[normalizedName] = entry.ADMISSION_ID;
+    }
 
     const updatedAdmissions = admissionRows.map((row) => {
       const name = (row["Student Name"] || "").trim().toLowerCase();
       const studentId = nameToIdMap[name] || "";
+      const admissionId = nameToAdmissionIdMap[name] || "";
       return {
         ...row,
         "STUDENT ID": studentId,
+        "ADMISSION ID": admissionId,
       };
     });
 

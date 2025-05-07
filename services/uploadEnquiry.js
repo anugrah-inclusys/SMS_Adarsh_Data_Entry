@@ -13,6 +13,7 @@ const { API_BASE_URL, JWT_TOKEN } = require("../config/config");
 
 async function uploadEnquiry(row) {
   let studentId;
+  let admissionId;
   const parsedName = parseFullName(row["Student Name"]);
   const parsedAddress = parseAddress(row["ADDRESS"]);
   const fatherParsed = parseFullName(row["FATHER'S NAME"]);
@@ -148,8 +149,29 @@ async function uploadEnquiry(row) {
       `❌ Submission failed for ${row["Student Name"]}`,
       err.response?.data || err.message
     );
+  }
+  // Final approval
+  const payload = {
+    admission_id: row["ADMN No."],
+    date_of_admission: parseExcelDate(row["DATE OF JOINING"]),
+  };
+  try {
+    const response = await axios.post(
+      `${API_BASE_URL}/students/admission-form/approve/${studentId}`,
+      payload,
+      {
+        headers: { Authorization: `Bearer ${JWT_TOKEN}` },
+      }
+    );
+    admissionId = response.data.admission_id;
+    console.log(`🎯 Admission approved for ${row["Student Name"]}`);
+  } catch (err) {
+    console.error(
+      `❌ Approval failed for ${row["Student Name"]}`,
+      err.response?.data || err.message
+    );
   } finally {
-    return studentId;
+    return { studentId, admissionId };
   }
 }
 
@@ -164,11 +186,12 @@ async function runEnquiryUpload(filePath = "./data/enquiry.csv") {
 
   const results = [];
   for (const row of rows) {
-    const studentId = await uploadEnquiry(row);
+    const { studentId, admissionId } = await uploadEnquiry(row);
     if (studentId) {
       const { first_name, last_name } = parseFullName(row["Student Name"]);
       results.push({
         STUDENT_ID: studentId,
+        ADMISSION_ID: admissionId,
         NAME: `${first_name} ${last_name}`,
       });
     }
