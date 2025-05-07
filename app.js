@@ -50,7 +50,7 @@ const {
     // //staff upload
     // await runStaffUpload();
 
-    // //enquiry form-admin
+    // // // enquiry form-admin
     // await runEnquiryUpload();
 
     // //admission form-admin
@@ -61,13 +61,13 @@ const {
     // });
     // await runAdmissionUpload();
 
-    // //initial assessment-admin
-    // await injectStudentIds({
-    //   admissionPath: "./data/initial_assessment.csv",
-    //   enquiryIdsPath: "./output/student_ids.xlsx",
-    //   outputPath: "./output/initial_assessment_with_ids.csv",
-    // });
-    // await runInitialAssessmentUpload();
+    //initial assessment-admin
+    await injectStudentIds({
+      admissionPath: "./data/initial_assessment.csv",
+      enquiryIdsPath: "./output/student_ids.xlsx",
+      outputPath: "./output/initial_assessment_with_ids.csv",
+    });
+    await runInitialAssessmentUpload();
 
     // //comprehensive assessment-permission admin
     // await injectStudentIds({
@@ -109,7 +109,7 @@ const {
     // });
     // await runSpeechAssessmentUpload();
 
-    //Technical term assessment-therapist
+    // //Technical term assessment-therapist
     // await injectStudentIds({
     //   admissionPath: './data/technicalTermAssessment.csv',
     //   enquiryIdsPath: './output/student_ids.xlsx',
@@ -117,7 +117,7 @@ const {
     // });
     // await runTechnicalTermUpload();
 
-    //Technical term report-therapist
+    // //Technical term report-therapist
     // await injectStudentIds({
     //   admissionPath: './data/technicalTermReport.csv',
     //   enquiryIdsPath: './output/student_ids.xlsx',
@@ -125,7 +125,7 @@ const {
     // });
     // await runTechnicalTermReportUpload();
 
-    //special education term assessment-teacher
+    // // special education term assessment-teacher
     // await injectStudentIds({
     //   admissionPath: "./data/special_education_term.csv",
     //   enquiryIdsPath: "./output/student_ids.xlsx",
@@ -133,7 +133,7 @@ const {
     // });
     // await runSpecialEducationTermUpload()
 
-    //     //special education term report-teacher
+    // //special education term report-teacher
     // await injectStudentIds({
     //   admissionPath: './data/specialEducationTermReport.csv',
     //   enquiryIdsPath: './output/student_ids.xlsx',
@@ -166,7 +166,7 @@ const {
     // });
     // await runSocialSkillsChecklistUpload();
 
-    //// adl-checklist-teacher
+    // // adl-checklist-teacher
     // await injectStudentIds({
     //   admissionPath: "./data/adl_checklist.csv",
     //   enquiryIdsPath: "./output/student_ids.xlsx",
@@ -182,13 +182,13 @@ const {
     // });
     // await runSensoryChecklistUpload();
 
-    // life_skills_checklist-checklist-teacher
-    await injectStudentIds({
-      admissionPath: "./data/life_skills_checklist.csv",
-      enquiryIdsPath: "./output/student_ids.xlsx",
-      outputPath: "./output/life_skills_checklist_with_ids.csv",
-    });
-    await runLifeSkillsChecklistUpload();
+    // // life_skills_checklist-checklist-teacher
+    // await injectStudentIds({
+    //   admissionPath: "./data/life_skills_checklist.csv",
+    //   enquiryIdsPath: "./output/student_ids.xlsx",
+    //   outputPath: "./output/life_skills_checklist_with_ids.csv",
+    // });
+    // await runLifeSkillsChecklistUpload();
 
     console.log('🎉 Upload complete!');
   } catch (err) {

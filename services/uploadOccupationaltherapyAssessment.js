@@ -437,7 +437,7 @@ async function uploadOccupationalTherapyAssessment(row) {
   // Step 3: Upload files if available
   const filePaths = getFilesForRow(
     row,
-    "STUDENT ID",
+    "ADMISSION ID",
     "./files/occupationalTherapy_assessment"
   ); // customize logic if needed
   if (filePaths.length > 0) {

@@ -720,7 +720,7 @@ async function uploadEvaluation(row) {
 
   const pedigreeFiles = getFilesForRow(
     row,
-    "STUDENT ID",
+    "ADMISSION ID",
     "./files/evaluation_form"
   );
   const pedigreePath = pedigreeFiles.length > 0 ? pedigreeFiles[0] : null;

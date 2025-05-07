@@ -255,7 +255,7 @@ async function uploadInitialAssessment(row) {
   }
   const pedigreeFiles = getFilesForRow(
     row,
-    "STUDENT ID",
+    "ADMISSION ID",
     "./files/initial_assessment"
   );
   const pedigreePath = pedigreeFiles.length > 0 ? pedigreeFiles[0] : null;

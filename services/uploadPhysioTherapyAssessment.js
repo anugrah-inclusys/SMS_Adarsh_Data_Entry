@@ -209,7 +209,7 @@ async function uploadPhysiotherapyAssessment(row) {
      // Step 4: Upload files if available
      const filePaths = getFilesForRow(
       row,
-      "STUDENT ID",
+      "ADMISSION ID",
       "./files/physiotherapy_assessment"
     ); // customize logic if needed
     if (filePaths.length > 0) {

@@ -203,7 +203,7 @@ async function uploadSpecialEducationAssessment(row) {
    // Step 9: Upload files if available
    const filePaths = getFilesForRow(
     row,
-    "STUDENT ID",
+    "ADMISSION ID",
     "./files/special_education_assessment"
   ); // customize logic if needed
   if (filePaths.length > 0) {

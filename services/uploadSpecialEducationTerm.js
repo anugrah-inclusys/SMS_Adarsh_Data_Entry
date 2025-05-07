@@ -177,7 +177,7 @@ async function uploadSpecialEducationTerm(row) {
   // Step 8: Upload files if available
   const filePaths = getFilesForRow(
     row,
-    "STUDENT ID",
+    "ADMISSION ID",
     "./files/special_education_term"
   ); // customize logic if needed
   if (filePaths.length > 0) {
