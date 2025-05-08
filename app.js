@@ -50,16 +50,16 @@ const {
     // //staff upload
     // await runStaffUpload();
 
-    // // // enquiry form-admin
-    // await runEnquiryUpload();
+    // // enquiry form-admin
+    await runEnquiryUpload();
 
-    // //admission form-admin
-    // await injectStudentIds({
-    //   admissionPath: "./data/enquiry.csv",
-    //   enquiryIdsPath: "./output/student_ids.xlsx",
-    //   outputPath: "./output/admission_with_ids.csv",
-    // });
-    // await runAdmissionUpload();
+    //admission form-admin
+    await injectStudentIds({
+      admissionPath: "./data/enquiry.csv",
+      enquiryIdsPath: "./output/student_ids.xlsx",
+      outputPath: "./output/admission_with_ids.csv",
+    });
+    await runAdmissionUpload();
 
     //initial assessment-admin
     await injectStudentIds({
