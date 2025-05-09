@@ -4,11 +4,16 @@ const path = require("path");
 //YYYY-MM-DD
 function parseExcelDate(value) {
   if (!value) return "";
+
   if (typeof value === "number") {
     const excelEpoch = new Date(1899, 11, 30);
-    return new Date(excelEpoch.getTime() + value * 86400000).toISOString();
+    const date = new Date(excelEpoch.getTime() + value * 86400000);
+    return isNaN(date) ? "" : date.toISOString();
   }
-  return new Date(value).toISOString();
+
+  const dateStr = String(value).trim();
+  const date = new Date(dateStr);
+  return isNaN(date) ? "" : date.toISOString();
 }
 
 //DD.MM.YYYY

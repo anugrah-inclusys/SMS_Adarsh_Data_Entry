@@ -51,14 +51,14 @@ const {
     // await runStaffUpload();
 
     // enquiry form-admin
-    // await runEnquiryUpload();
+    await runEnquiryUpload();
 
-    //admission form-admin
-    // await injectStudentIds({
-    //   admissionPath: "./data/enquiry.csv",
-    //   enquiryIdsPath: "./output/student_ids.xlsx",
-    //   outputPath: "./output/admission_with_ids.csv",
-    // });
+    // admission form-admin
+    await injectStudentIds({
+      admissionPath: "./data/enquiry.csv",
+      enquiryIdsPath: "./output/student_ids.xlsx",
+      outputPath: "./output/admission_with_ids.csv",
+    });
     await runAdmissionUpload();
 
     // //initial assessment-admin
