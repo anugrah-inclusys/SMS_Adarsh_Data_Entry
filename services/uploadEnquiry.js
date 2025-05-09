@@ -28,7 +28,7 @@ async function uploadEnquiry(row) {
       payload: {
         name: parsedName,
         date_of_birth: parseDate(row["DATE OF BIRTH"]),
-        gender: row["SEX"].toLowerCase() || "",
+        gender: row["GENDER"].toLowerCase() || "",
       },
     },
     {
@@ -63,7 +63,7 @@ async function uploadEnquiry(row) {
       step: 5,
       payload: {
         assessment: {
-          referred_by: parseToString(row["REFERRED BY"]) || "", // Add this column if applicable
+          referred_by: parseToString(row["REFERRED BY"]) || "",
           preliminary_diagnosis: {
             name: row["DIAGNOSIS"] || "",
           },
@@ -115,7 +115,7 @@ async function uploadEnquiry(row) {
   // Final Submission
   const submissionPayload = {
     name: parsedName,
-    gender: row["SEX"] || "",
+    gender: row["GENDER"] || "",
     date_of_birth: parseDate(row["DATE OF BIRTH"]),
     contact_info: {
       mobile_number: mobile || "",
@@ -156,7 +156,7 @@ async function uploadEnquiry(row) {
   // Final approval
   const payload = {
     admission_id: row["ADMN No."],
-    date_of_admission: parseDate(row["DATE OF JOINING"]),
+    date_of_admission: parseExcelDate(row["DATE OF JOINING"]),
   };
   try {
     const response = await axios.post(

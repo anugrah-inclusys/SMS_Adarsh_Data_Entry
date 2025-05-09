@@ -3,19 +3,23 @@ const xlsx = require("xlsx");
 const FormData = require("form-data");
 const fs = require("fs");
 
-const {
-  parseExcelDate,
-} = require("./uploadHelper");
-const { API_BASE_URL, JWT_TOKEN} = require("../config/config");
+const { parseExcelDate } = require("./uploadHelper");
+const { API_BASE_URL, JWT_TOKEN } = require("../config/config");
 
 async function fetchStudentDetails(studentId) {
   try {
-    const res = await axios.get(`${API_BASE_URL}/students/enquiry/${studentId}`, {
-      headers: { Authorization: `Bearer ${JWT_TOKEN}` },
-    });
+    const res = await axios.get(
+      `${API_BASE_URL}/students/enquiry/${studentId}`,
+      {
+        headers: { Authorization: `Bearer ${JWT_TOKEN}` },
+      }
+    );
     return res.data;
   } catch (err) {
-    console.error(`❌ Failed fetching student: ${studentId}`, err.response?.data || err.message);
+    console.error(
+      `❌ Failed fetching student: ${studentId}`,
+      err.response?.data || err.message
+    );
     return null;
   }
 }
@@ -29,28 +33,29 @@ function mapStep1(row) {
       goalsAchieved: row["psychology.goalsAchieved"] || "",
       shortTermGoal: row["psychology.shortTermGoal"] || "",
       remarks: row["psychology.remarks"] || "",
-      completed_at:parseExcelDate(row["psychology.completed_at"])||""
+      completed_at: parseExcelDate(row["psychology.completed_at"]) || "",
     },
     physiotherapy: {
       presentLevel: row["physiotherapy.presentLevel"] || "",
       goalsAchieved: row["physiotherapy.goalsAchieved"] || "",
       shortTermGoal: row["physiotherapy.shortTermGoal"] || "",
       remarks: row["physiotherapy.remarks"] || "",
-       completed_at:parseExcelDate(row["physiotherapy.completed_at"])||""
+      completed_at: parseExcelDate(row["physiotherapy.completed_at"]) || "",
     },
     speechtherapy: {
       presentLevel: row["speechtherapy.presentLevel"] || "",
       goalsAchieved: row["speechtherapy.goalsAchieved"] || "",
       shortTermGoal: row["speechtherapy.shortTermGoal"] || "",
       remarks: row["speechtherapy.remarks"] || "",
-       completed_at:parseExcelDate(row["speechtherapy.completed_at"])||""
+      completed_at: parseExcelDate(row["speechtherapy.completed_at"]) || "",
     },
     occupationaltherapy: {
       presentLevel: row["occupationaltherapy.presentLevel"] || "",
       goalsAchieved: row["occupationaltherapy.goalsAchieved"] || "",
       shortTermGoal: row["occupationaltherapy.shortTermGoal"] || "",
       remarks: row["occupationaltherapy.remarks"] || "",
-       completed_at:parseExcelDate(row["occupationaltherapy.completed_at"])||""
+      completed_at:
+        parseExcelDate(row["occupationaltherapy.completed_at"]) || "",
     },
   };
 }
@@ -83,7 +88,10 @@ async function uploadTechnicalTermReport(row) {
     assessmentId = res.data.data._id;
     console.log(`✅ Step 1 created Technical Term Report ${assessmentId}`);
   } catch (err) {
-    console.error(`❌ Step 1 creation failed`, err.response?.data || err.message);
+    console.error(
+      `❌ Step 1 creation failed`,
+      err.response?.data || err.message
+    );
     return;
   }
 
@@ -121,11 +129,16 @@ async function uploadTechnicalTermReport(row) {
     );
     console.log(`🎉 Technical Term Report submitted for ${assessmentId}`);
   } catch (err) {
-    console.error(`❌ Final submission failed`, err.response?.data || err.message);
+    console.error(
+      `❌ Final submission failed`,
+      err.response?.data || err.message
+    );
   }
 }
 
-async function runTechnicalTermReportUpload(filePath = "./output/technical_term_report_with_ids.csv") {
+async function runTechnicalTermReportUpload(
+  filePath = "./output/technical_term_report_with_ids.csv"
+) {
   const workbook = xlsx.readFile(filePath, {
     cellText: false,
     cellDates: true,

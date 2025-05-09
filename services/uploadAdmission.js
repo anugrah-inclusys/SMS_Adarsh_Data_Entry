@@ -15,7 +15,25 @@ const { getUnitClassLookup } = require("./unitClassLookup");
 const fs = require("fs");
 const FormData = require("form-data");
 
-function mapExcelRowToSteps(row) {
+async function fetchStudentDetails(studentId) {
+  try {
+    const res = await axios.get(
+      `${API_BASE_URL}/students/enquiry/${studentId}`,
+      {
+        headers: { Authorization: `Bearer ${JWT_TOKEN}` },
+      }
+    );
+    return res.data;
+  } catch (err) {
+    console.error(
+      `❌ Failed fetching student: ${studentId}`,
+      err.response?.data || err.message
+    );
+    return null;
+  }
+}
+
+function mapExcelRowToSteps(row, student) {
   const steps = [];
   const { mobile, phone_residence, alternate } = parsePhoneNumbers(
     row["PHONE NO."]
@@ -28,13 +46,13 @@ function mapExcelRowToSteps(row) {
         firstName: parsedName.first_name,
         lastName: parsedName.last_name,
         dob: parseDate(row["DATE OF BIRTH"]),
-        age: row["AGE"].replace(" YRS", "").trim(),
-        gender: row["SEX"],
+        age: student?.age || "",
+        gender: row["GENDER"],
         religion: row["RELIGION&CASTE"]?.split(" - ")[0] || "",
         caste: row["RELIGION&CASTE"]?.split(" - ")[1] || "",
         aadhaarNumber: removeSpaces(row["ADHAR CARD NO:"]) || "",
         disabilityPercentage: row["PERCENTAGE"] || "",
-        category: row["CLASS.1"] || "",
+        category: row["CATEGORY"] || "",
       },
     });
   }
@@ -110,7 +128,7 @@ function mapExcelRowToSteps(row) {
   return steps;
 }
 
-async function buildSubmissionPayload(row) {
+async function buildSubmissionPayload(row, student) {
   const parsedName = parseFullName(row["Student Name"]);
   const parsedAddress = parseAddress(row["ADDRESS"]);
   const { unitMap, classMap } = await getUnitClassLookup();
@@ -128,12 +146,12 @@ async function buildSubmissionPayload(row) {
   return {
     name: parsedName,
     date_of_birth: parseDate(row["DATE OF BIRTH"]),
-    age: row["AGE"].replace(" YRS", "").trim(),
-    gender: row["SEX"],
+    age: student?.age || "",
+    gender: row["GENDER"],
     encryptedFields: {
       aadhaarNumber: row["ADHAR CARD NO:"] || "",
       caste: row["RELIGION&CASTE"]?.split(" - ")[1] || "",
-      category: row["CLASS.1"] || "",
+      category: row["CATEGORY"] || "",
       disabilityPercentage: row["PERCENTAGE"] || "",
       religion: row["RELIGION&CASTE"]?.split(" - ")[0] || "",
     },
@@ -191,7 +209,10 @@ async function buildSubmissionPayload(row) {
 }
 
 async function uploadAdmission(row, studentId) {
-  const steps = mapExcelRowToSteps(row);
+  const student = await fetchStudentDetails(studentId);
+  if (!student) return;
+
+  const steps = mapExcelRowToSteps(row, student);
 
   for (const { step, payload } of steps) {
     try {
@@ -247,7 +268,7 @@ async function uploadAdmission(row, studentId) {
   await uploadAdmissionDocumentsStep6(row, studentId);
 
   // Final submission
-  const submissionPayload = await buildSubmissionPayload(row);
+  const submissionPayload = await buildSubmissionPayload(row, student);
   try {
     await axios.put(
       `${API_BASE_URL}/students/admission-form/submit/${studentId}`,

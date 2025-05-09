@@ -12,7 +12,8 @@ const ageGroupContent = {
     "Response",
     "Listening skill",
     "Self- introduction",
-    "Sharing Peer group interaction",
+    "Sharing",
+    "Peer group interaction",
   ],
   "3-6 years": [
     "Self-awareness",
@@ -44,11 +45,13 @@ const ageGroupContent = {
   "9-13 years": [
     "Respect others",
     "To help others",
-    "Body shaming Social services",
+    "Body shaming",
+    "Social services",
     "Well dressing",
     "Body touch",
     "Self confidence",
-    "Social distance/personal space Actively manages illness",
+    "Social distance/personal space",
+    "Actively manages illness",
     "To know danger and hazards in situation",
     "Identifying and describing problems",
     "Generalizing solutions",
@@ -62,14 +65,14 @@ const ageGroupContent = {
     "Asserting yourself",
   ],
   "13-19 years": [
-    "Saving budget",
-    "Money management",
-    "Paying bill",
-    "Dealing with family problem",
-    "Dealing with making a mistake",
-    "Trying when work is hard",
-    "Trying something new",
-    "Shifting topics",
+    'Saving budget',
+    'Money management',
+    'Paying bill',
+    'Dealing with family problem',
+    'Dealing with making a mistake',
+    'Trying when work is hard',
+    'Trying something new',
+    'Shifting topics'
   ],
 };
 
