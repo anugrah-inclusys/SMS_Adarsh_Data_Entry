@@ -1,73 +1,73 @@
-const { runEnquiryUpload } = require('./services/uploadEnquiry');
-const { runStaffUpload } = require('./services/uploadStaff');
-const { runAdmissionUpload } = require('./services/uploadAdmission');
+const { runEnquiryUpload } = require("./services/uploadEnquiry");
+const { runStaffUpload } = require("./services/uploadStaff");
+const { runAdmissionUpload } = require("./services/uploadAdmission");
 const {
   runSpecialEducationAssessmentUpload,
-} = require('./services/uploadSpecialEducationAssessment');
+} = require("./services/uploadSpecialEducationAssessment");
 const {
   runPhysiotherapyAssessmentUpload,
-} = require('./services/uploadPhysioTherapyAssessment');
+} = require("./services/uploadPhysioTherapyAssessment");
 const {
   runOccupationalTherapyAssessmentUpload,
-} = require('./services/uploadOccupationaltherapyAssessment');
-const { injectStudentIds } = require('./services/injectStudentIdIntoAdmission');
+} = require("./services/uploadOccupationaltherapyAssessment");
+const { injectStudentIds } = require("./services/injectStudentIdIntoAdmission");
 const {
   runInitialAssessmentUpload,
-} = require('./services/uploadInitialAssessment');
+} = require("./services/uploadInitialAssessment");
 const {
   runPsychologyAssessmentUpload,
-} = require('./services/uploadPsychologyAssessment');
+} = require("./services/uploadPsychologyAssessment");
 const {
   runSpeechAssessmentUpload,
-} = require('./services/uploadSpeechAssessment');
+} = require("./services/uploadSpeechAssessment");
 const {
   runSpecialEducationTermUpload,
-} = require('./services/uploadSpecialEducationTerm');
-const { runEvaluationUpload } = require('./services/uploadEvaluation');
+} = require("./services/uploadSpecialEducationTerm");
+const { runEvaluationUpload } = require("./services/uploadEvaluation");
 const {
   runSocialSkillsChecklistUpload,
-} = require('./services/uploadSocialSkillsChecklist');
-const { runADLChecklistUpload } = require('./services/uploadADLChecklist');
+} = require("./services/uploadSocialSkillsChecklist");
+const { runADLChecklistUpload } = require("./services/uploadADLChecklist");
 const {
   runSensoryChecklistUpload,
-} = require('./services/uploadSensoryChecklist');
+} = require("./services/uploadSensoryChecklist");
 const {
   runLifeSkillsChecklistUpload,
-} = require('./services/uploadLifeSkillsChecklist');
+} = require("./services/uploadLifeSkillsChecklist");
 const {
   runComprehensiveAssessmentUpload,
-} = require('./services/uploadComprehensiveAssessment');
-const { runTechnicalTermUpload } = require('./services/uploadTechnicalTerm');
+} = require("./services/uploadComprehensiveAssessment");
+const { runTechnicalTermUpload } = require("./services/uploadTechnicalTerm");
 const {
   runTechnicalTermReportUpload,
-} = require('./services/uploadTechnicalTermReport.JS');
+} = require("./services/uploadTechnicalTermReport.JS");
 const {
   runSpecialEducationReportUpload,
-} = require('./services/uploadSpecialEducationReport');
+} = require("./services/uploadSpecialEducationReport");
 
 (async () => {
   try {
     // //staff upload
     // await runStaffUpload();
 
-    // // enquiry form-admin
-    await runEnquiryUpload();
+    // enquiry form-admin
+    // await runEnquiryUpload();
 
     //admission form-admin
-    await injectStudentIds({
-      admissionPath: "./data/enquiry.csv",
-      enquiryIdsPath: "./output/student_ids.xlsx",
-      outputPath: "./output/admission_with_ids.csv",
-    });
+    // await injectStudentIds({
+    //   admissionPath: "./data/enquiry.csv",
+    //   enquiryIdsPath: "./output/student_ids.xlsx",
+    //   outputPath: "./output/admission_with_ids.csv",
+    // });
     await runAdmissionUpload();
 
-    //initial assessment-admin
-    await injectStudentIds({
-      admissionPath: "./data/initial_assessment.csv",
-      enquiryIdsPath: "./output/student_ids.xlsx",
-      outputPath: "./output/initial_assessment_with_ids.csv",
-    });
-    await runInitialAssessmentUpload();
+    // //initial assessment-admin
+    // await injectStudentIds({
+    //   admissionPath: "./data/initial_assessment.csv",
+    //   enquiryIdsPath: "./output/student_ids.xlsx",
+    //   outputPath: "./output/initial_assessment_with_ids.csv",
+    // });
+    // await runInitialAssessmentUpload();
 
     // //comprehensive assessment-permission admin
     // await injectStudentIds({
@@ -149,7 +149,6 @@ const {
     // });
     // await runSpecialEducationAssessmentUpload()
 
-
     // //evaluation form-teacher
     // await injectStudentIds({
     //   admissionPath: "./data/evaluation_form.csv",
@@ -190,8 +189,8 @@ const {
     // });
     // await runLifeSkillsChecklistUpload();
 
-    console.log('🎉 Upload complete!');
+    console.log("🎉 Upload complete!");
   } catch (err) {
-    console.error('🚨 Upload failed!', err);
+    console.error("🚨 Upload failed!", err);
   }
 })();

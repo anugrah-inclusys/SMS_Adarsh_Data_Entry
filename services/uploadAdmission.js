@@ -8,6 +8,7 @@ const {
   parsePhoneNumbers,
   parseToNumber,
   getAdmissionFilesForRow,
+  parseDate,
 } = require("./uploadHelper");
 const { API_BASE_URL, JWT_TOKEN, HEADERS } = require("../config/config");
 const { getUnitClassLookup } = require("./unitClassLookup");
@@ -16,7 +17,9 @@ const FormData = require("form-data");
 
 function mapExcelRowToSteps(row) {
   const steps = [];
-  const { mobile, alternate } = parsePhoneNumbers(row["PHONE NO."]);
+  const { mobile, phone_residence, alternate } = parsePhoneNumbers(
+    row["PHONE NO."]
+  );
   if (row["Student Name"] || row["ADHAR CARD NO:"]) {
     const parsedName = parseFullName(row["Student Name"]);
     steps.push({
@@ -24,7 +27,7 @@ function mapExcelRowToSteps(row) {
       payload: {
         firstName: parsedName.first_name,
         lastName: parsedName.last_name,
-        dob: parseExcelDate(row["DATE OF BIRTH"]),
+        dob: parseDate(row["DATE OF BIRTH"]),
         age: row["AGE"].replace(" YRS", "").trim(),
         gender: row["SEX"],
         religion: row["RELIGION&CASTE"]?.split(" - ")[0] || "",
@@ -54,12 +57,12 @@ function mapExcelRowToSteps(row) {
     steps.push({
       step: 3,
       payload: {
-        permHouseName: address.house_name,
-        permStreetName: address.street,
-        permCity: address.city,
-        permDistrict: address.city,
-        permState: address.state,
-        permPinCode: address.postal_code,
+        permHouseName: address.house_name || "",
+        permStreetName: address.street || "",
+        permCity: address.city || "",
+        permDistrict: address.district || "",
+        permState: address.state || "",
+        permPinCode: address.postal_code || "",
       },
     });
   }
@@ -68,12 +71,12 @@ function mapExcelRowToSteps(row) {
     steps.push({
       step: 4,
       payload: {
-        presHouseName: address.house_name,
-        presStreetName: address.street,
-        presCity: address.city,
-        presDistrict: address.city,
-        presState: address.state,
-        presPinCode: address.postal_code,
+        presHouseName: address.house_name || "",
+        presStreetName: address.street || "",
+        presCity: address.city || "",
+        presDistrict: address.district || "",
+        presState: address.state || "",
+        presPinCode: address.postal_code || "",
       },
     });
   }
@@ -84,7 +87,7 @@ function mapExcelRowToSteps(row) {
       payload: {
         childProblemDescription: row["DIAGNOSIS"],
         email: "",
-        phone: alternate || "",
+        phone: phone_residence || "",
         mobile_number: mobile || "",
       },
     });
@@ -115,7 +118,7 @@ async function buildSubmissionPayload(row) {
   const className = (row["CLASS"] || "").trim().toLowerCase();
   const unit_id = unitMap[unitName] || "";
   const class_id = classMap[`${unitName}|${className}`] || "";
-  const { mobile, alternate } = parsePhoneNumbers(row["PHONE NO."]);
+  const { mobile, phone_residence } = parsePhoneNumbers(row["PHONE NO."]);
 
   if (!unit_id || !class_id) {
     console.warn(
@@ -124,7 +127,7 @@ async function buildSubmissionPayload(row) {
   }
   return {
     name: parsedName,
-    date_of_birth: parseExcelDate(row["DATE OF BIRTH"]),
+    date_of_birth: parseDate(row["DATE OF BIRTH"]),
     age: row["AGE"].replace(" YRS", "").trim(),
     gender: row["SEX"],
     encryptedFields: {
@@ -135,20 +138,27 @@ async function buildSubmissionPayload(row) {
       religion: row["RELIGION&CASTE"]?.split(" - ")[0] || "",
     },
     contact_info: {
-      phone_residence: alternate || "",
+      phone_residence: phone_residence || "",
       email: "",
       mobile_number: mobile || "",
     },
     address_id: {
       permanent: {
-        permHouseName: parsedAddress.house_name,
-        permStreetName: parsedAddress.street,
-        permCity: parsedAddress.city,
-        permDistrict: parsedAddress.city,
-        permState: parsedAddress.state,
-        permPinCode: parsedAddress.postal_code,
+        permHouseName: parsedAddress.house_name || "",
+        permStreetName: parsedAddress.street || "",
+        permCity: parsedAddress.city || "",
+        permDistrict: parsedAddress.district || "",
+        permState: parsedAddress.state || "",
+        permPinCode: parsedAddress.postal_code || "",
       },
-      present: {},
+      present: {
+        presHouseName: parsedAddress.house_name || "",
+        presStreetName: parsedAddress.street || "",
+        presCity: parsedAddress.city || "",
+        presDistrict: parsedAddress.district || "",
+        presState: parsedAddress.state || "",
+        presPinCode: parsedAddress.postal_code || "",
+      },
     },
     family_id: {
       background_details: {
@@ -173,7 +183,7 @@ async function buildSubmissionPayload(row) {
     },
     childProblemDescription: row["DIAGNOSIS"] || "",
     email: "",
-    phone: alternate || "",
+    phone: phone_residence || "",
     mobile_number: mobile || "",
     unit_id: unit_id,
     class_id: class_id,
