@@ -38,7 +38,7 @@ function getFilesForRow(row, field, baseFolder = "staff_files") {
   let rawId = String(row[field] || "").trim();
   if (!rawId) return [];
 
-  const normalizedId = rawId.replace(/\//g, "-"); // becomes ACT-59-24
+  const normalizedId = rawId.replace(/\//g, "-");
   const dirPath = path.resolve(__dirname, "..", baseFolder);
 
   if (!fs.existsSync(dirPath)) return [];

@@ -1,24 +1,46 @@
-Student ID,Student Name,_id,student_id,term,uploadedFiles[0].filename,uploadedFiles[1].filename,uploadedFiles[0].path,uploadedFiles[1].path,uploadedFiles[0].size,uploadedFiles[1].size,uploadedFiles[0]._id,uploadedFiles[1]._id,name,age,dob,createdAt,updatedAt,__v,occupationaltherapy.presentLevel,occupationaltherapy.longTermGoal,occupationaltherapy.shortTermGoal,physiotherapy.presentLevel,physiotherapy.longTermGoal,physiotherapy.shortTermGoal,psychology.presentLevel,psychology.longTermGoal,psychology.shortTermGoal,speechtherapy.presentLevel,speechtherapy.longTermGoal,speechtherapy.shortTermGoal,documents.files[0],documents.files[1],documents._id,status
-,REUBEN REPSOL,,,term_1,,,,,,,,,,,,2024-08-30,,,,,,Independent Walking,No need for individual physio session,General excercise only,"poor writing skills, Inconsistent attention,
-poor play skills, poor social skills, 
-poor emotional skills.
-","To improve attention span
-To improve social skills
-To improve emotional skills","To improve writing skills
-To improve sitting tolerance
-To improve play","Understands simple commands reduced
-expressive skills, comprehends common 
-items, body parts, fruits vegetables, Reduced PLS","improve overall speech output
-improve PLS","Improve vocalisation
-Functional Communication",,,,
-,REUBEN REPSOL,,,term_2,,,,,,,,,,,,2024-12-17,,,"Tactile hypersensitivity,vest hypo
-poor name call response and eye contact.",To improve APL skills,"To reduce sensory issues.
-To improve NCR and eye contact.
-To improve sitting tolerence.
-To improve attention with max to min(V) assistance.",Independent walking.,Maintain current level.,General body  conditioning exercises.,"He has improved eye contact and social smile.
-Inconsistent attention.Lack of social skills,play skills,emotional skills.
-","To improve attention.
-To improve social skills.","To improve name call response
-Group activities.
-Attention enhancing activities.",Follows simple commands.Reduced experience language skills.Random vocalisation.,To improve picture identification and vocslisation.,"Pointing Skills
-Further improve PLS",,,,
+Student ID,Student Name,_id,student_id,term,uploadedFiles[0].filename,uploadedFiles[1].filename,uploadedFiles[0].path,uploadedFiles[1].path,uploadedFiles[0].size,uploadedFiles[1].size,uploadedFiles[0]._id,uploadedFiles[1]._id,name,age,dob,createdAt,updatedAt,__v,occupationaltherapy.presentLevel,occupationaltherapy.longTermGoal,occupationaltherapy.shortTermGoal,occupationaltherapy.completed_at,physiotherapy.presentLevel,physiotherapy.longTermGoal,physiotherapy.shortTermGoal,physiotherapy.completed_at,psychology.presentLevel,psychology.longTermGoal,psychology.shortTermGoal,psychology.completed_at,speechtherapy.presentLevel,speechtherapy.longTermGoal,speechtherapy.shortTermGoal,speechtherapy.completed_at,documents.files[0],documents.files[1],documents._id,status
+ACT-77-24,SIDDHARTH A VARMA,,,term_2,,,,,,,,,,,,,,,CHILD HAS POOR HAND FUNCTION,TO IMPROVE ADL,"TO IMPROVE REACHING
+ TO IMPROVE FINGER DEXTERITY
+ TO IMPROVE FINGER STRENGTH, GRIP STRENGTH",########,CREEPING (ACHIEVED AFTER STRATING SESSIONS),INDEPENDANT WALKING,"INDEPENDANT STANDING
+ CORE STRENGHTENING",########,C\O DEVELPOMENTAL DELAY,"NO SIGNIFICANT BEHAVIOURAL ISSUES, SO THERAPY IS NOT REQUIRED",,########,"REDUCED PLS, LIMITED VOCALISATION
+ EXPRESS NEEDS THROUGH CRIES","IMPROVE PLS
+ IMPROVE VOCALISATION","IMPROVE EYE CONTACT
+ FUNCTIONAL COMMUNICATION",########,,,,
+ACT-47-24,AAYUSH VINEESH,,,term_1,,,,,,,,,,,,,,"Child has tactile hypersensitivity 
+ Oral hypo sensitivity,proprioceptive hypo sensitivity, Hyper active
+ Poor sitting tolerance","To improve eating,brushing etc","To reduce sensory issues
+ To reduce hyperacticity
+ To improve sitting tolerance",#######,"Independent Walking
+ Balance issue present
+ Core muscle weakness present","To improve balance
+ To improve Core muscle strength",Core muscle strengthening's,#######,"The child has fleeting eye contact 
+ Lack of attention,social skills.crying present","To improve attention 
+ To improve social skills.
+ To improve eye contact.","To improve sitting tolerance 
+ To improve name call response",#######,"Reduced speech output.mainly express hus needs through cry.Tantrums(+)
+ Poor PLS.reduced socialisation.","Improve PLS (attention,eye contact,sitting)
+ Improve verbal output,starting from vocalisation level","Improve functional communication 
+ socialization skills",########,,,,,
+ACT-47-24,AAYUSH VINEESH,,,term_2,,,,,,,,,,,,,,"Poor eye contact&NCR
+ Poor sitting tolerance
+ Poor eye hand coordination 
+ Tactile hypersensitivity 
+ Proprioception seeking
+ Inattention","To improve ADL skills,,eating,dressing etc","To improve eye contact &NCR
+ To improve sitting tolerence
+ To reduce sensory issues.",#######,"Independent Walking
+ Core muscle weakness present
+ Balance issue present","To improve attention 
+ To improve social skills.
+ To improve eye contact.",,#######,"The child has social smile.
+ Sometimes he responsded to his name by look 
+ Slight improvement noted in sitting tolerence.","To improve attention 
+ To improve social skills.
+ To improve eye contact.","To improve sitting tolerance 
+ To improve name call response 
+ Group activity",#######,"Reduced speech output 
+ Poor PLS","To improve pre linguistics skills
+ To improve socialisation skills
+ To improve Oro-Motor skills","To improve chewing
+ To improve eye contact 
+ To improve greeting skills",########,,,,,

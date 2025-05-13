@@ -44,22 +44,25 @@ const {
 const {
   runSpecialEducationReportUpload,
 } = require("./services/uploadSpecialEducationReport");
+const { runMedicalFilesUpload } = require("./services/uploadMedicalFiles");
+const { runLestFileUpload } = require("./services/uploadLEST");
+const { runTdscFileUpload } = require("./services/uploadTDSC");
 
 (async () => {
   try {
     // //staff upload
     // await runStaffUpload();
 
-    // enquiry form-admin
-    await runEnquiryUpload();
+    // // enquiry form-admin
+    // await runEnquiryUpload();
 
-    // admission form-admin
-    await injectStudentIds({
-      admissionPath: "./data/enquiry.csv",
-      enquiryIdsPath: "./output/student_ids.xlsx",
-      outputPath: "./output/admission_with_ids.csv",
-    });
-    await runAdmissionUpload();
+    // // admission form-admin
+    // await injectStudentIds({
+    //   admissionPath: "./data/enquiry.csv",
+    //   enquiryIdsPath: "./output/student_ids.xlsx",
+    //   outputPath: "./output/admission_with_ids.csv",
+    // });
+    // await runAdmissionUpload();
 
     // //initial assessment-admin
     // await injectStudentIds({
@@ -93,7 +96,7 @@ const {
     // });
     // await runOccupationalTherapyAssessmentUpload();
 
-    ////psychology assessment assessment-therapist
+    // //psychology assessment assessment-therapist
     // await injectStudentIds({
     //   admissionPath: './data/psychology_assessement.csv',
     //   enquiryIdsPath: './output/student_ids.xlsx',
@@ -188,6 +191,25 @@ const {
     //   outputPath: "./output/life_skills_checklist_with_ids.csv",
     // });
     // await runLifeSkillsChecklistUpload();
+
+    // //medical-files-teacher
+    // await runMedicalFilesUpload();
+
+    // //LEST -teacher
+    // await injectStudentIds({
+    //   admissionPath: "./data/lest.csv",
+    //   enquiryIdsPath: "./output/student_ids.xlsx",
+    //   outputPath: "./output/lest_with_ids.csv",
+    // });
+    // await runLestFileUpload();
+
+    // //TDSC -teacher
+    // await injectStudentIds({
+    //   admissionPath: "./data/tdsc.csv",
+    //   enquiryIdsPath: "./output/student_ids.xlsx",
+    //   outputPath: "./output/tdsc_with_ids.csv",
+    // });
+    // await runTdscFileUpload();
 
     console.log("🎉 Upload complete!");
   } catch (err) {
