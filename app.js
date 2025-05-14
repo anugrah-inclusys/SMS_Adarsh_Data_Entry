@@ -80,53 +80,53 @@ const { runTdscFileUpload } = require("./services/uploadTDSC");
     // });
     // await runComprehensiveAssessmentUpload();
 
-    // //physiotherapy assessment-therapist
-    // await injectStudentIds({
-    //   admissionPath: "./data/physiotherapy_assessment.csv",
-    //   enquiryIdsPath: "./output/student_ids.xlsx",
-    //   outputPath: "./output/physiotherapy_assessment_with_ids.csv",
-    // });
-    // await runPhysiotherapyAssessmentUpload()
+      // //physiotherapy assessment-therapist
+      // await injectStudentIds({
+      //   admissionPath: "./data/physiotherapy_assessment.csv",
+      //   enquiryIdsPath: "./output/student_ids.xlsx",
+      //   outputPath: "./output/physiotherapy_assessment_with_ids.csv",
+      // });
+      // await runPhysiotherapyAssessmentUpload()
 
-    // //occupational therapy assessment assessment-therapist
-    // await injectStudentIds({
-    //   admissionPath: './data/occupational_therapy_assessment.csv',
-    //   enquiryIdsPath: './output/student_ids.xlsx',
-    //   outputPath: './output/occupational_therapy_assessment_with_ids.csv',
-    // });
-    // await runOccupationalTherapyAssessmentUpload();
+      // //occupational therapy assessment assessment-therapist
+      // await injectStudentIds({
+      //   admissionPath: './data/occupational_therapy_assessment.csv',
+      //   enquiryIdsPath: './output/student_ids.xlsx',
+      //   outputPath: './output/occupational_therapy_assessment_with_ids.csv',
+      // });
+      // await runOccupationalTherapyAssessmentUpload();
 
-    // //psychology assessment assessment-therapist
-    // await injectStudentIds({
-    //   admissionPath: './data/psychology_assessement.csv',
-    //   enquiryIdsPath: './output/student_ids.xlsx',
-    //   outputPath: './output/psychology_assessment_with_ids.csv',
-    // });
-    // await runPsychologyAssessmentUpload();
+      // //psychology assessment assessment-therapist
+      // await injectStudentIds({
+      //   admissionPath: './data/psychology_assessement.csv',
+      //   enquiryIdsPath: './output/student_ids.xlsx',
+      //   outputPath: './output/psychology_assessment_with_ids.csv',
+      // });
+      // await runPsychologyAssessmentUpload();
 
-    // //speech therapy assessment assessment-therapist
-    // await injectStudentIds({
-    //   admissionPath: './data/SpeechAssessment.csv',
-    //   enquiryIdsPath: './output/student_ids.xlsx',
-    //   outputPath: './output/speech_assessment_with_ids.csv',
-    // });
-    // await runSpeechAssessmentUpload();
+      // //speech therapy assessment assessment-therapist
+      // await injectStudentIds({
+      //   admissionPath: './data/SpeechAssessment.csv',
+      //   enquiryIdsPath: './output/student_ids.xlsx',
+      //   outputPath: './output/speech_assessment_with_ids.csv',
+      // });
+      // await runSpeechAssessmentUpload();
 
-    // //Technical term assessment-therapist
-    // await injectStudentIds({
-    //   admissionPath: './data/technicalTermAssessment.csv',
-    //   enquiryIdsPath: './output/student_ids.xlsx',
-    //   outputPath: './output/technical_term_assessment_with_ids.csv',
-    // });
-    // await runTechnicalTermUpload();
+      // //Technical term assessment-therapist
+      // await injectStudentIds({
+      //   admissionPath: './data/technicalTermAssessment.csv',
+      //   enquiryIdsPath: './output/student_ids.xlsx',
+      //   outputPath: './output/technical_term_assessment_with_ids.csv',
+      // });
+      // await runTechnicalTermUpload();
 
-    // //Technical term report-therapist
-    // await injectStudentIds({
-    //   admissionPath: './data/technicalTermReport.csv',
-    //   enquiryIdsPath: './output/student_ids.xlsx',
-    //   outputPath: './output/technical_term_report_with_ids.csv',
-    // });
-    // await runTechnicalTermReportUpload();
+      // //Technical term report-therapist
+      // await injectStudentIds({
+      //   admissionPath: './data/technicalTermReport.csv',
+      //   enquiryIdsPath: './output/student_ids.xlsx',
+      //   outputPath: './output/technical_term_report_with_ids.csv',
+      // });
+      // await runTechnicalTermReportUpload();
 
     // // special education term assessment-teacher
     // await injectStudentIds({
