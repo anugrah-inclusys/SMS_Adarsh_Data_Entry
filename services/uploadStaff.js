@@ -15,7 +15,11 @@ const {
 
 function mapStaffAt(value) {
   if (!value) return "";
-  if (value.trim().toUpperCase() === "ADMIN") return "ACT";
+  if (
+    value.trim().toUpperCase() === "ADMIN" ||
+    value.trim().toUpperCase() === "REHAB"
+  )
+    return "ACT";
   return value.trim().toUpperCase();
 }
 
@@ -42,9 +46,9 @@ async function uploadStaff(row) {
     removeSpaces(String(row["AADHAR CARD  NUMBER"] || ""))
   );
   form.append("phoneNumber", parseToNumber(row["PHONE NUMBER"] || ""));
-  form.append("qualification", String(row.DESIGNATION || ""));
   form.append("rci", determineRCI(row.RCI));
   form.append("rciNumber", String(row.RCI || ""));
+  form.append("validDate", parseDate(row["VALID DATE"]));
   form.append("designation", String(row.DESIGNATION || ""));
   form.append("qualification", String(row.QUALIFICATION || ""));
   form.append("is_permanent", String(isPermanent(row["PER/PRO"])));
@@ -55,7 +59,6 @@ async function uploadStaff(row) {
   form.append("district", String(address.district || ""));
   form.append("state", String(address.state || ""));
   form.append("pinCode", String(address.postal_code || ""));
-  form.append("validDate", parseDate(row["VALID DATE"]));
   form.append("dateOfJoining", parseDate(row.DOJ));
 
   // Files
@@ -68,7 +71,7 @@ async function uploadStaff(row) {
     const res = await axios.post(`${API_BASE_URL}/staff`, form, {
       headers: HEADERS(form),
     });
-    console.log(`✅ Uploaded: ${row.email}`);
+    console.log(`✅ Uploaded: ${first_name}`);
   } catch (err) {
     console.error(
       `❌ Failed for: ${row.email}`,
