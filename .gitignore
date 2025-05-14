@@ -1,7 +1,7 @@
 #Assests
-#files
-#data
-#output
+files
+data
+output
 # Logs
 logs
 *.log
