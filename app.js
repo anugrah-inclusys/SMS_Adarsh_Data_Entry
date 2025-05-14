@@ -44,22 +44,25 @@ const {
 const {
   runSpecialEducationReportUpload,
 } = require("./services/uploadSpecialEducationReport");
+const { runMedicalFilesUpload } = require("./services/uploadMedicalFiles");
+const { runLestFileUpload } = require("./services/uploadLEST");
+const { runTdscFileUpload } = require("./services/uploadTDSC");
 
 (async () => {
   try {
     // //staff upload
     // await runStaffUpload();
 
-    // enquiry form-admin
-    await runEnquiryUpload();
+    // // enquiry form-admin
+    // await runEnquiryUpload();
 
-    // admission form-admin
-    await injectStudentIds({
-      admissionPath: "./data/enquiry.csv",
-      enquiryIdsPath: "./output/student_ids.xlsx",
-      outputPath: "./output/admission_with_ids.csv",
-    });
-    await runAdmissionUpload();
+    // // admission form-admin
+    // await injectStudentIds({
+    //   admissionPath: "./data/enquiry.csv",
+    //   enquiryIdsPath: "./output/student_ids.xlsx",
+    //   outputPath: "./output/admission_with_ids.csv",
+    // });
+    // await runAdmissionUpload();
 
     // //initial assessment-admin
     // await injectStudentIds({
@@ -77,53 +80,53 @@ const {
     // });
     // await runComprehensiveAssessmentUpload();
 
-    // //physiotherapy assessment-therapist
-    // await injectStudentIds({
-    //   admissionPath: "./data/physiotherapy_assessment.csv",
-    //   enquiryIdsPath: "./output/student_ids.xlsx",
-    //   outputPath: "./output/physiotherapy_assessment_with_ids.csv",
-    // });
-    // await runPhysiotherapyAssessmentUpload()
+      // //physiotherapy assessment-therapist
+      // await injectStudentIds({
+      //   admissionPath: "./data/physiotherapy_assessment.csv",
+      //   enquiryIdsPath: "./output/student_ids.xlsx",
+      //   outputPath: "./output/physiotherapy_assessment_with_ids.csv",
+      // });
+      // await runPhysiotherapyAssessmentUpload()
 
-    // //occupational therapy assessment assessment-therapist
-    // await injectStudentIds({
-    //   admissionPath: './data/occupational_therapy_assessment.csv',
-    //   enquiryIdsPath: './output/student_ids.xlsx',
-    //   outputPath: './output/occupational_therapy_assessment_with_ids.csv',
-    // });
-    // await runOccupationalTherapyAssessmentUpload();
+      // //occupational therapy assessment assessment-therapist
+      // await injectStudentIds({
+      //   admissionPath: './data/occupational_therapy_assessment.csv',
+      //   enquiryIdsPath: './output/student_ids.xlsx',
+      //   outputPath: './output/occupational_therapy_assessment_with_ids.csv',
+      // });
+      // await runOccupationalTherapyAssessmentUpload();
 
-    ////psychology assessment assessment-therapist
-    // await injectStudentIds({
-    //   admissionPath: './data/psychology_assessement.csv',
-    //   enquiryIdsPath: './output/student_ids.xlsx',
-    //   outputPath: './output/psychology_assessment_with_ids.csv',
-    // });
-    // await runPsychologyAssessmentUpload();
+      // //psychology assessment assessment-therapist
+      // await injectStudentIds({
+      //   admissionPath: './data/psychology_assessement.csv',
+      //   enquiryIdsPath: './output/student_ids.xlsx',
+      //   outputPath: './output/psychology_assessment_with_ids.csv',
+      // });
+      // await runPsychologyAssessmentUpload();
 
-    // //speech therapy assessment assessment-therapist
-    // await injectStudentIds({
-    //   admissionPath: './data/SpeechAssessment.csv',
-    //   enquiryIdsPath: './output/student_ids.xlsx',
-    //   outputPath: './output/speech_assessment_with_ids.csv',
-    // });
-    // await runSpeechAssessmentUpload();
+      // //speech therapy assessment assessment-therapist
+      // await injectStudentIds({
+      //   admissionPath: './data/SpeechAssessment.csv',
+      //   enquiryIdsPath: './output/student_ids.xlsx',
+      //   outputPath: './output/speech_assessment_with_ids.csv',
+      // });
+      // await runSpeechAssessmentUpload();
 
-    // //Technical term assessment-therapist
-    // await injectStudentIds({
-    //   admissionPath: './data/technicalTermAssessment.csv',
-    //   enquiryIdsPath: './output/student_ids.xlsx',
-    //   outputPath: './output/technical_term_assessment_with_ids.csv',
-    // });
-    // await runTechnicalTermUpload();
+      // //Technical term assessment-therapist
+      // await injectStudentIds({
+      //   admissionPath: './data/technicalTermAssessment.csv',
+      //   enquiryIdsPath: './output/student_ids.xlsx',
+      //   outputPath: './output/technical_term_assessment_with_ids.csv',
+      // });
+      // await runTechnicalTermUpload();
 
-    // //Technical term report-therapist
-    // await injectStudentIds({
-    //   admissionPath: './data/technicalTermReport.csv',
-    //   enquiryIdsPath: './output/student_ids.xlsx',
-    //   outputPath: './output/technical_term_report_with_ids.csv',
-    // });
-    // await runTechnicalTermReportUpload();
+      // //Technical term report-therapist
+      // await injectStudentIds({
+      //   admissionPath: './data/technicalTermReport.csv',
+      //   enquiryIdsPath: './output/student_ids.xlsx',
+      //   outputPath: './output/technical_term_report_with_ids.csv',
+      // });
+      // await runTechnicalTermReportUpload();
 
     // // special education term assessment-teacher
     // await injectStudentIds({
@@ -188,6 +191,25 @@ const {
     //   outputPath: "./output/life_skills_checklist_with_ids.csv",
     // });
     // await runLifeSkillsChecklistUpload();
+
+    // //medical-files-teacher
+    // await runMedicalFilesUpload();
+
+    // //LEST -teacher
+    // await injectStudentIds({
+    //   admissionPath: "./data/lest.csv",
+    //   enquiryIdsPath: "./output/student_ids.xlsx",
+    //   outputPath: "./output/lest_with_ids.csv",
+    // });
+    // await runLestFileUpload();
+
+    // //TDSC -teacher
+    // await injectStudentIds({
+    //   admissionPath: "./data/tdsc.csv",
+    //   enquiryIdsPath: "./output/student_ids.xlsx",
+    //   outputPath: "./output/tdsc_with_ids.csv",
+    // });
+    // await runTdscFileUpload();
 
     console.log("🎉 Upload complete!");
   } catch (err) {

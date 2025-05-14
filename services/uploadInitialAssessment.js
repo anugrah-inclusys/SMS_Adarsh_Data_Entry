@@ -59,7 +59,7 @@ function mapStep2(row, student) {
   return {
     student_id: row["_id"] || student?._id || "",
     deliveryType: row["medicalHistory.deliveryType"] || "",
-    birthCry: (row["medicalHistory.birthCry"] || "").toLowerCase(),
+    birthCry: row["medicalHistory.birthCry"] || "",
     birthWeight: parseToNumber(row["medicalHistory.birthWeight"]) || "",
     pedigreeFile: row["medicalHistory.pedigreeFile"] || "",
     chiefComplaints: row["medicalHistory.chiefComplaints"] || "",
