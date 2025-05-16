@@ -4,39 +4,62 @@ const xlsx = require("xlsx");
 const fs = require("fs");
 const path = require("path");
 const { API_BASE_URL, HEADERS } = require("../config/config");
-const { parseExcelDate, getFilesForRow } = require("./uploadHelper");
+const {
+  parseDate,
+  getFilesForRow,
+  parseFullName,
+  removeSpaces,
+  parseToNumber,
+  parseAddress,
+} = require("./uploadHelper");
+
+function mapStaffAt(value) {
+  if (!value) return "";
+  if (
+    value.trim().toUpperCase() === "ADMIN" ||
+    value.trim().toUpperCase() === "REHAB"
+  )
+    return "ACT";
+  return value.trim().toUpperCase();
+}
+
+function determineRCI(rciValue) {
+  return rciValue?.trim() ? "yes" : "no";
+}
+
+function isPermanent(perProValue) {
+  return perProValue?.trim().toUpperCase() === "PERMANENT";
+}
 
 async function uploadStaff(row) {
   const form = new FormData();
-
-  form.append("firstName", String(row.first_name || ""));
-  form.append("lastName", String(row.last_name || ""));
-  form.append("email", String(row.email || ""));
-  form.append("phoneNumber", String(row.phone || ""));
-  form.append("aadhaarNumber", String(row.aadhaar || ""));
-  form.append("gender", String(row.gender || ""));
-  form.append("role", String(row.role || ""));
-  form.append("qualification", String(row.qualification || ""));
-  form.append("rci", String(row.RCI || ""));
-  form.append("rciNumber", String(row.RCINumber || ""));
-  form.append("designation", String(row.designation || ""));
-  form.append("is_permanent", String(row.is_permanent === "TRUE"));
-  form.append("staffAt", String(row.staff_at || ""));
-  form.append("houseName", String(row.houseName || ""));
-  form.append("streetName", String(row.streetName || ""));
-  form.append("city", String(row.city || ""));
-  form.append("district", String(row.district || ""));
-  form.append("state", String(row.state || ""));
-  form.append("pinCode", String(row.pinCode || ""));
-  form.append("school_id", String(row.school_id || ""));
-  form.append("isActive", String(row.isActive === "TRUE"));
-  form.append("is_deleted", String(row.is_deleted === "TRUE"));
-  form.append("is_disentroll", String(row.is_disentroll === "TRUE"));
-  form.append("dateOfBirth", parseExcelDate(row.date_of_birth));
-  form.append("validDate", parseExcelDate(row.valid_date));
-  form.append("dateOfJoining", parseExcelDate(row.date_of_joining));
-  form.append("createdAt", parseExcelDate(row.createdAt));
-  form.append("updatedAt", parseExcelDate(row.updatedAt));
+  const { first_name, last_name } = parseFullName(row["NAME"]);
+  const address = parseAddress(row["ADDRESS"]);
+  form.append("firstName", String(first_name || ""));
+  form.append("lastName", String(last_name || ""));
+  form.append("email", String(row.EMAIL || ""));
+  form.append("dateOfBirth", parseDate(row.DOB));
+  form.append("role", String(row.ROLE || ""));
+  form.append("gender", String(row.Sex || ""));
+  form.append(
+    "aadhaarNumber",
+    removeSpaces(String(row["AADHAR CARD  NUMBER"] || ""))
+  );
+  form.append("phoneNumber", parseToNumber(row["PHONE NUMBER"] || ""));
+  form.append("rci", determineRCI(row.RCI));
+  form.append("rciNumber", String(row.RCI || ""));
+  form.append("validDate", parseDate(row["VALID DATE"]));
+  form.append("designation", String(row.DESIGNATION || ""));
+  form.append("qualification", String(row.QUALIFICATION || ""));
+  form.append("is_permanent", String(isPermanent(row["PER/PRO"])));
+  form.append("staffAt", mapStaffAt(row["STAFF AT"] || ""));
+  form.append("houseName", String(address.house_name || ""));
+  form.append("streetName", String(address.street || ""));
+  form.append("city", String(address.city || ""));
+  form.append("district", String(address.district || ""));
+  form.append("state", String(address.state || ""));
+  form.append("pinCode", String(address.postal_code || ""));
+  form.append("dateOfJoining", parseDate(row.DOJ));
 
   // Files
   const filePaths = getFilesForRow(row, "email", "./files/staff_files");
@@ -48,7 +71,7 @@ async function uploadStaff(row) {
     const res = await axios.post(`${API_BASE_URL}/staff`, form, {
       headers: HEADERS(form),
     });
-    console.log(`✅ Uploaded: ${row.email}`);
+    console.log(`✅ Uploaded: ${first_name}`);
   } catch (err) {
     console.error(
       `❌ Failed for: ${row.email}`,
