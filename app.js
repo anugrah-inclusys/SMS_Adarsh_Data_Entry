@@ -50,8 +50,8 @@ const { runTdscFileUpload } = require("./services/uploadTDSC");
 
 (async () => {
   try {
-    //staff upload - admin/office_staff
-    await runStaffUpload();
+    // //staff upload - admin/office_staff
+    // await runStaffUpload();
 
     // // enquiry form-admin
     // await runEnquiryUpload();
