@@ -64,7 +64,6 @@ async function uploadEnquiry(row) {
       payload: {
         assessment: {
           referred_by: parseToString(row["REFERRED BY"]) || "",
-          diagnosis_remark: parseToString(row["DIAGNOSIS-REMARKS"]) || "",
           preliminary_diagnosis: {
             name: row["DIAGNOSIS"] || "",
           },
@@ -133,7 +132,6 @@ async function uploadEnquiry(row) {
     },
     assessment: {
       referred_by: row["REFERRED BY"] || "",
-      diagnosis_remark: parseToString(row["DIAGNOSIS-REMARKS"]) || "",
       preliminary_diagnosis: {
         name: row["DIAGNOSIS"] || "",
       },

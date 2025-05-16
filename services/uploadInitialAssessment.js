@@ -43,8 +43,9 @@ function mapStep1(row, student) {
       "",
     age: row["demographicData.age"] || student?.age || "",
     diagnosis:
-      `${student?.assessment?.preliminary_diagnosis?.name} - ${student?.assessment?.diagnosis_remark}` ||
-      row["demographicData.diagnosis"],
+      row["demographicData.diagnosis"] ||
+      student?.assessment?.preliminary_diagnosis?.name ||
+      "",
     informant: row["demographicData.informant"] || "",
     previousSchoolHistory:
       row["demographicData.previousSchoolHistory"] === "TRUE" || false,
