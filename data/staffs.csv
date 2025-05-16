@@ -1,3 +1,144 @@
-first_name,last_name,gender,email,date_of_birth,role,aadhaar,phone,houseName,streetName,city,district,state,pinCode,qualification,RCI,RCINumber,valid_date,designation,is_permanent,is_probation,staff_at,date_of_joining,school_id,isActive,is_deleted,is_disentroll,createdAt,updatedAt
-Anugrah,S,male,anugrahsasikumar@gmail.com,2000-05-01,admin,123456789012,1234567890,Presi Bhavan,abc street,abc city,abc district,abc state,abc pincode,BPT,yes,fdsd44433443,2025-04-01,staff,FALSE,TRUE,ACE,2025-04-08,67f3fa6fde50dc4d70eb97e0,TRUE,TRUE,TRUE,2025-04-08,2025-04-08
-Presi,S,female,presispremchandran@gmail.com,1999-05-01,admin,123456789012,1234567890,Presi Bhavan,abc street,abc city,abc district,abc state,abc pincode,BPT,yes,fdsd44433443,2025-04-01,staff,TRUE,FALSE,ACE,2025-04-08,67f3fa6fde50dc4d70eb97e0,TRUE,TRUE,TRUE,2025-04-08,2025-04-08
+SL NO,NAME,Sex,DESIGNATION,PER/PRO,STAFF AT,DOB,"AADHAR CARD
+ NUMBER",DOJ,RCI,VALID DATE,QUALIFICATION,ADDRESS,PHONE NUMBER,EMAIL,ROLE
+1,Aswanykumar S,Male,Executive Secretary,PERMANENT,ADMIN,07.04.1980,4820 4139 6096,01.05.2004,,,BPT,"Kuzhipanathil House,Mulanthuruthy P O,
+Mulanthuruhy",9447391730,,admin
+2,Aneesh M T,Male,Physiotherapist,PERMANENT,ACE,05.04.1986,7857 5873 5337,22.08.2012,,,BPT,"Mannath(H),Maraickal P O, Kannara P O,Thrissur",9895660918,,therapist
+3,Ambily Francis,Female,Physiotherapist,PERMANENT,REHAB,10.01.1984,5902 3739 9231,14.06.2010,,,BPT,"Kuttikat (H) ,Nadakavu P O ,Ernakulam",7293288328,,therapist
+4,Simi M.S,Female,Physiotherapist,PERMANENT,ACE,08.05.1987,2327 9941 1870,01.03.2013,,,BPT,"Thekkemughalil , Brahmamangalam ,Vaikom",9526231940,,therapist
+5,Dhanya Mol  C A,Female,Physiotherapist,PERMANENT,HBR,03.05.1984,9920 0483 0881,10.02.2014,,,BPT,"Kandathil Parambu(H) ,Udayagiri Mullakkara,Mannuthy  P O
+,Trissur",9745484718,,therapist
+6,AsaSaseendran,Female,Physiotherapist,PERMANENT,REHAB,14.05.1986,6052 6390 5952,03.01.2011,,,BPT,"Parackaveliyil(H),Marithazham P O,Kanjiramattom",9048953349,,therapist
+7,Shikha Joseph,Female,Physiotherapist,PERMANENT,REHAB,11.11.1988,3634 7256 8613,01.06.2016,,,BPT,"Karukappallil (H),Thekkumbhagam ,Tripunithura",9605830214,,therapist
+8,Jency  Jose,Female,Physiotherapist,PERMANENT,HBR,15.10.1987,5585 4455 5553,01.08.2018,,,BPT,"Chirakkal (H) ,Vellikulangara,,Thrissur",7034597926,,therapist
+9,Neethu P M,Female,Physiotherapist,PERMANENT,HBR,27.09.1988,9713 1198 9324,01.02.2019,,,BPT,"Ealukadu (H) ,South Paravoor P O, 682320",9895861436,,therapist
+10,Neeraja Murali,Female,Physiotherapist,PERMANENT,REHAB,21.05.1996,3044 0542 5351,20.11.2019,,,BPT,"Thoppil House,Karuthala West,Cherai P O 683514",9895581588,,teacher
+11,Vanaja S,Female,Special Educator ,PERMANENT,REHAB,12.06.1967,4933 1294 9981,01.06.1998,B38120,01.05.2024,Diploma in Special Education CBR,"Puthenpurackal(H),Thiruvaniyoor P O ,,Ernakulam",9847447545,,teacher
+12,Ambily K Krishnan,Female,Special Educator,PERMANENT,REHAB,31.05.1978,7160 8134 2559,01.06.1998,B15696,11.12.2027,Diploma in Special Education MR,"Balamurali, Ayilyamkavu Lane , Tripunithura",9495976968,,teacher
+13,Manjula A G,Female,Special Educator ,PERMANENT,ACE,14.08.1970,7262 1879 8166,06.03.2000,B38121,01.05.2024,Diploma in Special Education CBR,"Thekkedath (H) ,Near Sreedevi Auditorium
+Maradu P O",9747059062,,teacher
+14,Simi Philipose,Female,Special Educator,PERMANENT,ACE,24.04.1972,9178 3627 6977,09.06.2010,B24309,07.12.2027,"M.Sc , Diploma in Special Education (CP)","Green Land Enclave ,Near Agasthya Temple
+Kureekkad",9526277601,,teacher
+15,Diana Merilyn Ross Bernard,Female,Special Educator,PERMANENT,ACE,24.05.1974,3791 5404 3572,30.09.2004,A31931,09.01.2025,"MSW,B.ED in Special Education( MR)","PayyaPPilly(H),Thekkinathe Nirappu ,Chottanikkara",9809091187,,teacher
+16,Sumavally P,Female,Special Educator,PERMANENT,REHAB,10.05.1982,9960 0665 5949,04.06.2014,A35341,01.05.2024,"M.Sc Child Development ,B.Ed in Special 
+Education (MR)","Naryana Nivas ,Bhbaneswary Temple Rd Chambakkara
+Poonithura P O",9995089623,,teacher
+17,Sreekutty P S,Female,Special Educator,PERMANENT,REHAB,01.04.1987,2230 5895 4332,30.06.2014,B23897,11.03.2029,"Plus Two ,Diploma in Special Education (ASD)","Nakkalapattu ,Chembu P O,Vaikom ,Kottayam",9645807395,,teacher
+18,Sari K Sivan,Female,Special Educator,PERMANENT,HBR,09.04.1987,9994 5156 4582,01.06.2010,B17754,06.09.2026,Diploma in Special Education CP,"Plavila Veedu, Manimandhiram,Arakkunnam P O",7034471771,,teacher
+19,Remya.V.G,Female,Special Educator,PERMANENT,CDEIRC,24.05.1984,2613 2307 1546,09.05.2011,B41701,07.07.2027,"BA , Diploma in Special Education","Payyampallil (H) ,Ezhupunna South P O ,Cherthala ,688570",9249646881,,teacher
+20,Jayasree V,Female,Special Educator,PERMANENT,CDEIRC,14.02.1987,8077 1541 1360,08.07.2013,B17017,11.12.2027,Diploma in Special Education (MR),"Putheveliyil ,Maruthoorvattom P O,Cherthala 
+,Alappuzha",9288407328,,teacher
+21,Divya. K.P,Female,Special Educator,PERMANENT,CDEIRC,05.05.1986,2378 2691 7086,12.05.2014,B46168,28.11.2027,Diploma in Special Education CP,"Kelanthara(H),Kumbalam P O",9048286270,,teacher
+22,Remya N P,Female,Special Educator,PERMANENT,REHAB,07.05.1992,8281 9151 8550,21.07.2014,B44020,12.03.2029,Diploma in Special Education (MR),"Ayankulath (H) ,K S Mangalam P O,Vaikom",9400176699,,teacher
+23,Athira Mohan,Female,Special Educator,PERMANENT,ACE,03.03.1995,2320 7030 8427,08.06.2015,B42950,17.03.2025,"Diploma in DVR ,MR"," Mangadathumoozhil (H) ,Kaippattoor P O ,Arakunnam",7561018245,,teacher
+24,Jisha P.M,Female,Special Educator,PERMANENT,REHAB,10.12.1981,6341 8305 6896,08.06.2015,B13831,29.05.2027,"BBA ,Diploma in Special Education (CP)","Kavugumkoottathil , Elamakkara P O,Cochin -96",8113063485,,teacher
+25,Manjusha. U,Female,Special Educator,PERMANENT,HBR,20.05.1989,9539 0713 0481,27.07.2015,B30389,14.06.2024,Diploma in Special Education (ASD),"Ashirvad ,Keltron Road ,Aroor P O ,Alappuzha",9048791618,,teacher
+26,Sindhu. K.B,Female,Special Educator,PERMANENT,HBR,01.05.1975,5371 2431 2816,16.06.2015,B20334,18.07.2024,Diploma in Special Education (CP),"Vathuveettil(H),Kumbalam P O, , Ernakulam ,682306",9446429746,,teacher
+27,Anju. T.M,Female,Special Educator,PERMANENT,ACE,21.02.1994,6291 9167 8043,07.06.2016,A46872,22.01.2027,B.Ed in Special Education (MR),"Parakal (H),Kanjiramattom P O",7356547439,,teacher
+28,Shiji Joseph,Female,Special Educator,PERMANENT,ACE,15.05.1976,9957 7629 7008,9/1/2016,B52385,21.09.2027,"B.com ,ITI ,Diploma in Special Education (CP)","Chettipurackal (H),Thykkoodam ,Vyttila P O",9995504948,,teacher
+29,Kalpana. K.K,Female,Special Educator,PERMANENT,REHAB,20.05.1968,8207 9800 0524,01.08.2000,B52386,19.06.2027,Diploma in Special Education (CP),"Kunnath (H) ,Perumbilly P O ,Mulanthuruthy",9447609006,,teacher
+30,Shanthini S,Female,Special Educator,PERMANENT,REHAB,14.05.1977,7408 1250 8175,08.06.2005,B52363,29.05.2027,Diploma in Special Education (CP),"Madathil Parambu(H),Ambalamugal P O,Tripunithura",7025089067,,teacher
+31,Deepthi. E. G,Female,Special Educator,PERMANENT,ACE,21.02.1992,2180 5534 7344,01.08.2017,B52136,27.03.2027,Diploma in Special Education (MR),"Sundar Vihar  ,Sakthi Nagar ,Tripunithura ,682301",9744834959,,teacher
+32,Saritha K K,Female,Special Educator,PERMANENT,REHAB,27.05.1982,2393 6003 9090,01.06.2018,B69909,07.08.2025,Diploma in Special Education (ASD),"Kizkakkevellachalil (H) ,Kanjiramattom P O",9847096473,,teacher
+33,Niva M A,Female,Special Educator,PERMANENT,REHAB,22.09.1995,5452 6376 6467,28.10.2019,B64353,29.05.2024,Diploma in Special Education (ASD),"Elanjikkal House, H No.03/81 Kattipparambu,
+Kannamali P O",8606122974,,teacher
+34,Malavika K S ,Female,Special Educator,PERMANENT,REHAB,26.10.1997,3143 3011 1959,01.12.2021,B77193,03.09.2026,Diploma in Special Education (Autism),"Kizhakkekalayil (H),Vadakara P O ,Varikkamkunnu",9746609706,,teacher
+35,Lamuval Thomas A J,Male,Special Educator,PERMANENT,REHAB,23.07.1993,4228 2246 7412,30.05.2022,B44459,26.09.2028,"BA Sociology
+Diploma in Special Education (CP)","Arakkaparambil (H)
+Veli,Fort Kochi",8606165513,,teacher
+36,Manzoora Noushad,Female,Special Educator,PERMANENT,HBR,09.09.2000,2201 5598 1124,08.08.2022,B102796,08.07.2028,Diploma in Special Education (Autism),"Nedumpurath (H),Thaikkattukara P O ,Aluva",7559048172,,teacher
+37,Gayathri Mohan,Female,Special Educator,PERMANENT,REHAB,07.04.1997,9983 9288 1482,02.06.2022,B77381,03.09.2026,"B.Sc Psychology,
+Diploma in Special Education (ASD)","Shravan,Plot No.190/A,Mavelipuram Colony Kakkanad ,682030",8943509420,,teacher
+38,Bindu P V,Female,Special Educator,PERMANENT,REHAB,04.03.1975,2825 3395 0024,01.06.2023,A54491,2022,B.Ed in Special Education (MR),"Panachiyil (H),Thirumarady P O,Kootattukulam",6282351816,,teacher
+39,Anitha K,Female,Special Educator,PERMANENT,REHAB,20.05.1974,6878 8301 0780,01.06.2023,B60146,2022,"Diploma in DVR ,MR,
+Caregivers Trainig","Puthoorapana Veedu,Greenvalley Homes,Arakkunnam",9947470298,,teacher
+40,Amrutha N G,Female,Special Educator,PROBATION,REHAB,20.08.1996,4902 2716 7762,21.09.2023,,,"MA,B.Ed I Special Education (MR)","Thekkepereparambil House, Edavattom P O ,Thalayolaparambu",8138078915,,teacher
+41,Remya K R,Female,Speech Therapist,PERMANENT,REHAB,20.05.1988,4510 7741 7825,02.10.2013,,,Diploma in Hearing  and Language Pathology,"Kalathil (H),Ambelipadam Rd,Near Cochin TVS 
+Janatha,Vyttila",9539589123,,therapist
+42,Vaisakh Ram,Male,Speech Therapist,PERMANENT,REHAB,05.04.1996,5257 2146 1613,25.05.2022,,,BASLP,"Chathoth (H),Pattithara P O,Thrithala ,Palakkad",8086210456,,therapist
+43,Angel Anil,Female,Speech Therapist,PERMANENT,REHAB,23.09.1999,9566 2852 0076,02.06.2022,,,BASLP,"Anikuzhikattil (H) ,Balal, ,Kasargod ,671533",8590888843,,therapist
+44,Liju Mon K P,Male,Psychologist,PERMANENT,REHAB,18.05.1987,4729 4071 0714,01.02.2016,,,"M.SC ,M.Phil ","Kottaraparambil(H),Kodur P O, ,Malappuram ,676504",9633187797,,therapist
+45,Marjana E,Female,Psychologist,PERMANENT,ACE,02.01.1996,4404 3926 6713,26.09.2022,,,M.Sc  HRD Psychology,"Flat No.11€ , SFS Silicon Drive , Kakkanad",8921050055,,therapist
+46,Reena Babu,Female,Teacher,PERMANENT,ACE,17.03.1975,7779  4579 4374,30.09.2004,,,BA Sociology,"Naliyath(H),Kurreekkad P O.Kureekkad",7012352106,,teacher
+47,Saralamma P.K,Female, Teacher,CONTRACT,ACE,25.05.1965,5398 7760 4728,01.06.2007,,,B A History,"Shanthi Nagar , 603 H,Kureekkad",9947802471,,teacher
+48,Sithimol M K,Female,Teacher,PERMANENT,ACE,14.04.1973,5794 2382 0818,08.06.2011,,,Department of Technical Education,"Sayoojyam ,KRA 167,Near Adarsh Special School Kureekkad",9446837447,,teacher
+49,Sreedevi P.,Female,Teacher,PERMANENT,REHAB,16.05.1971,4174 2327 7634,02.11.2011,,,"B.Com ,PGDCA","Shivanm (H),Chuzhipadam RD ,Kureekkad",9037665033,,teacher
+50,Sarala K K,Female,Teacher,PERMANENT,REHAB,20.02.1969,6517 5455 6382,13.06.2011,,,Diploma in Ganabhushanam,"Company Malayil ,Vettikal P O,Mulanthuruthy",8946425913,,teacher
+51,Revathy Dileep,Female,Teacher,PERMANENT,REHAB,14.09.1992,3912 0038 5155,23.06.2014,,,M A  Mohiniyattam,"Thaikkattu (H),Eroor P O,Tripunithura",9567683992,,teacher
+52,Shiji P P,Female,Teacher,PERMANENT,ACE,30.05.1979,7686 9261 6620,06.12.2022,,,"M A ,B.Ed","Malithara(H),Vadayar P O,Thalayolaparambu",9526774407,,teacher
+53,Kripa Gladston,Female,Teacher,CONTRACT,ACE,15.08.1970,3334 8926 0775,01.11.2022,,,M.Sc Maths,"Kalliyath Lane ,Mamangalam P O,Edappally",7994935551,,teacher
+54,Shara K S,Female,Accountant,PERMANENT,ADMIN,06.11.1977,3210 0641 5473,27.08.2008,,,"Pre Degree ,ITI ,DCFA","Anjilithadathil (H) ,Kandanadu P O ,Kureekkad",9961527580,,office_staff
+55,Merlin Thomas,Female,Office Assistant,PERMANENT,ADMIN,31.05.1975,8026 8034 1195,05.01.2015,,,"B.Com ,PGDCA","Cherukuzhiyil (H) ,Vadakkara P O,
+Thalayolaparambu ,686605",9446894495,,office_staff
+56,Soumya K S,Female,Office Assistant,PERMANENT,ADMIN,01.06.1989,6205 3745 1131,30.10.2017,,,"B.com with Computer Application,
+PGDCA","Moottaparambil (H),Kadungamangalam P O
+Ambadimala ,682305",9544170347,,office_staff
+57,Chitra V Nair,Female,CDEIRC Coordinator,PERMANENT,CDEIRC,19.10.1972,4800 9030 6276,02.02.2015,,,B A Psychology,"Block - 2 ,V B Royal Apartments Devankulangara ,Edappally",7736196496,,others
+58,Sunu Antony,Female,Office Assistant,PERMANENT,CDEIRC,03.10.1973,5461 1819 6655,09.06.2008,,,Pre -Degree,"Pallath (H),Bright Lane Vennala P O, Palarivattom",9895520603,,office_staff
+59,Shyamala B M,Female,Sweeper,CONTRACT,REHAB,24.05.1967,8365 7257 7589,30.09.2004,,,9 th std,"Thekkeundalmuri(H),Thekkumbhagam,Thripunithura",9567658966,,others
+60,Anjan Satheesh,Male,Teacher,PERMANENT,REHAB,29.09.1987,8068 9497 1840,01.04.2009,,,"SSLC, 3 D Animation","Anjanam ,Keeerthi Nagar Kannankulangara,
+Tripunithura",8921662085,,teacher
+61,Raji K R,Female,Teacher Assistant,PERMANENT,HBR,20.03.1975,3848 0231 6879,08.09.2008,,,SSLC,"Kuttadathu (H),Thekkumbhagam ,Tripunithura",9947349824,,teacher
+62,Radha E.N,Female,Teacher Assistant,PERMANENT,REHAB,20.04.1971,2620 5884 6012,30.09.2004,,,SSLC,"Thekkeundalamuri (H) ,Thekkumbhagam ,Tripunithura",9847169605,,teacher
+63,Saritha M K,Female,Teacher Assistant,PERMANENT,REHAB,21.05.1978,8624 1233 7820,09.06.2008,,,9 th std,"Velumpurath (H),Chottanikkara P O,Chottanikkara",9947209723,,teacher
+64,Seema George,Female,Teacher Assistant,PERMANENT,REHAB,17.05.1974,4847 5193 5181,07.06.2011,,,SSLC,"Manakkal (H) ,Vyttila ,Cochin-19",9544344020,,teacher
+65,Renju Raju,Female,Teacher Assistant,PERMANENT,REHAB,26.03.1984,2537 7033 5844,10.10.2005,,,"Plus Two , Computer TTC","Asharikuzhil (H) ,Karipadam P O ,Thalayolap[arambu",8281220824,,teacher
+66,Assa C N,Female,Teacher Assistant,PERMANENT,ACE,01.06.1970,8135 3283 2766 ,24.10.2005,,,SSLC,"Naduvilaparambil(H),Eroor South P O,Tripunithura",9961300928,,teacher
+67,Latha A L,Female,Teacher Assistant,PERMANENT,REHAB,11.03.1979,8189 4332 6792,09.06.2008,,,SSLC,"Alingal (H),Kedamangalam,North Paravur",9446419846,,teacher
+68,Rajitha Sukumaran,Female,Teacher Assistant,CONTRACT,REHAB,10.05.1967,2883 9729 3825,08.07.2014,,,"PDC , Type Writing","Punnakkudiyil (H) , Nadakkavu P O ,Udayamperoor",9544830105,,teacher
+69,Saritha P K,Female,Teacher Assistant,PERMANENT,ACE,16.01.1978,1190 2014 0411,01.02.2013,,,SSLC,"Mavunkal (H) ,Udayamperoor P O ,682307",9946831848,,teacher
+70,Lalitha K N,Female,Teacher Assistant,PERMANENT,REHAB,27.05.1969,3698 9719 1233,13.08.2012,,,SSLC,"Parayil (H),Amballoor P O",9847253109,,teacher
+71,Swapna M S,Female,Teacher Assistant,PERMANENT,REHAB,30.11.1971,3222 3068 8385,01.07.2013,,,"Hindi Praveen , DTP","Muthathil (H) , Kolathery Road KRRA 91 , Maradu P O",9446459935,,teacher
+72,Atharagini A K,Female,Teacher Assistant,PERMANENT,HBR,23.01.1973,4810 4603 5222,03.09.2012,,,SSLC,"Karimath(H),Kandanadu P O ",9567497221,,teacher
+73,Bindhu V P,Female,Teacher Assistant,PERMANENT,HBR,01.04.1975,3360 1355 8482,02.08.2012,,,PDC,"Manakumbel (H),Kandanadu P O",9961260299,,teacher
+74,Mery M M,Female,Teacher Assistant,PERMANENT,ACE,22.06.1971,5396 6141 5455,02.06.2014,,,SSLC,"Kanjirathum Parambil (H),Kanjirathinkal Rd,Vennala P O",9539881833,,teacher
+75,"Philomina  Sheeba
+  Joy V A",Female,Teacher Assistant,PERMANENT,ACE,14.01.1969,4441 7612 5087,02.06.2014,,,SSLC,"Kappilankudi ,Maria Bhavan Edachira P O ,Kakkanad",9846203787,,teacher
+76,Fathima  M I,Female,Teacher Assistant,PERMANENT,REHAB,12.02.1971,2966 9151 8550,02.06.2014,,,VIIth,"Kallarackal (H) ,Karukapilly Lane Elamakkara P O ,Kallor",8129795273,,teacher
+77,Mini N K,Female,Teacher Assistant,PERMANENT,REHAB,20.05.1975,2176 6773 0423,02.06.2014,,,7 th std,"Thazhimuthat (H) ,Kuzhiyara P O ,Chottanikkara",9495439568,,teacher
+78,Rajitha Rajan.,Female,Teacher Assistant,PERMANENT,ACE,14.01.1982,8120 5357 2842,02.02.2015,,,SSLC,"Vettikattil(H),Perumpily P O,Mulanthuruthy",9961480044,,teacher
+79,Sajumole P M,Female,Teacher Assistant,PERMANENT,ACE,12.04.1974,2075 0915 1731,02.06.2014,,,B.com,"Aduparayil ,Puthuveli P O,Kottayam",9744472813,,teacher
+80,Riji.I.P,Female,Teacher Assistant,PERMANENT,REHAB,25.11.1992,9476 2919 0627,05.06.2015,,,TTC,"Puthenpurackal(H),Kureekkad P O ,Chandaparambu",9656328504,,teacher
+81,Rini. I.P,Female,Teacher Assistant,PERMANENT,REHAB,25.11.1992,8045 6813 7490,05.06.2015,,,TTC,"Puthenpurackal(H),Kureekkad P O ,Chandaparambu",9633332749,,teacher
+82,Soumya Thomas,Female,Teacher Assistant,PERMANENT,REHAB,28.03.1986,8383 5270 0811,13.10.2015,,,SSLC,"Kabaleeswarath (H),Kureekkad P O,682305",9744702587,,teacher
+83,Sajitha  K S,Female,Teacher Assistant,PERMANENT,ACE,28.01.1981,3692 5575 7411,15.06.2015,,,SSLC,"Kolanchaliyat,Nadakavu P O,Udayamperoor",9746010639,,teacher
+84,Dhanya K D,Female,Teacher Assistant,PERMANENT,REHAB,04.04.1986,9650 2342 8655,01.06.2016,,,SSLC,"Punnachaliyil (H),Kureekkad",9633881652,,teacher
+85,Sunitha S,Female,Teacher Assistant,PERMANENT,REHAB,30.05.1972,3930 5748 9560,13.06.2016,,,SSLC,"Karthika Nivas,Chanthaparambu ,Kureekkad",9846922921,,teacher
+86,Sindhu. C.N,Female,Teacher Assistant,PERMANENT,REHAB,10.04.1972,6948 6972 3100,13.06.2016,,,"Pre Degree ,ITI","Vadakkathara,Gandhi Nagar,Kureekkad",9847655521,,teacher
+87,Linet P T,Female,Teacher Assistant,PERMANENT,REHAB,10.04.1984,8665 8804 9736,14.06.2016,,,Plus Two,"Chiramel (H),kureekkad ,Thiruvankulam P O",9562131342,,teacher
+88,Asha George,Female,Teacher Assistant,PERMANENT,REHAB,03.05.1979,6001 1988 7631,01.06.2017,,,SSLC,"Pichakassery (H),Nadakavu P O,Kochupally ,682307",9846010525,,teacher
+89,Jayasree S,Female, Teacher Assistant,PERMANENT,ACE,24.04.1983,4945 6338 3818,01.08.2017,,,SSLC,"Peedakaparambil ,Kureekkad P O,Thiruvankulam",9746169398,,teacher
+90,Kala V S,Female, Teacher Assistant,PERMANENT,HBR,06.11.1986,5812 3705 5566,05.03.2019,,,SSLC,"Aykkara (H) ,Kureekkdu P O,Namboorisanmala
+Thiruvankulam",8129674167,,teacher
+91,Linu Thambi,Female,Teacher Assistant,PERMANENT,REHAB,27.03.1993,8322 6293 1485,11.08.2022,,,"SSLC , TTC","Parappillil house ,Kureekkad P O,Kureekkad",9207019960,,teacher
+92,Anagha T R,Female,Teacher Assistant,PERMANENT,REHAB,28.12.1996,5678 5654 3038,01.12.2022,,,B.Sc Chemistry,"Thattupurackal (H),Udayamperoor P O",9497687574,,teacher
+93,Minimol M M,Female,Teacher Assistant,PERMANENT,REHAB,09.12.1978,7396 5726 7353,01.11.2022,,,SSLC,"Puthuvalsthalath House
+Azheekal  P O ,Puthuvype",9946626520,,teacher
+94,Anjitha P S,Female,Teacher Assistant,PERMANENT,REHAB,31.05.1996,2881 8304 3574,01.06.2023,,,"SSLC,Plus Two","Meenkadavil (H) ,Udayamperoor P O,Udayamperoor",9746738471,,teacher
+95,Dhanya Ebin,Female,Teacher Assistant,PERMANENT,REHAB,10.02.1991,7842 6679 1828,01.06.2023,,,SSLC,"Mekkaimukd(H),Kureekkadu P O,Udayakavala ,682305",8111822329,,teacher
+96,Sivadev T A,Male,Attender,PERMANENT,REHAB,26.05.1997,3796 5160 3367,01.06.2022,,,plus two,"Thykoottathil House, Thodupuzha East P O",9400648230,,others
+97,Rashmi.S,Female,Consultant Dietician,CONSULTANT,REHAB,23.04.1981,8926 4962 9179,01.08.2016,,,"Diploma in Applied Nutrition and
+Diebetics","Sopanam ,Eroor South,Tripunithura ,682306",9447389361,,others
+98,Rajeev V B,Male,Physical Trainer,CONSULTANT,REHAB,20.03.1964,6080 7224 8773,05.01.2023,,,Physical Education,"Kuttazhathu House, Thekkumbagam, Tripunithura ,682301",9567227747,,others
+99,Dhanya Gopinath,Female,Child Development Therapist,PERMANENT,HBR,07.07.1978,5828 1019 7119,01.08.2011,,,"P G Diploma in Clinical
+ Child Development","Pallath (H),Narakkal P O ,682505",7306408164,,others
+100,Vimina Sujith,Female,Counsellor,CONTRACT,REHAB,28.10.1972,5561 8146 1499,01.01.2017,,,M.Sc Psychology,"Keerthanam ,Near Krishna Temple, Kureekkad",9207468115,,others
+101,Jancy K S,Female,Nursing Assistant,CONTRACT,REHAB,11.04.1987,7679 5226 9464,19.09.2023,,,General Nursing,"Kulappurathu House,Pannimattom,Thodupuzha",9544375108,,others
+102,Jacob Mathai,Male,Driver,CONTRACT,ADMIN,22.01.1954,3787 0454 1713,15.01.2009,,,7 th std,"Mulamkulam (H) ,Kandanadu P O ,Kureekkad",9656681889,,others
+103,Sasidharan,Male,Driver,CONTRACT,HBR,07.01.1949,2007 3539 1853,10.07.2017,,,5 th std,"Chemmatuveli (H)Udayamperoor ,682307",8330044751,,others
+104,Rajeev V R  ,Male,Driver,CONTRACT,HBR,30.05.1972,6237 0379 0138,01.12.2019,,,SSLC,"Varayanthanath House,Piravom,Kakkad P O ,686664",9961669040,,others
+105,Santhosh M H,Male,Driver,CONTRACT,HBR,10.03.1983,3376 1629 3135,01.06.2011,,,SSLC,"Meenkadavil (H) ,Udayamperoor P O,Udayamperoor",9947131327,,others
+106,Kumari,Female,Bus in charge,CONTRACT,REHAB,01.01.1971,4446 4758 4604,01.06.2008,,,8 TH STD,"Punathil House ,Kureekkad",,,others
+107,Bindhu Suresh,Female,Bus in charge,CONTRACT,REHAB,26.04.1972,2115 3394 3671,01.06.2008,,,SSLC,"Manakumbil House,Udayamperoor,Manakunnam ,682307",8138848007,,others
+108,Kala,Female,Bus in charge,CONTRACT,REHAB,20.05.1972,6236 1219 5502,01.06.2008,,,SSLC,"Pulimoottil House ,Eroor West,Tripunithura",9526706297,,others
+109,Ribsijo,Female,Bus in charge,CONTRACT,REHAB,25.05.1969,4918 1868 2832,01.08.2017,,,SSLC,"Mavelithayil (H), B G I P T Quarters,Thevara ,682013",8606053510,,others
+110,Jayanthi Biju,Female,Bus in charge CUM TA,CONTRACT,REHAB,28.04.1979,2377 7388 7474,06.06.2022,,,SSLC,"Puthenpurayil(H) ,Piravom P O ,Piravom",9544913553,,others
+111,Shyma. T.T,Female,Bus in charge ,CONTRACT,REHAB,14.02.1977,6665 0574 6918,01.08.2017,,,SSLC,"Thekkedathu (H),South Paravoor P O ,682307",7994566018,,others
+112,Remya P,Female,Bus in charge,CONTRACT,REHAB,09.05.1988,9519 2504 8195,07.10.2022,,,BA,"Puthuvalil House, Bhramamangalam,Kottayam",9400611380,,others
+113,Suseela Raju,Female,Cook,CONTRACT,REHAB,09.02.1951,6253 5883 4780,01.01.2005,,,7 th std,"Kattuliyil Parambil ,Permbilly",8281439521,,others
+114,Niveditha,Female,Canteen Helper,CONTRACT,REHAB,28.06.1961,,01.06.2015,,,5 th std,"Anachaliyil (H),Kureekkad",9995820724,,others
+115,Anjali Nair N ,Female,Sweeper,CONTRACT,REHAB,05.08.1985,7736 3251 0346,01.10.2021,,,7 th std,"Njarumpurath (H),Maliyekkal Road ,Kureekkad",,,others
+116,Krishnapriya ,Female,Sweeper,CONTRACT,ADMIN,07.07.1980,7081 9497 3660,01.04.2024,,,SSLC,"Nagappillithundiyil ,Udayakavala, Kureekkad P O",7025878290,,others
+117,Naseema,Female,Sweeper,CONTRACT,REHAB,01.01.1976,9584 1653 6854,01.06.2022,,,SSLC,"Nediyanthuruthil (H),Kumbalam ,682506",,,others
+118,Raji jayakumar,Female,Sweeper,CONTRACT,ACE,25.03.1975,6534 1651 2885,01.12.2021,,,SSLC,"Muriyamangalathu House,Kulayatikkara P O",9994538860,,others
+119,Muthumayil,Female,Sweeper,CONTRACT,CDEIRC,,NIL,20.09.2022,,,NIL,"Veliparambil (H),Janatha Road,Vengola",,,others
+120,Venu Gopal,Male,Volunteer,VOLUNTEER,ADMIN,,,,,,,,,,others
