@@ -156,7 +156,11 @@ async function uploadEnquiry(row) {
   // Final approval
   const payload = {
     admission_id: row["ADMN No."],
-    date_of_admission: parseExcelDate(row["DATE OF JOINING"]),
+    // //ACT
+    // date_of_admission: parseExcelDate(row["DATE OF JOINING"]),
+
+    //ACE
+    date_of_admission: parseDate(row["DATE OF JOINING"]),
   };
   try {
     const response = await axios.post(

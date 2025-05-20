@@ -57,16 +57,16 @@ const {
     // //staff upload - admin/office_staff
     // await runStaffUpload();
 
-    // // enquiry form-admin
-    // await runEnquiryUpload();
+    // enquiry form-admin
+    await runEnquiryUpload();
 
-    // // admission form-admin
-    // await injectStudentIds({
-    //   admissionPath: "./data/enquiry.csv",
-    //   enquiryIdsPath: "./output/student_ids.xlsx",
-    //   outputPath: "./output/admission_with_ids.csv",
-    // });
-    // await runAdmissionUpload();
+    // admission form-admin
+    await injectStudentIds({
+      admissionPath: "./data/enquiry.csv",
+      enquiryIdsPath: "./output/student_ids.xlsx",
+      outputPath: "./output/admission_with_ids.csv",
+    });
+    await runAdmissionUpload();
 
     // //initial assessment-admin
     // await injectStudentIds({
@@ -124,13 +124,13 @@ const {
     // });
     // await runSpeechAssessmentUpload();
 
-    //Technical term assessment-therapist
-    await injectStudentIds({
-      admissionPath: './data/technicalTermAssessment.csv',
-      enquiryIdsPath: './output/student_ids.xlsx',
-      outputPath: './output/technical_term_assessment_with_ids.csv',
-    });
-    await runTechnicalTermUpload();
+    // //Technical term assessment-therapist
+    // await injectStudentIds({
+    //   admissionPath: './data/technicalTermAssessment.csv',
+    //   enquiryIdsPath: './output/student_ids.xlsx',
+    //   outputPath: './output/technical_term_assessment_with_ids.csv',
+    // });
+    // await runTechnicalTermUpload();
 
     // //Technical term report-therapist
     // await injectStudentIds({
