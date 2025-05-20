@@ -40,10 +40,15 @@ async function uploadStaff(row) {
   form.append("email", String(row.EMAIL || ""));
   form.append("dateOfBirth", parseDate(row.DOB));
   form.append("role", String(row.ROLE || ""));
-  form.append("gender", String(row.Sex || ""));
+  form.append(
+    "gender",
+    String(row.Sex || "")
+      .trim()
+      .toLowerCase()
+  );
   form.append(
     "aadhaarNumber",
-    removeSpaces(String(row["AADHAR CARD  NUMBER"] || ""))
+    removeSpaces(String(row["AADHAR CARD NUMBER"] || ""))
   );
   form.append("phoneNumber", parseToNumber(row["PHONE NUMBER"] || ""));
   form.append("rci", determineRCI(row.RCI));
