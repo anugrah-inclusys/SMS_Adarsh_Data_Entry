@@ -72,13 +72,13 @@ const { runTdscFileUpload } = require("./services/uploadTDSC");
     // });
     // await runAdmissionUpload();
 
-    //initial assessment-admin
-    await injectStudentIds({
-      admissionPath: "./data/initial_assessment.csv",
-      enquiryIdsPath: "./output/student_ids.xlsx",
-      outputPath: "./output/initial_assessment_with_ids.csv",
-    });
-    await runInitialAssessmentUpload();
+    // //initial assessment-admin
+    // await injectStudentIds({
+    //   admissionPath: "./data/initial_assessment.csv",
+    //   enquiryIdsPath: "./output/student_ids.xlsx",
+    //   outputPath: "./output/initial_assessment_with_ids.csv",
+    // });
+    // await runInitialAssessmentUpload();
 
     // //comprehensive assessment-permission admin
     // await injectStudentIds({
