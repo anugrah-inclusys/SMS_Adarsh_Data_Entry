@@ -1,52 +1,56 @@
-const { runEnquiryUpload } = require("./services/uploadEnquiry");
-const { runStaffUpload } = require("./services/uploadStaff");
-const { runAdmissionUpload } = require("./services/uploadAdmission");
+const { runEnquiryUpload } = require('./services/uploadEnquiry');
+const { runStaffUpload } = require('./services/uploadStaff');
+const { runAdmissionUpload } = require('./services/uploadAdmission');
 const {
   runSpecialEducationAssessmentUpload,
-} = require("./services/uploadSpecialEducationAssessment");
+} = require('./services/uploadSpecialEducationAssessment');
 const {
   runPhysiotherapyAssessmentUpload,
-} = require("./services/uploadPhysioTherapyAssessment");
+} = require('./services/uploadPhysioTherapyAssessment');
 const {
   runOccupationalTherapyAssessmentUpload,
-} = require("./services/uploadOccupationaltherapyAssessment");
-const { injectStudentIds } = require("./services/injectStudentIdIntoAdmission");
+} = require('./services/uploadOccupationaltherapyAssessment');
+const { injectStudentIds } = require('./services/injectStudentIdIntoAdmission');
 const {
   runInitialAssessmentUpload,
-} = require("./services/uploadInitialAssessment");
+} = require('./services/uploadInitialAssessment');
 const {
   runPsychologyAssessmentUpload,
-} = require("./services/uploadPsychologyAssessment");
+} = require('./services/uploadPsychologyAssessment');
 const {
   runSpeechAssessmentUpload,
-} = require("./services/uploadSpeechAssessment");
+} = require('./services/uploadSpeechAssessment');
 const {
   runSpecialEducationTermUpload,
-} = require("./services/uploadSpecialEducationTerm");
-const { runEvaluationUpload } = require("./services/uploadEvaluation");
+} = require('./services/uploadSpecialEducationTerm');
+const { runEvaluationUpload } = require('./services/uploadEvaluation');
 const {
   runSocialSkillsChecklistUpload,
-} = require("./services/uploadSocialSkillsChecklist");
-const { runADLChecklistUpload } = require("./services/uploadADLChecklist");
+} = require('./services/uploadSocialSkillsChecklist');
+const { runADLChecklistUpload } = require('./services/uploadADLChecklist');
 const {
   runSensoryChecklistUpload,
-} = require("./services/uploadSensoryChecklist");
+} = require('./services/uploadSensoryChecklist');
 const {
   runLifeSkillsChecklistUpload,
-} = require("./services/uploadLifeSkillsChecklist");
+} = require('./services/uploadLifeSkillsChecklist');
 const {
   runComprehensiveAssessmentUpload,
-} = require("./services/uploadComprehensiveAssessment");
-const { runTechnicalTermUpload } = require("./services/uploadTechnicalTerm");
+} = require('./services/uploadComprehensiveAssessment');
+const { runTechnicalTermUpload } = require('./services/uploadTechnicalTerm');
 const {
   runTechnicalTermReportUpload,
-} = require("./services/uploadTechnicalTermReport.JS");
+} = require('./services/uploadTechnicalTermReport.JS');
 const {
   runSpecialEducationReportUpload,
-} = require("./services/uploadSpecialEducationReport");
-const { runMedicalFilesUpload } = require("./services/uploadMedicalFiles");
-const { runLestFileUpload } = require("./services/uploadLEST");
-const { runTdscFileUpload } = require("./services/uploadTDSC");
+} = require('./services/uploadSpecialEducationReport');
+const { runMedicalFilesUpload } = require('./services/uploadMedicalFiles');
+const { runLestFileUpload } = require('./services/uploadLEST');
+const { runTdscFileUpload } = require('./services/uploadTDSC');
+const { runReAssessmentUpload } = require('./services/uploadReAssessment');
+const {
+  runMiscellaneousFilesUpload,
+} = require('./services/uploadMiscellaneousFiles');
 
 (async () => {
   try {
@@ -66,19 +70,19 @@ const { runTdscFileUpload } = require("./services/uploadTDSC");
 
     // //initial assessment-admin
     // await injectStudentIds({
-    //   admissionPath: "./data/enquiry.csv",
-    //   enquiryIdsPath: "./output/student_ids.xlsx",
-    //   outputPath: "./output/admission_with_ids.csv",
-    // });
-    // await runAdmissionUpload();
-
-    // //initial assessment-admin
-    // await injectStudentIds({
     //   admissionPath: "./data/initial_assessment.csv",
     //   enquiryIdsPath: "./output/student_ids.xlsx",
     //   outputPath: "./output/initial_assessment_with_ids.csv",
     // });
     // await runInitialAssessmentUpload();
+
+    //    // re-assessment assessment-admin
+    // await injectStudentIds({
+    //   admissionPath: "./data/re_assessment.csv",
+    //   enquiryIdsPath: "./output/student_ids.xlsx",
+    //   outputPath: "./output/re_assessment_with_ids.csv",
+    // });
+    // await runReAssessmentUpload();
 
     // //comprehensive assessment-permission admin
     // await injectStudentIds({
@@ -120,13 +124,13 @@ const { runTdscFileUpload } = require("./services/uploadTDSC");
     // });
     // await runSpeechAssessmentUpload();
 
-    // //Technical term assessment-therapist
-    // await injectStudentIds({
-    //   admissionPath: './data/technicalTermAssessment.csv',
-    //   enquiryIdsPath: './output/student_ids.xlsx',
-    //   outputPath: './output/technical_term_assessment_with_ids.csv',
-    // });
-    // await runTechnicalTermUpload();
+    //Technical term assessment-therapist
+    await injectStudentIds({
+      admissionPath: './data/technicalTermAssessment.csv',
+      enquiryIdsPath: './output/student_ids.xlsx',
+      outputPath: './output/technical_term_assessment_with_ids.csv',
+    });
+    await runTechnicalTermUpload();
 
     // //Technical term report-therapist
     // await injectStudentIds({
@@ -219,8 +223,14 @@ const { runTdscFileUpload } = require("./services/uploadTDSC");
     // });
     // await runTdscFileUpload();
 
-    console.log("🎉 Upload complete!");
+    ////miscellaneous documents-teacher
+    // await runMiscellaneousFilesUpload();
+
+
+
+
+    console.log('🎉 Upload complete!');
   } catch (err) {
-    console.error("🚨 Upload failed!", err);
+    console.error('🚨 Upload failed!', err);
   }
 })();

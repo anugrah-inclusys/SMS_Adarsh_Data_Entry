@@ -83,7 +83,7 @@ async function uploadTechnicalTerm(row) {
   try {
     const res = await axios.post(
       `${API_BASE_URL}/students/technical-term/autosave/1/${term}`,
-      steps[0],
+      steps[1],
       {
         headers: { Authorization: `Bearer ${JWT_TOKEN}` },
       }
@@ -95,21 +95,8 @@ async function uploadTechnicalTerm(row) {
     return;
   }
 
-  // Step 2: Update main content
-  try {
-    await axios.put(
-      `${API_BASE_URL}/students/technical-term/autosave/${assessmentId}/2`,
-      steps[1],
-      {
-        headers: { Authorization: `Bearer ${JWT_TOKEN}` },
-      }
-    );
-    console.log(`✅ Step 2 updated for ${assessmentId}`);
-  } catch (err) {
-    console.error(`❌ Step 2 update failed`, err.response?.data || err.message);
-  }
 
-  // Step 3: File Upload
+  // Step 2: File Upload
   const filePaths = getFilesForRow(row, "ADMISSION ID", "./files/technical_term");
   if (filePaths.length > 0) {
     const form = new FormData();
@@ -118,7 +105,7 @@ async function uploadTechnicalTerm(row) {
     }
     try {
       await axios.put(
-        `${API_BASE_URL}/students/technical-term/autosave/${assessmentId}/3`,
+        `${API_BASE_URL}/students/technical-term/autosave/${assessmentId}/2`,
         form,
         {
           headers: HEADERS(form),

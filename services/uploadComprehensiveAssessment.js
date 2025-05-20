@@ -31,7 +31,7 @@ async function fetchStudentDetails(studentId) {
 async function uploadComprehensiveAssessment(row) {
   const studentId = row["Student ID"] || row["STUDENT ID"] || row["student id"];
   if (!studentId) {
-    console.warn(`⚠️ Skipping row without Student ID: ${student.name.first_name}`);
+    console.warn(`⚠️ Skipping row without Student ID: ${row["Student Name"]}`);
     return;
   }
 
@@ -44,12 +44,12 @@ async function uploadComprehensiveAssessment(row) {
     const student = await fetchStudentDetails(studentId);
     if (!student) return;
   
-    console.log("🚀 Step 10 Payload:", {
-      unit_id,
-      class_id,
-      provisional_diagnosis: row["content.provisional_diagnosis"] || "",
-      remarks: row["content.remarks"] || "",
-    });
+    // console.log("🚀 Step 10 Payload:", {
+    //   unit_id,
+    //   class_id,
+    //   provisional_diagnosis: row["content.provisional_diagnosis"] || "",
+    //   remarks: row["content.remarks"] || "",
+    // });
 
   let assessmentId = "";
 
