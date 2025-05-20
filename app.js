@@ -47,6 +47,7 @@ const {
 const { runMedicalFilesUpload } = require("./services/uploadMedicalFiles");
 const { runLestFileUpload } = require("./services/uploadLEST");
 const { runTdscFileUpload } = require("./services/uploadTDSC");
+const { runReAssessmentUpload } = require("./services/uploadReAssessment");
 
 (async () => {
   try {
@@ -64,21 +65,24 @@ const { runTdscFileUpload } = require("./services/uploadTDSC");
     // });
     // await runAdmissionUpload();
 
+
+
     // //initial assessment-admin
     // await injectStudentIds({
-    //   admissionPath: "./data/enquiry.csv",
+    //   admissionPath: "./data/initial_assessment.csv",
     //   enquiryIdsPath: "./output/student_ids.xlsx",
-    //   outputPath: "./output/admission_with_ids.csv",
+    //   outputPath: "./output/initial_assessment_with_ids.csv",
     // });
-    // await runAdmissionUpload();
+    // await runInitialAssessmentUpload();
 
-    //initial assessment-admin
-    await injectStudentIds({
-      admissionPath: "./data/initial_assessment.csv",
-      enquiryIdsPath: "./output/student_ids.xlsx",
-      outputPath: "./output/initial_assessment_with_ids.csv",
-    });
-    await runInitialAssessmentUpload();
+    //    // re-assessment assessment-admin
+    // await injectStudentIds({
+    //   admissionPath: "./data/re_assessment.csv",
+    //   enquiryIdsPath: "./output/student_ids.xlsx",
+    //   outputPath: "./output/re_assessment_with_ids.csv",
+    // });
+    // await runReAssessmentUpload();
+ 
 
     // //comprehensive assessment-permission admin
     // await injectStudentIds({
@@ -87,6 +91,8 @@ const { runTdscFileUpload } = require("./services/uploadTDSC");
     //   outputPath: './output/comprehensive_assessment_with_ids.csv',
     // });
     // await runComprehensiveAssessmentUpload();
+
+
 
     // //physiotherapy assessment-therapist
     // await injectStudentIds({
