@@ -46,10 +46,7 @@ async function uploadStaff(row) {
       .trim()
       .toLowerCase()
   );
-  form.append(
-    "aadhaarNumber",
-    removeSpaces(String(row["AADHAR CARD NUMBER"] || ""))
-  );
+  form.append("aadhaarNumber", removeSpaces(String(row["AADHAR"] || "")));
   form.append("phoneNumber", parseToNumber(row["PHONE NUMBER"] || ""));
   form.append("rci", determineRCI(row.RCI));
   form.append("rciNumber", String(row.RCI || ""));
