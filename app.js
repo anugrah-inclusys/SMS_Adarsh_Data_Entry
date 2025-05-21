@@ -51,6 +51,7 @@ const { runReAssessmentUpload } = require('./services/uploadReAssessment');
 const {
   runMiscellaneousFilesUpload,
 } = require('./services/uploadMiscellaneousFiles');
+const { runPreVocationalChecklistUpload } = require('./services/uploadPreVocationalChecklist');
 
 (async () => {
   try {
@@ -203,6 +204,14 @@ const {
     //   outputPath: "./output/life_skills_checklist_with_ids.csv",
     // });
     // await runLifeSkillsChecklistUpload();
+   
+    // life_skills_checklist-checklist-teacher
+    await injectStudentIds({
+      admissionPath: "./data/pre_vocational_checklist.csv",
+      enquiryIdsPath: "./output/student_ids.xlsx",
+      outputPath: "./output/pre_vocational_checklist_with_ids.csv",
+    });
+    await runPreVocationalChecklistUpload();
 
     // //medical-files-teacher
     // await runMedicalFilesUpload();
