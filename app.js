@@ -78,13 +78,13 @@ const { runGenericSkillsUpload } = require('./services/uploadGenericTool');
     // });
     // await runInitialAssessmentUpload();
 
-    //    // re-assessment assessment-admin
-    // await injectStudentIds({
-    //   admissionPath: "./data/re_assessment.csv",
-    //   enquiryIdsPath: "./output/student_ids.xlsx",
-    //   outputPath: "./output/re_assessment_with_ids.csv",
-    // });
-    // await runReAssessmentUpload();
+       // re-assessment assessment-admin
+    await injectStudentIds({
+      admissionPath: "./data/re_assessment.csv",
+      enquiryIdsPath: "./output/student_ids.xlsx",
+      outputPath: "./output/re_assessment_with_ids.csv",
+    });
+    await runReAssessmentUpload();
 
     // //comprehensive assessment-permission admin
     // await injectStudentIds({
@@ -214,13 +214,13 @@ const { runGenericSkillsUpload } = require('./services/uploadGenericTool');
     // });
     // await runPreVocationalChecklistUpload();
 
-    // generic skills-teacher
-    await injectStudentIds({
-      admissionPath: "./data/generic_tool.csv",
-      enquiryIdsPath: "./output/student_ids.xlsx",
-      outputPath: "./output/generic_tool_with_ids.csv",
-    });
-    await runGenericSkillsUpload();
+    // // generic skills-teacher
+    // await injectStudentIds({
+    //   admissionPath: "./data/generic_tool.csv",
+    //   enquiryIdsPath: "./output/student_ids.xlsx",
+    //   outputPath: "./output/generic_tool_with_ids.csv",
+    // });
+    // await runGenericSkillsUpload();
 
     // //medical-files-teacher
     // await runMedicalFilesUpload();
