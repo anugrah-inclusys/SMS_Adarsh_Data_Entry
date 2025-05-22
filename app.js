@@ -54,6 +54,7 @@ const {
 const {
   runPreVocationalChecklistUpload,
 } = require("./services/uploadPreVocationalChecklist");
+const { runGenericSkillsUpload } = require('./services/uploadGenericTool');
 const { runISSAUpload } = require("./services/uploadISSA");
 
 (async () => {
@@ -80,13 +81,13 @@ const { runISSAUpload } = require("./services/uploadISSA");
     // });
     // await runInitialAssessmentUpload();
 
-    //    // re-assessment assessment-admin
-    // await injectStudentIds({
-    //   admissionPath: "./data/re_assessment.csv",
-    //   enquiryIdsPath: "./output/student_ids.xlsx",
-    //   outputPath: "./output/re_assessment_with_ids.csv",
-    // });
-    // await runReAssessmentUpload();
+       // re-assessment assessment-admin
+    await injectStudentIds({
+      admissionPath: "./data/re_assessment.csv",
+      enquiryIdsPath: "./output/student_ids.xlsx",
+      outputPath: "./output/re_assessment_with_ids.csv",
+    });
+    await runReAssessmentUpload();
 
     // //comprehensive assessment-permission admin
     // await injectStudentIds({
@@ -207,14 +208,22 @@ const { runISSAUpload } = require("./services/uploadISSA");
     //   outputPath: "./output/life_skills_checklist_with_ids.csv",
     // });
     // await runLifeSkillsChecklistUpload();
-
-    // // pre_vocational_checklist-teacher
+   
+    // // PREVOCATIONAL _checklist-checklist-teacher
     // await injectStudentIds({
     //   admissionPath: "./data/pre_vocational_checklist.csv",
     //   enquiryIdsPath: "./output/student_ids.xlsx",
     //   outputPath: "./output/pre_vocational_checklist_with_ids.csv",
     // });
     // await runPreVocationalChecklistUpload();
+
+    // // generic skills-teacher
+    // await injectStudentIds({
+    //   admissionPath: "./data/generic_tool.csv",
+    //   enquiryIdsPath: "./output/student_ids.xlsx",
+    //   outputPath: "./output/generic_tool_with_ids.csv",
+    // });
+    // await runGenericSkillsUpload();
 
     // //medical-files-teacher
     // await runMedicalFilesUpload();
