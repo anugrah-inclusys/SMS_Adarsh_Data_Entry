@@ -293,7 +293,7 @@ async function uploadReAssessment(row) {
   try {
     await axios.put(
       `${API_BASE_URL}/students/re-assessment/submit/${assessmentId}`,
-      {},
+      { student_id: studentId },
       {
         headers: { Authorization: `Bearer ${JWT_TOKEN}` },
       }
@@ -306,8 +306,7 @@ async function uploadReAssessment(row) {
     );
   }
 
-
-    // Final Approval
+  // Final Approval
   try {
     await axios.post(
       `${API_BASE_URL}/students/re-assessment/approve/${studentId}`,
@@ -319,10 +318,6 @@ async function uploadReAssessment(row) {
     console.error(`❌ Approval failed`, err.response?.data || err.message);
   }
 }
-
-
-
-
 
 async function runReAssessmentUpload(
   filePath = "./output/re_assessment_with_ids.csv"

@@ -54,22 +54,23 @@ const {
 const {
   runPreVocationalChecklistUpload,
 } = require("./services/uploadPreVocationalChecklist");
+const { runISSAUpload } = require("./services/uploadISSA");
 
 (async () => {
   try {
-    //staff upload - admin/office_staff
-    await runStaffUpload();
+    // //staff upload - admin/office_staff
+    // await runStaffUpload();
 
-    // enquiry form-admin
-    await runEnquiryUpload();
+    // // enquiry form-admin
+    // await runEnquiryUpload();
 
-    // admission form-admin
-    await injectStudentIds({
-      admissionPath: "./data/enquiry.csv",
-      enquiryIdsPath: "./output/student_ids.xlsx",
-      outputPath: "./output/admission_with_ids.csv",
-    });
-    await runAdmissionUpload();
+    // // admission form-admin
+    // await injectStudentIds({
+    //   admissionPath: "./data/enquiry.csv",
+    //   enquiryIdsPath: "./output/student_ids.xlsx",
+    //   outputPath: "./output/admission_with_ids.csv",
+    // });
+    // await runAdmissionUpload();
 
     // //initial assessment-admin
     // await injectStudentIds({
@@ -233,6 +234,14 @@ const {
     //   outputPath: "./output/tdsc_with_ids.csv",
     // });
     // await runTdscFileUpload();
+
+    //ISSA -teacher
+    await injectStudentIds({
+      admissionPath: "./data/issa.csv",
+      enquiryIdsPath: "./output/student_ids.xlsx",
+      outputPath: "./output/issa_checklist_with_ids.csv",
+    });
+    await runISSAUpload();
 
     ////miscellaneous documents-teacher
     // await runMiscellaneousFilesUpload();

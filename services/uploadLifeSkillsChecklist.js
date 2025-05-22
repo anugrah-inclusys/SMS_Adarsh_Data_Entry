@@ -109,7 +109,7 @@ async function uploadLifeSkillsChecklist(row, tabsStructure, term = "term1") {
         headers: { Authorization: `Bearer ${JWT_TOKEN}` },
       }
     );
-    console.log(`🎉 Life skills checklist submitted for ${checklistId}`);
+    console.log(`🎉 Life skills checklist submitted for ${row["Student Name"]}`);
   } catch (err) {
     console.error(
       `❌ Final submission failed for ${checklistId}`,

@@ -5,7 +5,10 @@ const axios = require("axios");
 const FormData = require("form-data");
 const { API_BASE_URL, JWT_TOKEN } = require("../config/config");
 
-const Miscellaneous_FILES_DIR = path.join(__dirname, "../files/miscellaneous_documents");
+const Miscellaneous_FILES_DIR = path.join(
+  __dirname,
+  "../files/miscellaneous_documents"
+);
 const STUDENT_IDS_FILE = path.join(__dirname, "../output/student_ids.xlsx");
 
 function parseStudentMapping() {
@@ -76,6 +79,8 @@ async function runMiscellaneousFilesUpload() {
       console.warn(
         `⚠️ No student mapping found for admission ID: ${folderName}`
       );
+      fs.appendFileSync("skipped_miscellaneous_files.log", `${folderName}\n`);
+
       continue;
     }
 

@@ -50,7 +50,38 @@ function extractDataFields(row) {
   });
   return data;
 }
-
+async function uploadInitial(studentId, student, payload) {
+  let assessmentId;
+  try {
+    const res = await axios.post(
+      `${API_BASE_URL}/students/pre-vocational-check-list/autosave/${studentId}/1`,
+      payload,
+      { headers: { Authorization: `Bearer ${JWT_TOKEN}` } }
+    );
+    console.log(`✅ Step 1 uploaded for  ${student.name.first_name}`);
+    return (assessmentId = res.data.data._id);
+  } catch (err) {
+    console.error(`❌ Step 1 failed`, err.response?.data || err.message);
+    return;
+  }
+}
+async function uploadSubmit(assessmentId, student) {
+  try {
+    await axios.put(
+      `${API_BASE_URL}/students/pre-vocational-check-list/submit/${assessmentId}`,
+      {},
+      { headers: { Authorization: `Bearer ${JWT_TOKEN}` } }
+    );
+    console.log(
+      `🎉 Pre vocational Checklist submitted for  ${student.name.first_name}`
+    );
+  } catch (err) {
+    console.error(
+      `❌ Final Submission failed`,
+      err.response?.data || err.message
+    );
+  }
+}
 // Upload a single step (1-8)
 async function uploadStep(studentId, step, payload) {
   try {
@@ -110,7 +141,8 @@ async function runPreVocationalChecklistUpload() {
       ...dataFields,
       dateOfEvaluation,
     };
-
+    const assessmentId = await uploadInitial(studentId, student, basePayload);
+    await uploadSubmit(assessmentId, student);
     // Step 1-7: data fields
     for (let step = 1; step <= 7; step++) {
       await uploadStep(studentId, step, basePayload);

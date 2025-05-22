@@ -15,13 +15,13 @@ function parseStudentMapping() {
 
   const studentMap = {};
   rows.forEach((row) => {
-    if (row["ADMISSION_ID"] && row["STUDENT_ID"]) {
-      const normalizedAdmissionId = row["ADMISSION_ID"]
+    if (row["ADMISSION ID"] && row["STUDENT ID"]) {
+      const normalizedAdmissionId = row["ADMISSION ID"]
         .toString()
         .trim()
         .replace(/\//g, "-");
       studentMap[normalizedAdmissionId] = {
-        studentId: row["STUDENT_ID"],
+        studentId: row["STUDENT ID"],
         name: row["NAME"] || "",
       };
     }
@@ -36,8 +36,8 @@ function parseTdscDates() {
 
   const dateMap = {};
   rows.forEach((row) => {
-    if (row["ADMISSION_ID"] && row["tdsc.date"]) {
-      const normalizedAdmissionId = row["ADMISSION_ID"]
+    if (row["ADMISSION ID"] && row["tdsc.date"]) {
+      const normalizedAdmissionId = row["ADMISSION ID"]
         .toString()
         .trim()
         .replace(/\//g, "-");
@@ -47,7 +47,16 @@ function parseTdscDates() {
   return dateMap;
 }
 
-async function uploadTdscFile(studentId, filePath, fileName, date) {
+async function uploadTdscFile(
+  studentId,
+  filePath,
+  fileName = "Not Available",
+  date
+) {
+  if (!fs.existsSync(filePath)) {
+    console.error(`🚫 File not found: ${filePath}`);
+    return;
+  }
   const form = new FormData();
   form.append("file", fs.createReadStream(filePath));
   form.append("description", fileName);
