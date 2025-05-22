@@ -5,34 +5,31 @@ const axios = require("axios");
 const { API_BASE_URL, JWT_TOKEN } = require("../config/config");
 const { parseExcelDate } = require("./uploadHelper");
 
-
-const STUDENT_IDS_FILE = path.join(__dirname, "./output/student_ids.xlsx");
 const EXCEL_FILE = path.join(
   __dirname,
-  "./data/pre_vocational_checklist_with_ids.xlsx"
+  "../output/pre_vocational_checklist_with_ids.csv"
 );
 
-function parseStudentMapping() {
-  const workbook = xlsx.readFile(STUDENT_IDS_FILE);
-  const sheet = workbook.Sheets[workbook.SheetNames[0]];
-  const rows = xlsx.utils.sheet_to_json(sheet);
-
-  const studentMap = {};
-  rows.forEach((row) => {
-    const admissionId = String(row["ADMISSION ID"] || "")
-      .trim()
-      .replace(/\//g, "-");
-    if (admissionId && row["STUDENT ID"]) {
-      studentMap[admissionId] = {
-        studentId: row["STUDENT ID"],
-        firstName: (row["NAME"] || "").split(" ")[0],
-        lastName: (row["NAME"] || "").split(" ").slice(1).join(" "),
-      };
-    }
-  });
-  return studentMap;
+// Fetch full student record from /enquiry/:id
+async function fetchStudentDetails(studentId) {
+  try {
+    const res = await axios.get(
+      `${API_BASE_URL}/students/enquiry/${studentId}`,
+      {
+        headers: { Authorization: `Bearer ${JWT_TOKEN}` },
+      }
+    );
+    return res.data;
+  } catch (err) {
+    console.error(
+      `❌ Failed fetching student: ${studentId}`,
+      err.response?.data || err.message
+    );
+    return null;
+  }
 }
 
+// Extract all skills[0-11] into an array
 function getSkillsArray(row) {
   const skills = [];
   for (let i = 0; i <= 11; i++) {
@@ -42,6 +39,7 @@ function getSkillsArray(row) {
   return skills;
 }
 
+// Extract all field entries under prevocational_skills.data.*
 function extractDataFields(row) {
   const data = {};
   Object.keys(row).forEach((key) => {
@@ -53,18 +51,19 @@ function extractDataFields(row) {
   return data;
 }
 
-async function uploadStep(studentId, step, payload, method = "put") {
+// Upload a single step (1-8)
+async function uploadStep(studentId, step, payload) {
   try {
-    const res = await axios({
-      method,
-      url: `${API_BASE_URL}/students/pre-vocational-check-list/autosave/${studentId}/${step}`,
-      headers: {
-        Authorization: `Bearer ${JWT_TOKEN}`,
-      },
-      data: payload,
-    });
-    console.log(`✅ Step ${step} uploaded for student ${studentId}`);
- 
+    const res = await axios.put(
+      `${API_BASE_URL}/students/pre-vocational-check-list/autosave/${studentId}/${step}`,
+      payload,
+      {
+        headers: {
+          Authorization: `Bearer ${JWT_TOKEN}`,
+        },
+      }
+    );
+    console.log(`✅ Step ${step} uploaded for ${studentId}`);
   } catch (err) {
     console.error(
       `❌ Failed at step ${step} for ${studentId}`,
@@ -73,8 +72,8 @@ async function uploadStep(studentId, step, payload, method = "put") {
   }
 }
 
+// Main runner
 async function runPreVocationalChecklistUpload() {
-  const studentMap = parseStudentMapping();
   const workbook = xlsx.readFile(EXCEL_FILE, {
     cellText: false,
     cellDates: true,
@@ -84,36 +83,40 @@ async function runPreVocationalChecklistUpload() {
   const rows = xlsx.utils.sheet_to_json(sheet);
 
   for (const row of rows) {
-    const rawId = String(row["STUDENT ID"] || "")
-      .trim()
-      .replace(/\//g, "-");
-    const studentData = studentMap[rawId];
-    if (!studentData) {
-      console.warn(`⚠️ No mapping found for ${rawId}`);
+    const studentId = String(row["STUDENT ID"] || "").trim();
+    if (!studentId) {
+      console.warn(
+        `⚠️ Skipping row without student_id: ${row["Student Name"]}`
+      );
       continue;
     }
 
-    const { studentId, firstName, lastName } = studentData;
-    const dateOfEvaluation = parseExcelDate(
-      row["prevocational_skills.data.dateOfEvaluation"]
-    );
+    const student = await fetchStudentDetails(studentId);
+    if (!student) continue;
+
+    const firstName = student?.name?.first_name || "";
+    const lastName = student?.name?.last_name || "";
     const ageGroup = row["prevocational_skills.ageGroup"] || "";
     const skills = getSkillsArray(row);
     const dataFields = extractDataFields(row);
+    const dateOfEvaluation = parseExcelDate(
+      row["prevocational_skills.data.dateOfEvaluation"]
+    );
 
     const basePayload = {
       student_id: studentId,
       firstName,
       lastName,
       ...dataFields,
+      dateOfEvaluation,
     };
 
-    // Steps 1-7 use data fields
+    // Step 1-7: data fields
     for (let step = 1; step <= 7; step++) {
       await uploadStep(studentId, step, basePayload);
     }
 
-    // Step 8 for ageGroup and skills
+    // Step 8: skills + age group
     await uploadStep(studentId, 8, { age: ageGroup, skills });
   }
 
