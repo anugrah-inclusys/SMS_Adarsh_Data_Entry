@@ -237,7 +237,11 @@ async function uploadAdmission(row, studentId) {
       console.log(`ℹ️ No Step 6 files found for ${studentId}`);
       return;
     }
-    const requiredFiles = ["aadhaar", "photo"];
+    const requiredFiles = [
+      "aadhaar",
+      "disability_certificate",
+      "birth_certificate",
+    ];
     for (const req of requiredFiles) {
       if (!fileMap[req]) {
         console.warn(`⚠️ Missing required file '${req}' for ${studentId}`);

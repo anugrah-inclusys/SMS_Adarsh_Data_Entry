@@ -2,6 +2,8 @@
 files
 data
 output
+test
+actual
 # Logs
 logs
 *.log

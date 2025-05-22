@@ -1,62 +1,64 @@
-const { runEnquiryUpload } = require('./services/uploadEnquiry');
-const { runStaffUpload } = require('./services/uploadStaff');
-const { runAdmissionUpload } = require('./services/uploadAdmission');
+const { runEnquiryUpload } = require("./services/uploadEnquiry");
+const { runStaffUpload } = require("./services/uploadStaff");
+const { runAdmissionUpload } = require("./services/uploadAdmission");
 const {
   runSpecialEducationAssessmentUpload,
-} = require('./services/uploadSpecialEducationAssessment');
+} = require("./services/uploadSpecialEducationAssessment");
 const {
   runPhysiotherapyAssessmentUpload,
-} = require('./services/uploadPhysioTherapyAssessment');
+} = require("./services/uploadPhysioTherapyAssessment");
 const {
   runOccupationalTherapyAssessmentUpload,
-} = require('./services/uploadOccupationaltherapyAssessment');
-const { injectStudentIds } = require('./services/injectStudentIdIntoAdmission');
+} = require("./services/uploadOccupationaltherapyAssessment");
+const { injectStudentIds } = require("./services/injectStudentIdIntoAdmission");
 const {
   runInitialAssessmentUpload,
-} = require('./services/uploadInitialAssessment');
+} = require("./services/uploadInitialAssessment");
 const {
   runPsychologyAssessmentUpload,
-} = require('./services/uploadPsychologyAssessment');
+} = require("./services/uploadPsychologyAssessment");
 const {
   runSpeechAssessmentUpload,
-} = require('./services/uploadSpeechAssessment');
+} = require("./services/uploadSpeechAssessment");
 const {
   runSpecialEducationTermUpload,
-} = require('./services/uploadSpecialEducationTerm');
-const { runEvaluationUpload } = require('./services/uploadEvaluation');
+} = require("./services/uploadSpecialEducationTerm");
+const { runEvaluationUpload } = require("./services/uploadEvaluation");
 const {
   runSocialSkillsChecklistUpload,
-} = require('./services/uploadSocialSkillsChecklist');
-const { runADLChecklistUpload } = require('./services/uploadADLChecklist');
+} = require("./services/uploadSocialSkillsChecklist");
+const { runADLChecklistUpload } = require("./services/uploadADLChecklist");
 const {
   runSensoryChecklistUpload,
-} = require('./services/uploadSensoryChecklist');
+} = require("./services/uploadSensoryChecklist");
 const {
   runLifeSkillsChecklistUpload,
-} = require('./services/uploadLifeSkillsChecklist');
+} = require("./services/uploadLifeSkillsChecklist");
 const {
   runComprehensiveAssessmentUpload,
-} = require('./services/uploadComprehensiveAssessment');
-const { runTechnicalTermUpload } = require('./services/uploadTechnicalTerm');
+} = require("./services/uploadComprehensiveAssessment");
+const { runTechnicalTermUpload } = require("./services/uploadTechnicalTerm");
 const {
   runTechnicalTermReportUpload,
-} = require('./services/uploadTechnicalTermReport.JS');
+} = require("./services/uploadTechnicalTermReport.JS");
 const {
   runSpecialEducationReportUpload,
-} = require('./services/uploadSpecialEducationReport');
-const { runMedicalFilesUpload } = require('./services/uploadMedicalFiles');
-const { runLestFileUpload } = require('./services/uploadLEST');
-const { runTdscFileUpload } = require('./services/uploadTDSC');
-const { runReAssessmentUpload } = require('./services/uploadReAssessment');
+} = require("./services/uploadSpecialEducationReport");
+const { runMedicalFilesUpload } = require("./services/uploadMedicalFiles");
+const { runLestFileUpload } = require("./services/uploadLEST");
+const { runTdscFileUpload } = require("./services/uploadTDSC");
+const { runReAssessmentUpload } = require("./services/uploadReAssessment");
 const {
   runMiscellaneousFilesUpload,
-} = require('./services/uploadMiscellaneousFiles');
-const { runPreVocationalChecklistUpload } = require('./services/uploadPreVocationalChecklist');
+} = require("./services/uploadMiscellaneousFiles");
+const {
+  runPreVocationalChecklistUpload,
+} = require("./services/uploadPreVocationalChecklist");
 
 (async () => {
   try {
-    // //staff upload - admin/office_staff
-    // await runStaffUpload();
+    //staff upload - admin/office_staff
+    await runStaffUpload();
 
     // enquiry form-admin
     await runEnquiryUpload();
@@ -204,14 +206,14 @@ const { runPreVocationalChecklistUpload } = require('./services/uploadPreVocatio
     //   outputPath: "./output/life_skills_checklist_with_ids.csv",
     // });
     // await runLifeSkillsChecklistUpload();
-   
-    // life_skills_checklist-checklist-teacher
-    await injectStudentIds({
-      admissionPath: "./data/pre_vocational_checklist.csv",
-      enquiryIdsPath: "./output/student_ids.xlsx",
-      outputPath: "./output/pre_vocational_checklist_with_ids.csv",
-    });
-    await runPreVocationalChecklistUpload();
+
+    // // pre_vocational_checklist-teacher
+    // await injectStudentIds({
+    //   admissionPath: "./data/pre_vocational_checklist.csv",
+    //   enquiryIdsPath: "./output/student_ids.xlsx",
+    //   outputPath: "./output/pre_vocational_checklist_with_ids.csv",
+    // });
+    // await runPreVocationalChecklistUpload();
 
     // //medical-files-teacher
     // await runMedicalFilesUpload();
@@ -235,11 +237,8 @@ const { runPreVocationalChecklistUpload } = require('./services/uploadPreVocatio
     ////miscellaneous documents-teacher
     // await runMiscellaneousFilesUpload();
 
-
-
-
-    console.log('🎉 Upload complete!');
+    console.log("🎉 Upload complete!");
   } catch (err) {
-    console.error('🚨 Upload failed!', err);
+    console.error("🚨 Upload failed!", err);
   }
 })();
