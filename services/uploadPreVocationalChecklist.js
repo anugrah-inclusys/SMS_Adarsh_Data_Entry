@@ -3,7 +3,8 @@ const path = require("path");
 const xlsx = require("xlsx");
 const axios = require("axios");
 const { API_BASE_URL, JWT_TOKEN } = require("../config/config");
-const { parseFullName, parseExcelDate, delay } = require("../utils/helpers");
+const { parseExcelDate } = require("./uploadHelper");
+
 
 const STUDENT_IDS_FILE = path.join(__dirname, "./output/student_ids.xlsx");
 const EXCEL_FILE = path.join(
@@ -63,7 +64,7 @@ async function uploadStep(studentId, step, payload, method = "put") {
       data: payload,
     });
     console.log(`✅ Step ${step} uploaded for student ${studentId}`);
-    await delay(300); // throttle to avoid overwhelming server
+ 
   } catch (err) {
     console.error(
       `❌ Failed at step ${step} for ${studentId}`,

@@ -52,22 +52,23 @@ const {
   runMiscellaneousFilesUpload,
 } = require('./services/uploadMiscellaneousFiles');
 const { runPreVocationalChecklistUpload } = require('./services/uploadPreVocationalChecklist');
+const { runGenericSkillsUpload } = require('./services/uploadGenericTool');
 
 (async () => {
   try {
     // //staff upload - admin/office_staff
     // await runStaffUpload();
 
-    // enquiry form-admin
-    await runEnquiryUpload();
+    // // enquiry form-admin
+    // await runEnquiryUpload();
 
-    // admission form-admin
-    await injectStudentIds({
-      admissionPath: "./data/enquiry.csv",
-      enquiryIdsPath: "./output/student_ids.xlsx",
-      outputPath: "./output/admission_with_ids.csv",
-    });
-    await runAdmissionUpload();
+    // // admission form-admin
+    // await injectStudentIds({
+    //   admissionPath: "./data/enquiry.csv",
+    //   enquiryIdsPath: "./output/student_ids.xlsx",
+    //   outputPath: "./output/admission_with_ids.csv",
+    // });
+    // await runAdmissionUpload();
 
     // //initial assessment-admin
     // await injectStudentIds({
@@ -205,13 +206,21 @@ const { runPreVocationalChecklistUpload } = require('./services/uploadPreVocatio
     // });
     // await runLifeSkillsChecklistUpload();
    
-    // life_skills_checklist-checklist-teacher
+    // // PREVOCATIONAL _checklist-checklist-teacher
+    // await injectStudentIds({
+    //   admissionPath: "./data/pre_vocational_checklist.csv",
+    //   enquiryIdsPath: "./output/student_ids.xlsx",
+    //   outputPath: "./output/pre_vocational_checklist_with_ids.csv",
+    // });
+    // await runPreVocationalChecklistUpload();
+
+    // generic skills-teacher
     await injectStudentIds({
-      admissionPath: "./data/pre_vocational_checklist.csv",
+      admissionPath: "./data/generic_tool.csv",
       enquiryIdsPath: "./output/student_ids.xlsx",
-      outputPath: "./output/pre_vocational_checklist_with_ids.csv",
+      outputPath: "./output/generic_tool_with_ids.csv",
     });
-    await runPreVocationalChecklistUpload();
+    await runGenericSkillsUpload();
 
     // //medical-files-teacher
     // await runMedicalFilesUpload();
