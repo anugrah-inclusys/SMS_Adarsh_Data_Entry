@@ -12,12 +12,18 @@ const { API_BASE_URL, JWT_TOKEN, HEADERS } = require("../config/config");
 
 async function fetchStudentDetails(studentId) {
   try {
-    const res = await axios.get(`${API_BASE_URL}/students/enquiry/${studentId}`, {
-      headers: { Authorization: `Bearer ${JWT_TOKEN}` },
-    });
+    const res = await axios.get(
+      `${API_BASE_URL}/students/enquiry/${studentId}`,
+      {
+        headers: { Authorization: `Bearer ${JWT_TOKEN}` },
+      }
+    );
     return res.data;
   } catch (err) {
-    console.error(`❌ Failed fetching student: ${studentId}`, err.response?.data || err.message);
+    console.error(
+      `❌ Failed fetching student: ${studentId}`,
+      err.response?.data || err.message
+    );
     return null;
   }
 }
@@ -29,40 +35,41 @@ function mapStep1(row, student) {
     student_id: row["student_id"] || student?._id || "",
     name:
       `${student?.name?.first_name} ${student?.name?.last_name}` ||
-      `${first_name} ${last_name}` || "",
+      `${first_name} ${last_name}` ||
+      "",
     age: row["age"] || student?.age || "",
     dob: parseExcelDate(row["dob"]) || student?.date_of_birth || null,
-   
   };
 }
 
 // Step 2 mapping
-function mapStep2(row) {
-    return {
-        createdAt: parseExcelDate(row["createdAt"]) ||  "",
-      psychology: {
-        presentLevel: row["psychology.presentLevel"] || "",
-        longTermGoal: row["psychology.longTermGoal"] || "",
-        shortTermGoal: row["psychology.shortTermGoal"] || "",
-      },
-      physiotherapy: {
-        presentLevel: row["physiotherapy.presentLevel"] || "",
-        longTermGoal: row["physiotherapy.longTermGoal"] || "",
-        shortTermGoal: row["physiotherapy.shortTermGoal"] || "",
-      },
-      speechtherapy: {
-        presentLevel: row["speechtherapy.presentLevel"] || "",
-        longTermGoal: row["speechtherapy.longTermGoal"] || "",
-        shortTermGoal: row["speechtherapy.shortTermGoal"] || "",
-      },
-      occupationaltherapy: {
-        presentLevel: row["occupationaltherapy.presentLevel"] || "",
-        longTermGoal: row["occupationaltherapy.longTermGoal"] || "",
-        shortTermGoal: row["occupationaltherapy.shortTermGoal"] || "",
-      },
-    };
-  }
-  
+function mapStep2(row, student) {
+  return {
+    student_id: row["student_id"] || student?._id || "",
+    createdAt: parseExcelDate(row["createdAt"]) || "",
+    psychology: {
+      presentLevel: row["psychology.presentLevel"] || "",
+      longTermGoal: row["psychology.longTermGoal"] || "",
+      shortTermGoal: row["psychology.shortTermGoal"] || "",
+    },
+    physiotherapy: {
+      presentLevel: row["physiotherapy.presentLevel"] || "",
+      longTermGoal: row["physiotherapy.longTermGoal"] || "",
+      shortTermGoal: row["physiotherapy.shortTermGoal"] || "",
+    },
+    speechtherapy: {
+      presentLevel: row["speechtherapy.presentLevel"] || "",
+      longTermGoal: row["speechtherapy.longTermGoal"] || "",
+      shortTermGoal: row["speechtherapy.shortTermGoal"] || "",
+    },
+    occupationaltherapy: {
+      presentLevel: row["occupationaltherapy.presentLevel"] || "",
+      longTermGoal: row["occupationaltherapy.longTermGoal"] || "",
+      shortTermGoal: row["occupationaltherapy.shortTermGoal"] || "",
+    },
+  };
+}
+
 async function uploadTechnicalTerm(row) {
   const studentId = row["STUDENT ID"];
   const term = String(row["term"] || "").trim();
@@ -75,7 +82,7 @@ async function uploadTechnicalTerm(row) {
   const student = await fetchStudentDetails(studentId);
   if (!student) return;
 
-  const steps = [mapStep1(row, student), mapStep2(row)];
+  const steps = [mapStep1(row, student), mapStep2(row, student)];
 
   let assessmentId;
 
@@ -91,13 +98,19 @@ async function uploadTechnicalTerm(row) {
     assessmentId = res.data.data._id;
     console.log(`✅ Step 1 created Technical Term Assessment ${assessmentId}`);
   } catch (err) {
-    console.error(`❌ Step 1 creation failed`, err.response?.data || err.message);
+    console.error(
+      `❌ Step 1 creation failed`,
+      err.response?.data || err.message
+    );
     return;
   }
 
-
   // Step 2: File Upload
-  const filePaths = getFilesForRow(row, "ADMISSION ID", "./files/technical_term");
+  const filePaths = getFilesForRow(
+    row,
+    "ADMISSION ID",
+    "./files/technical_term"
+  );
   if (filePaths.length > 0) {
     const form = new FormData();
     for (const filePath of filePaths) {
@@ -113,7 +126,10 @@ async function uploadTechnicalTerm(row) {
       );
       console.log(`✅ Step 3 files uploaded for ${assessmentId}`);
     } catch (err) {
-      console.error(`❌ Step 3 file upload failed`, err.response?.data || err.message);
+      console.error(
+        `❌ Step 3 file upload failed`,
+        err.response?.data || err.message
+      );
     }
   } else {
     console.log(`ℹ️ No files found for Step 3 for ${assessmentId}`);
@@ -130,11 +146,16 @@ async function uploadTechnicalTerm(row) {
     );
     console.log(`🎉 Technical Term Assessment submitted for ${assessmentId}`);
   } catch (err) {
-    console.error(`❌ Final submission failed`, err.response?.data || err.message);
+    console.error(
+      `❌ Final submission failed`,
+      err.response?.data || err.message
+    );
   }
 }
 
-async function runTechnicalTermUpload(filePath = "./output/technical_term_assessment_with_ids.csv") {
+async function runTechnicalTermUpload(
+  filePath = "./output/technical_term_assessment_with_ids.csv"
+) {
   const workbook = xlsx.readFile(filePath, {
     cellText: false,
     cellDates: true,

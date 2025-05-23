@@ -17,13 +17,13 @@ function parseStudentMapping() {
 
   const studentMap = {};
   rows.forEach((row) => {
-    if (row["ADMISSION ID"] && row["STUDENT ID"]) {
-      const normalizedAdmissionId = row["ADMISSION ID"]
+    if (row["ADMISSION_ID"] && row["STUDENT_ID"]) {
+      const normalizedAdmissionId = row["ADMISSION_ID"]
         .toString()
         .trim()
         .replace(/\//g, "-");
       studentMap[normalizedAdmissionId] = {
-        studentId: row["STUDENT ID"],
+        studentId: row["STUDENT_ID"],
         name: row["NAME"] || "",
       };
     }

@@ -4,6 +4,7 @@ const xlsx = require("xlsx");
 const axios = require("axios");
 const FormData = require("form-data");
 const { API_BASE_URL, JWT_TOKEN } = require("../config/config");
+const { excelDateToYMD } = require("./uploadHelper");
 
 const TDSC_DIR = path.join(__dirname, "../files/tdsc");
 const STUDENT_IDS_FILE = path.join(__dirname, "../output/student_ids.xlsx");
