@@ -279,7 +279,7 @@ async function uploadInitialAssessment(row) {
         }
       );
       console.log(
-        `📁 Step 2 with file uploaded for ${student.name.first_name}`
+        `📁 Step 2 with file uploaded (Pedigree) for ${student.name.first_name}`
       );
     } catch (err) {
       console.error(
@@ -298,7 +298,7 @@ async function uploadInitialAssessment(row) {
         headers: { Authorization: `Bearer ${JWT_TOKEN}` },
       }
     );
-    console.log(`🎉 Assessment submitted for ${student.name.first_name}`);
+    console.log(`🎉 Initial Assessment submitted for ${student.name.first_name}`);
   } catch (err) {
     console.error(
       `❌ Final Submission failed`,

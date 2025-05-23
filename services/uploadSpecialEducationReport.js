@@ -112,7 +112,7 @@ async function uploadSpecialEducationReport(row) {
   const term = String(row['term'] || '').trim();
 
   if (!studentId || !term) {
-    console.warn(`⚠️ Skipping row: Missing student_id or term`);
+    console.warn(`⚠️ Skipping row without student_id: ${row["Student Name"]}`);
     return;
   }
 

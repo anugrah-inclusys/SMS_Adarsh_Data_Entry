@@ -51,7 +51,16 @@ function parseLestDates() {
   return dateMap;
 }
 
-async function uploadLestFile(studentId, filePath, fileName, date) {
+async function uploadLestFile(
+  studentId,
+  filePath,
+  fileName = "Not Available",
+  date
+) {
+  if (!fs.existsSync(filePath)) {
+    console.error(`🚫 File not found: ${filePath}`);
+    return;
+  }
   const form = new FormData();
   form.append("file", fs.createReadStream(filePath));
   form.append("description", fileName);
@@ -89,12 +98,18 @@ async function runLestFileUpload() {
     console.log(`🔍 Checking file: ${file}`);
     if (!matchedAdmissionId) {
       console.warn(`⚠️ No matching admission ID found in file name: ${file}`);
+      fs.appendFileSync("skipped_lest_files.log", `${file}\n`);
       continue;
     }
 
     const studentData = studentMap[matchedAdmissionId];
     const lestDate = dateMap[matchedAdmissionId];
     const filePath = path.join(LEST_DIR, file);
+    if (!fs.existsSync(filePath)) {
+      console.warn(`❗ File does not exist at path: ${filePath}`);
+      continue;
+    }
+
     await uploadLestFile(studentData.studentId, filePath, file, lestDate);
   }
 

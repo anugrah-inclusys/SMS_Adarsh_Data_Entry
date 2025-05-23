@@ -54,17 +54,18 @@ const {
 const {
   runPreVocationalChecklistUpload,
 } = require("./services/uploadPreVocationalChecklist");
-const { runGenericSkillsUpload } = require('./services/uploadGenericTool');
+const { runGenericSkillsUpload } = require("./services/uploadGenericTool");
+const { runISSAUpload } = require("./services/uploadISSA");
 
 (async () => {
   try {
-    //staff upload - admin/office_staff
-    await runStaffUpload();
+    // // Staff upload - admin/office_staff
+    // await runStaffUpload();
 
-    // // enquiry form-admin
+    // // Enquiry form-admin
     // await runEnquiryUpload();
 
-    // // admission form-admin
+    // // Admission form-admin
     // await injectStudentIds({
     //   admissionPath: "./data/enquiry.csv",
     //   enquiryIdsPath: "./output/student_ids.xlsx",
@@ -72,7 +73,7 @@ const { runGenericSkillsUpload } = require('./services/uploadGenericTool');
     // });
     // await runAdmissionUpload();
 
-    // //initial assessment-admin
+    // // Initial assessment-admin
     // await injectStudentIds({
     //   admissionPath: "./data/initial_assessment.csv",
     //   enquiryIdsPath: "./output/student_ids.xlsx",
@@ -80,15 +81,15 @@ const { runGenericSkillsUpload } = require('./services/uploadGenericTool');
     // });
     // await runInitialAssessmentUpload();
 
-       // re-assessment assessment-admin
-    await injectStudentIds({
-      admissionPath: "./data/re_assessment.csv",
-      enquiryIdsPath: "./output/student_ids.xlsx",
-      outputPath: "./output/re_assessment_with_ids.csv",
-    });
-    await runReAssessmentUpload();
+    // // Re-assessment assessment-admin
+    // await injectStudentIds({
+    //   admissionPath: "./data/re_assessment.csv",
+    //   enquiryIdsPath: "./output/student_ids.xlsx",
+    //   outputPath: "./output/re_assessment_with_ids.csv",
+    // });
+    // await runReAssessmentUpload();
 
-    // //comprehensive assessment-permission admin
+    // // Comprehensive assessment-permission admin
     // await injectStudentIds({
     //   admissionPath: './data/comprehensive.csv',
     //   enquiryIdsPath: './output/student_ids.xlsx',
@@ -96,7 +97,7 @@ const { runGenericSkillsUpload } = require('./services/uploadGenericTool');
     // });
     // await runComprehensiveAssessmentUpload();
 
-    // //physiotherapy assessment-therapist
+    // // Physiotherapy assessment-therapist
     // await injectStudentIds({
     //   admissionPath: "./data/physiotherapy_assessment.csv",
     //   enquiryIdsPath: "./output/student_ids.xlsx",
@@ -104,7 +105,7 @@ const { runGenericSkillsUpload } = require('./services/uploadGenericTool');
     // });
     // await runPhysiotherapyAssessmentUpload()
 
-    // //occupational therapy assessment assessment-therapist
+    // // Occupational therapy assessment assessment-therapist
     // await injectStudentIds({
     //   admissionPath: './data/occupational_therapy_assessment.csv',
     //   enquiryIdsPath: './output/student_ids.xlsx',
@@ -112,7 +113,7 @@ const { runGenericSkillsUpload } = require('./services/uploadGenericTool');
     // });
     // await runOccupationalTherapyAssessmentUpload();
 
-    // //psychology assessment assessment-therapist
+    // // Psychology assessment assessment-therapist
     // await injectStudentIds({
     //   admissionPath: './data/psychology_assessement.csv',
     //   enquiryIdsPath: './output/student_ids.xlsx',
@@ -120,7 +121,7 @@ const { runGenericSkillsUpload } = require('./services/uploadGenericTool');
     // });
     // await runPsychologyAssessmentUpload();
 
-    // //speech therapy assessment assessment-therapist
+    // // Speech therapy assessment assessment-therapist
     // await injectStudentIds({
     //   admissionPath: './data/SpeechAssessment.csv',
     //   enquiryIdsPath: './output/student_ids.xlsx',
@@ -128,7 +129,7 @@ const { runGenericSkillsUpload } = require('./services/uploadGenericTool');
     // });
     // await runSpeechAssessmentUpload();
 
-    // //Technical term assessment-therapist
+    // // Technical term assessment-therapist
     // await injectStudentIds({
     //   admissionPath: './data/technicalTermAssessment.csv',
     //   enquiryIdsPath: './output/student_ids.xlsx',
@@ -136,7 +137,7 @@ const { runGenericSkillsUpload } = require('./services/uploadGenericTool');
     // });
     // await runTechnicalTermUpload();
 
-    // //Technical term report-therapist
+    // // Technical term report-therapist
     // await injectStudentIds({
     //   admissionPath: './data/technicalTermReport.csv',
     //   enquiryIdsPath: './output/student_ids.xlsx',
@@ -144,7 +145,7 @@ const { runGenericSkillsUpload } = require('./services/uploadGenericTool');
     // });
     // await runTechnicalTermReportUpload();
 
-    // // special education term assessment-teacher
+    // // Special education term assessment-teacher
     // await injectStudentIds({
     //   admissionPath: "./data/special_education_term.csv",
     //   enquiryIdsPath: "./output/student_ids.xlsx",
@@ -152,7 +153,7 @@ const { runGenericSkillsUpload } = require('./services/uploadGenericTool');
     // });
     // await runSpecialEducationTermUpload()
 
-    // //special education term report-teacher
+    // // Special education term report-teacher
     // await injectStudentIds({
     //   admissionPath: './data/specialEducationTermReport.csv',
     //   enquiryIdsPath: './output/student_ids.xlsx',
@@ -160,7 +161,7 @@ const { runGenericSkillsUpload } = require('./services/uploadGenericTool');
     // });
     // await runSpecialEducationReportUpload();
 
-    // // special education assessment-teacher
+    // // Special education assessment-teacher
     // await injectStudentIds({
     //   admissionPath: "./data/special_education_assessment.csv",
     //   enquiryIdsPath: "./output/student_ids.xlsx",
@@ -168,7 +169,7 @@ const { runGenericSkillsUpload } = require('./services/uploadGenericTool');
     // });
     // await runSpecialEducationAssessmentUpload()
 
-    // //evaluation form-teacher
+    // // Evaluation form-teacher
     // await injectStudentIds({
     //   admissionPath: "./data/evaluation_form.csv",
     //   enquiryIdsPath: "./output/student_ids.xlsx",
@@ -176,7 +177,7 @@ const { runGenericSkillsUpload } = require('./services/uploadGenericTool');
     // });
     // await runEvaluationUpload();
 
-    // //social-skills-checklist-teacher
+    // // Social-skills-checklist-teacher
     // await injectStudentIds({
     //   admissionPath: "./data/social_skills_checklist.csv",
     //   enquiryIdsPath: "./output/student_ids.xlsx",
@@ -184,7 +185,7 @@ const { runGenericSkillsUpload } = require('./services/uploadGenericTool');
     // });
     // await runSocialSkillsChecklistUpload();
 
-    // // adl-checklist-teacher
+    // // ADL-checklist-teacher
     // await injectStudentIds({
     //   admissionPath: "./data/adl_checklist.csv",
     //   enquiryIdsPath: "./output/student_ids.xlsx",
@@ -192,7 +193,7 @@ const { runGenericSkillsUpload } = require('./services/uploadGenericTool');
     // });
     // await runADLChecklistUpload();
 
-    // // sensory_dysfunction-checklist-teacher
+    // // Sensory_dysfunction-checklist-teacher
     // await injectStudentIds({
     //   admissionPath: "./data/sensory_dysfunction.csv",
     //   enquiryIdsPath: "./output/student_ids.xlsx",
@@ -200,14 +201,14 @@ const { runGenericSkillsUpload } = require('./services/uploadGenericTool');
     // });
     // await runSensoryChecklistUpload();
 
-    // // life_skills_checklist-checklist-teacher
+    // // Life_skills_checklist-checklist-teacher
     // await injectStudentIds({
     //   admissionPath: "./data/life_skills_checklist.csv",
     //   enquiryIdsPath: "./output/student_ids.xlsx",
     //   outputPath: "./output/life_skills_checklist_with_ids.csv",
     // });
     // await runLifeSkillsChecklistUpload();
-   
+
     // // PREVOCATIONAL _checklist-checklist-teacher
     // await injectStudentIds({
     //   admissionPath: "./data/pre_vocational_checklist.csv",
@@ -216,7 +217,7 @@ const { runGenericSkillsUpload } = require('./services/uploadGenericTool');
     // });
     // await runPreVocationalChecklistUpload();
 
-    // // generic skills-teacher
+    // // Generic skills-teacher
     // await injectStudentIds({
     //   admissionPath: "./data/generic_tool.csv",
     //   enquiryIdsPath: "./output/student_ids.xlsx",
@@ -224,10 +225,7 @@ const { runGenericSkillsUpload } = require('./services/uploadGenericTool');
     // });
     // await runGenericSkillsUpload();
 
-    // //medical-files-teacher
-    // await runMedicalFilesUpload();
-
-    // //LEST -teacher
+    // // LEST -teacher
     // await injectStudentIds({
     //   admissionPath: "./data/lest.csv",
     //   enquiryIdsPath: "./output/student_ids.xlsx",
@@ -235,7 +233,7 @@ const { runGenericSkillsUpload } = require('./services/uploadGenericTool');
     // });
     // await runLestFileUpload();
 
-    // //TDSC -teacher
+    // // TDSC -teacher
     // await injectStudentIds({
     //   admissionPath: "./data/tdsc.csv",
     //   enquiryIdsPath: "./output/student_ids.xlsx",
@@ -243,7 +241,18 @@ const { runGenericSkillsUpload } = require('./services/uploadGenericTool');
     // });
     // await runTdscFileUpload();
 
-    ////miscellaneous documents-teacher
+    // // ISSA -teacher
+    // await injectStudentIds({
+    //   admissionPath: "./data/issa.csv",
+    //   enquiryIdsPath: "./output/student_ids.xlsx",
+    //   outputPath: "./output/issa_checklist_with_ids.csv",
+    // });
+    // await runISSAUpload();
+
+    // // medical-files-teacher
+    // await runMedicalFilesUpload();
+
+    // // miscellaneous documents-teacher
     // await runMiscellaneousFilesUpload();
 
     console.log("🎉 Upload complete!");

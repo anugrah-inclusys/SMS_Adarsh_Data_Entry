@@ -77,6 +77,7 @@ async function runMedicalFilesUpload() {
       console.warn(
         `⚠️ No student mapping found for admission ID: ${folderName}`
       );
+      fs.appendFileSync("skipped_medical_files.log", `${folderName}\n`);
       continue;
     }
 

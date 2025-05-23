@@ -4,6 +4,7 @@ const xlsx = require("xlsx");
 const axios = require("axios");
 const FormData = require("form-data");
 const { API_BASE_URL, JWT_TOKEN } = require("../config/config");
+const { excelDateToYMD } = require("./uploadHelper");
 
 const TDSC_DIR = path.join(__dirname, "../files/tdsc");
 const STUDENT_IDS_FILE = path.join(__dirname, "../output/student_ids.xlsx");
@@ -15,13 +16,13 @@ function parseStudentMapping() {
 
   const studentMap = {};
   rows.forEach((row) => {
-    if (row["ADMISSION_ID"] && row["STUDENT_ID"]) {
-      const normalizedAdmissionId = row["ADMISSION_ID"]
+    if (row["ADMISSION ID"] && row["STUDENT ID"]) {
+      const normalizedAdmissionId = row["ADMISSION ID"]
         .toString()
         .trim()
         .replace(/\//g, "-");
       studentMap[normalizedAdmissionId] = {
-        studentId: row["STUDENT_ID"],
+        studentId: row["STUDENT ID"],
         name: row["NAME"] || "",
       };
     }
@@ -36,8 +37,8 @@ function parseTdscDates() {
 
   const dateMap = {};
   rows.forEach((row) => {
-    if (row["ADMISSION_ID"] && row["tdsc.date"]) {
-      const normalizedAdmissionId = row["ADMISSION_ID"]
+    if (row["ADMISSION ID"] && row["tdsc.date"]) {
+      const normalizedAdmissionId = row["ADMISSION ID"]
         .toString()
         .trim()
         .replace(/\//g, "-");
@@ -47,7 +48,16 @@ function parseTdscDates() {
   return dateMap;
 }
 
-async function uploadTdscFile(studentId, filePath, fileName, date) {
+async function uploadTdscFile(
+  studentId,
+  filePath,
+  fileName = "Not Available",
+  date
+) {
+  if (!fs.existsSync(filePath)) {
+    console.error(`🚫 File not found: ${filePath}`);
+    return;
+  }
   const form = new FormData();
   form.append("file", fs.createReadStream(filePath));
   form.append("description", fileName);
