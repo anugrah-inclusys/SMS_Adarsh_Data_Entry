@@ -81,13 +81,13 @@ const { runISSAUpload } = require("./services/uploadISSA");
     // });
     // await runInitialAssessmentUpload();
 
-    // // Re-assessment assessment-admin
-    // await injectStudentIds({
-    //   admissionPath: "./data/re_assessment.csv",
-    //   enquiryIdsPath: "./output/student_ids.xlsx",
-    //   outputPath: "./output/re_assessment_with_ids.csv",
-    // });
-    // await runReAssessmentUpload();
+    // Re-assessment assessment-admin
+    await injectStudentIds({
+      admissionPath: "./data/re_assessment.csv",
+      enquiryIdsPath: "./output/student_ids.xlsx",
+      outputPath: "./output/re_assessment_with_ids.csv",
+    });
+    await runReAssessmentUpload();
 
     // // Comprehensive assessment-permission admin
     // await injectStudentIds({
