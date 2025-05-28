@@ -3,12 +3,13 @@ const xlsx = require("xlsx");
 const fs = require("fs");
 const path = require("path");
 const FormData = require("form-data");
-const { API_BASE_URL, JWT_TOKEN,HEADERS } = require("../config/config");
+const { API_BASE_URL, JWT_TOKEN, HEADERS } = require("../config/config");
 const {
   getTodayDate,
   excelDateToYMD,
   cleanRangeString,
   getFilesForRow,
+  parseExcelDate,
 } = require("./uploadHelper");
 
 async function uploadPhysiotherapyAssessment(row) {
@@ -24,14 +25,7 @@ async function uploadPhysiotherapyAssessment(row) {
 
   // Step 1: Create Initial Form
   try {
-    let createdAt = row["createdAt"];
-
-    if (typeof createdAt === "number") {
-      createdAt = excelDateToYMD(createdAt);
-    }
-    if (!createdAt) {
-      createdAt = getTodayDate(); // fallback helper if missing
-    }
+    let createdAt = parseExcelDate(row["createdAt"]);
 
     const res = await axios.post(
       `${API_BASE_URL}/students/physiotherapy-assessment/autosave/1`,
@@ -205,36 +199,35 @@ async function uploadPhysiotherapyAssessment(row) {
     );
   }
 
-
-     // Step 4: Upload files if available
-     const filePaths = getFilesForRow(
-      row,
-      "ADMISSION ID",
-      "./files/physiotherapy_assessment"
-    ); // customize logic if needed
-    if (filePaths.length > 0) {
-      const form = new FormData();
-      for (const filePath of filePaths) {
-        form.append("files", fs.createReadStream(filePath));
-      }
-      try {
-        await axios.put(
-          `${API_BASE_URL}/students/physiotherapy-assessment/autosave/${assessmentId}/4`,
-          form,
-          {
-            headers: HEADERS(form),
-          }
-        );
-        console.log(`✅ Step 4 files uploaded for ${assessmentId}`);
-      } catch (err) {
-        console.error(
-          `❌ Step 4 file upload failed for ${assessmentId}`,
-          err.response?.data || err.message
-        );
-      }
-    } else {
-      console.log(`ℹ️ No files found for Step 4 upload for ${assessmentId}`);
+  // Step 4: Upload files if available
+  const filePaths = getFilesForRow(
+    row,
+    "ADMISSION ID",
+    "./files/physiotherapy_assessment"
+  ); // customize logic if needed
+  if (filePaths.length > 0) {
+    const form = new FormData();
+    for (const filePath of filePaths) {
+      form.append("files", fs.createReadStream(filePath));
     }
+    try {
+      await axios.put(
+        `${API_BASE_URL}/students/physiotherapy-assessment/autosave/${assessmentId}/4`,
+        form,
+        {
+          headers: HEADERS(form),
+        }
+      );
+      console.log(`✅ Step 4 files uploaded for ${assessmentId}`);
+    } catch (err) {
+      console.error(
+        `❌ Step 4 file upload failed for ${assessmentId}`,
+        err.response?.data || err.message
+      );
+    }
+  } else {
+    console.log(`ℹ️ No files found for Step 4 upload for ${assessmentId}`);
+  }
 
   // Step 6: Submit
   try {
@@ -264,7 +257,6 @@ async function runPhysiotherapyAssessmentUpload(
   });
   const sheet = workbook.Sheets[workbook.SheetNames[0]];
   const rows = xlsx.utils.sheet_to_json(sheet);
-
 
   for (const row of rows) {
     await uploadPhysiotherapyAssessment(row);
