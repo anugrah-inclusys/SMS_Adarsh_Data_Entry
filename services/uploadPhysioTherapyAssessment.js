@@ -25,7 +25,7 @@ async function uploadPhysiotherapyAssessment(row) {
 
   // Step 1: Create Initial Form
   try {
-    let createdAt = parseExcelDate(row["createdAt"]);
+    let createdAt = parseExcelDate(row["createdAt"] || " ");
 
     const res = await axios.post(
       `${API_BASE_URL}/students/physiotherapy-assessment/autosave/1`,

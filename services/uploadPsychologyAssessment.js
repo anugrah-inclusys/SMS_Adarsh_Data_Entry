@@ -20,7 +20,7 @@ async function uploadPsychologyAssessment(row) {
 
   let assessmentId = "";
   try {
-    let createdAt = parseExcelDate(row["createdAt"]);
+    let createdAt = parseExcelDate(row["createdAt"] || " ");
 
     const res = await axios.post(
       `${API_BASE_URL}/students/psychological-assessment/autosave/1`,
