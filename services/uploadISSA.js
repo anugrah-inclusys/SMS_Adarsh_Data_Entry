@@ -11,6 +11,38 @@ const EXCEL_FILE = path.join(
   "../output/issa_checklist_with_ids.csv"
 );
 
+async function fetchStudentDetails(studentId) {
+  try {
+    const res = await axios.get(
+      `${API_BASE_URL}/students/enquiry/${studentId}`,
+      {
+        headers: { Authorization: `Bearer ${JWT_TOKEN}` },
+      }
+    );
+    return res.data;
+  } catch (err) {
+    console.error(
+      `❌ Failed fetching student: ${studentId}`,
+      err.response?.data || err.message
+    );
+    return null;
+  }
+}
+function mapStep1(row, student) {
+  const { first_name, last_name } = parseFullName(row["Student Name"] || "");
+  return {
+    student_id: row["_id"] || student?._id || "",
+    firstName: first_name || student?.name?.first_name || "",
+    lastName: last_name || student?.name?.last_name || "",
+    dob:
+      parseExcelDate(row["demographicData.dob"]) ||
+      student?.date_of_birth ||
+      "",
+    age: row["demographicData.age"] || student?.age || "",
+    examiner: row["issa.demographicData.Examiner"],
+    createdAt: parseExcelDate(row["createdAt"]) || "",
+  };
+}
 // Step mapping for sections
 const sectionToStep = {
   demographicData: 1,
@@ -105,7 +137,14 @@ async function runISSAUpload() {
       continue;
     }
 
+    const student = await fetchStudentDetails(studentId);
     const sections = mapISSAFields(row);
+    // Inject demographicData into Step 1 payload
+    const demographicData = mapStep1(row, student);
+    sections[0] = {
+      ...sections[0],
+      ...demographicData,
+    };
     let assessmentId;
     for (let step = 1; step <= 8; step++) {
       assessmentId = await uploadStep(studentId, step, sections[step - 1]);
@@ -113,6 +152,7 @@ async function runISSAUpload() {
 
     const finalPayload = {
       issa: {
+        demographicData: mapStep1(row, student),
         additionalDetails: sections[7],
       },
     };
