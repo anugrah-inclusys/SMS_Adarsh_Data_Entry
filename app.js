@@ -81,13 +81,13 @@ const { runISSAUpload } = require("./services/uploadISSA");
     // });
     // await runInitialAssessmentUpload();
 
-    // Re-assessment assessment-admin
-    await injectStudentIds({
-      admissionPath: "./data/re_assessment.csv",
-      enquiryIdsPath: "./output/student_ids.xlsx",
-      outputPath: "./output/re_assessment_with_ids.csv",
-    });
-    await runReAssessmentUpload();
+    // // Re-assessment assessment-admin
+    // await injectStudentIds({
+    //   admissionPath: "./data/re_assessment.csv",
+    //   enquiryIdsPath: "./output/student_ids.xlsx",
+    //   outputPath: "./output/re_assessment_with_ids.csv",
+    // });
+    // await runReAssessmentUpload();
 
     // // Comprehensive assessment-permission admin
     // await injectStudentIds({
@@ -217,13 +217,7 @@ const { runISSAUpload } = require("./services/uploadISSA");
     // });
     // await runPreVocationalChecklistUpload();
 
-    // // Generic skills-teacher
-    // await injectStudentIds({
-    //   admissionPath: "./data/generic_tool.csv",
-    //   enquiryIdsPath: "./output/student_ids.xlsx",
-    //   outputPath: "./output/generic_tool_with_ids.csv",
-    // });
-    // await runGenericSkillsUpload();
+ 
 
     // // LEST -teacher
     // await injectStudentIds({
@@ -241,19 +235,28 @@ const { runISSAUpload } = require("./services/uploadISSA");
     // });
     // await runTdscFileUpload();
 
-    // // ISSA -teacher
-    // await injectStudentIds({
-    //   admissionPath: "./data/issa.csv",
-    //   enquiryIdsPath: "./output/student_ids.xlsx",
-    //   outputPath: "./output/issa_checklist_with_ids.csv",
-    // });
-    // await runISSAUpload();
+    // ISSA -teacher
+    await injectStudentIds({
+      admissionPath: "./data/issa.csv",
+      enquiryIdsPath: "./output/student_ids.xlsx",
+      outputPath: "./output/issa_checklist_with_ids.csv",
+    });
+    await runISSAUpload();
 
     // // medical-files-teacher
     // await runMedicalFilesUpload();
 
     // // miscellaneous documents-teacher
     // await runMiscellaneousFilesUpload();
+
+
+    //    // Generic skills-teacher-need to check createdAt
+    // await injectStudentIds({
+    //   admissionPath: "./data/generic_tool.csv",
+    //   enquiryIdsPath: "./output/student_ids.xlsx",
+    //   outputPath: "./output/generic_tool_with_ids.csv",
+    // });
+    // await runGenericSkillsUpload();
 
     console.log("🎉 Upload complete!");
   } catch (err) {

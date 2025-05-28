@@ -31,7 +31,7 @@ async function uploadSpecialEducationAssessment(row) {
       createdAt = excelDateToYMD(createdAt);
     }
     if (!createdAt) {
-      createdAt = getTodayDate(); // fallback helper if missing
+      createdAt = ""
     }
     const res = await axios.post(
       `${API_BASE_URL}/students/special-education-assessment/autosave/1`,

@@ -61,13 +61,14 @@ async function uploadLifeSkillsChecklist(row, tabsStructure, term = "term1") {
 
   const { first_name, last_name } = parseFullName(row["Student Name"] || "");
   const ageGroup = row["ageGroup"] || "";
-  const createdAt = parseExcelDate(row["createdAt"]);
+  const createdAt = parseExcelDate(row["life_skills.createdAt"] || "");
 
   const basePayload = {
     student_id: student._id,
     firstName: first_name,
     lastName: last_name,
     ageGroup,
+    createdAt: createdAt,
   };
 
   const skillsData = mapSkills(row, tabsStructure);
