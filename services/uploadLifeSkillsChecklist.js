@@ -67,6 +67,7 @@ async function uploadLifeSkillsChecklist(row, tabsStructure, term = "term1") {
     student_id: student._id,
     firstName: first_name,
     lastName: last_name,
+    createdAt,
     ageGroup,
     createdAt: createdAt,
   };

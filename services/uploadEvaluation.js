@@ -143,6 +143,7 @@ function mapStep2(row, admissionData) {
       row["content.PresentAddress.presPinCode"] ||
       admissionData?.PresentAddress?.presPinCode ||
       "",
+    createdAt: parseExcelDate(row["createdAt"]) || "",
   };
 }
 
