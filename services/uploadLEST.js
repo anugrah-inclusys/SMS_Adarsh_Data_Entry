@@ -55,7 +55,7 @@ async function uploadLestFile(
   studentId,
   filePath,
   fileName = "Not Available",
-  date
+  date = ""
 ) {
   if (!fs.existsSync(filePath)) {
     console.error(`🚫 File not found: ${filePath}`);
@@ -104,6 +104,7 @@ async function runLestFileUpload() {
 
     const studentData = studentMap[matchedAdmissionId];
     const lestDate = dateMap[matchedAdmissionId];
+
     const filePath = path.join(LEST_DIR, file);
     if (!fs.existsSync(filePath)) {
       console.warn(`❗ File does not exist at path: ${filePath}`);
