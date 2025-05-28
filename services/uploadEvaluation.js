@@ -90,6 +90,7 @@ function mapStep1(row, student, admissionData) {
     dateOfEvaluation:
       parseExcelDate(row["content.additional_details.dateOfEvaluation"]) ||
       null,
+      createdAt: parseExcelDate(row["createdAt"]) ||  "",
   };
 }
 function mapStep2(row, admissionData) {

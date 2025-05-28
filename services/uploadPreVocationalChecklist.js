@@ -139,6 +139,7 @@ async function runPreVocationalChecklistUpload() {
       student_id: studentId,
       firstName,
       lastName,
+      createdAt: createdAt,
       ...dataFields,
       dateOfEvaluation,
       createdAt,

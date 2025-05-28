@@ -101,7 +101,7 @@ function mapStep1(row, student, studentId) {
     firstName: first_name || student?.name?.first_name || "",
     lastName: last_name || student?.name?.last_name || "",
     ageGroup: "",
-    createdAt: parseExcelDate(row["createdAt"]) || "",
+    createdAt: parseExcelDate(row["social_skills.createdAt"]) || "",
   };
 }
 

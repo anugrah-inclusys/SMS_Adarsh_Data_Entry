@@ -177,53 +177,47 @@ const { runISSAUpload } = require("./services/uploadISSA");
     // });
     // await runEvaluationUpload();
 
-    // // Social-skills-checklist-teacher
-    // await injectStudentIds({
-    //   admissionPath: "./data/social_skills_checklist.csv",
-    //   enquiryIdsPath: "./output/student_ids.xlsx",
-    //   outputPath: "./output/social_skills_checklist_with_ids.csv",
-    // });
-    // await runSocialSkillsChecklistUpload();
+    // Social-skills-checklist-teacher
+    await injectStudentIds({
+      admissionPath: "./data/social_skills_checklist.csv",
+      enquiryIdsPath: "./output/student_ids.xlsx",
+      outputPath: "./output/social_skills_checklist_with_ids.csv",
+    });
+    await runSocialSkillsChecklistUpload();
 
-    // // ADL-checklist-teacher
-    // await injectStudentIds({
-    //   admissionPath: "./data/adl_checklist.csv",
-    //   enquiryIdsPath: "./output/student_ids.xlsx",
-    //   outputPath: "./output/adl_checklist_with_ids.csv",
-    // });
-    // await runADLChecklistUpload();
+    // ADL-checklist-teacher
+    await injectStudentIds({
+      admissionPath: "./data/adl_checklist.csv",
+      enquiryIdsPath: "./output/student_ids.xlsx",
+      outputPath: "./output/adl_checklist_with_ids.csv",
+    });
+    await runADLChecklistUpload();
 
-    // // Sensory_dysfunction-checklist-teacher
-    // await injectStudentIds({
-    //   admissionPath: "./data/sensory_dysfunction.csv",
-    //   enquiryIdsPath: "./output/student_ids.xlsx",
-    //   outputPath: "./output/sensory_dysfunction_with_ids.csv",
-    // });
-    // await runSensoryChecklistUpload();
+    // Sensory_dysfunction-checklist-teacher
+    await injectStudentIds({
+      admissionPath: "./data/sensory_dysfunction.csv",
+      enquiryIdsPath: "./output/student_ids.xlsx",
+      outputPath: "./output/sensory_dysfunction_with_ids.csv",
+    });
+    await runSensoryChecklistUpload();
 
-    // // Life_skills_checklist-checklist-teacher
-    // await injectStudentIds({
-    //   admissionPath: "./data/life_skills_checklist.csv",
-    //   enquiryIdsPath: "./output/student_ids.xlsx",
-    //   outputPath: "./output/life_skills_checklist_with_ids.csv",
-    // });
-    // await runLifeSkillsChecklistUpload();
+    // Life_skills_checklist-checklist-teacher
+    await injectStudentIds({
+      admissionPath: "./data/life_skills_checklist.csv",
+      enquiryIdsPath: "./output/student_ids.xlsx",
+      outputPath: "./output/life_skills_checklist_with_ids.csv",
+    });
+    await runLifeSkillsChecklistUpload();
 
-    // // PREVOCATIONAL _checklist-checklist-teacher
-    // await injectStudentIds({
-    //   admissionPath: "./data/pre_vocational_checklist.csv",
-    //   enquiryIdsPath: "./output/student_ids.xlsx",
-    //   outputPath: "./output/pre_vocational_checklist_with_ids.csv",
-    // });
-    // await runPreVocationalChecklistUpload();
+    // PREVOCATIONAL _checklist-checklist-teacher
+    await injectStudentIds({
+      admissionPath: "./data/pre_vocational_checklist.csv",
+      enquiryIdsPath: "./output/student_ids.xlsx",
+      outputPath: "./output/pre_vocational_checklist_with_ids.csv",
+    });
+    await runPreVocationalChecklistUpload();
 
-    // // Generic skills-teacher
-    // await injectStudentIds({
-    //   admissionPath: "./data/generic_tool.csv",
-    //   enquiryIdsPath: "./output/student_ids.xlsx",
-    //   outputPath: "./output/generic_tool_with_ids.csv",
-    // });
-    // await runGenericSkillsUpload();
+ 
 
     // // LEST -teacher
     // await injectStudentIds({
@@ -254,6 +248,15 @@ const { runISSAUpload } = require("./services/uploadISSA");
 
     // // miscellaneous documents-teacher
     // await runMiscellaneousFilesUpload();
+
+
+    //    // Generic skills-teacher-need to check createdAt
+    // await injectStudentIds({
+    //   admissionPath: "./data/generic_tool.csv",
+    //   enquiryIdsPath: "./output/student_ids.xlsx",
+    //   outputPath: "./output/generic_tool_with_ids.csv",
+    // });
+    // await runGenericSkillsUpload();
 
     console.log("🎉 Upload complete!");
   } catch (err) {
