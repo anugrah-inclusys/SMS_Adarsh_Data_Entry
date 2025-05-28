@@ -139,7 +139,12 @@ async function runISSAUpload() {
 
     const student = await fetchStudentDetails(studentId);
     const sections = mapISSAFields(row);
-
+    // Inject demographicData into Step 1 payload
+    const demographicData = mapStep1(row, student);
+    sections[0] = {
+      ...sections[0],
+      ...demographicData,
+    };
     let assessmentId;
     for (let step = 1; step <= 8; step++) {
       assessmentId = await uploadStep(studentId, step, sections[step - 1]);
