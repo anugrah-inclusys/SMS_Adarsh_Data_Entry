@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const xlsx = require("xlsx");
 const axios = require("axios");
-const { parseExcelDate } = require("./uploadHelper");
+const { parseExcelDate, parseFullName } = require("./uploadHelper");
 const { API_BASE_URL, JWT_TOKEN } = require("../config/config");
 
 // Excel paths
@@ -39,8 +39,8 @@ function mapStep1(row, student) {
       student?.date_of_birth ||
       "",
     age: row["demographicData.age"] || student?.age || "",
-    examiner: row["issa.demographicData.Examiner"],
-    createdAt: parseExcelDate(row["createdAt"]) || "",
+    examiner: row["issa.demographicData.Examiner"]  ||"",
+    
   };
 }
 // Step mapping for sections
