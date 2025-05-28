@@ -133,13 +133,15 @@ async function runPreVocationalChecklistUpload() {
     const dateOfEvaluation = parseExcelDate(
       row["prevocational_skills.data.dateOfEvaluation"]
     );
-
+    const createdAt =
+      parseExcelDate(row["prevocational_skills.createdAt"]) || "";
     const basePayload = {
       student_id: studentId,
       firstName,
       lastName,
       ...dataFields,
       dateOfEvaluation,
+      createdAt,
     };
     const assessmentId = await uploadInitial(studentId, student, basePayload);
     await uploadSubmit(assessmentId, student);

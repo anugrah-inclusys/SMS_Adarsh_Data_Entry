@@ -2,12 +2,13 @@ const axios = require("axios");
 const xlsx = require("xlsx");
 const fs = require("fs");
 const FormData = require("form-data");
-const { API_BASE_URL, JWT_TOKEN,HEADERS } = require("../config/config");
+const { API_BASE_URL, JWT_TOKEN, HEADERS } = require("../config/config");
 const {
   getTodayDate,
   excelDateToYMD,
   cleanRangeString,
   getFilesForRow,
+  parseExcelDate,
 } = require("./uploadHelper");
 
 async function uploadPsychologyAssessment(row) {
@@ -19,13 +20,7 @@ async function uploadPsychologyAssessment(row) {
 
   let assessmentId = "";
   try {
-    let createdAt = row["createdAt"];
-    if (typeof createdAt === "number") {
-      createdAt = excelDateToYMD(createdAt);
-    }
-    if (!createdAt) {
-      createdAt = getTodayDate();
-    }
+    let createdAt = parseExcelDate(row["createdAt"]);
 
     const res = await axios.post(
       `${API_BASE_URL}/students/psychological-assessment/autosave/1`,
@@ -238,7 +233,6 @@ async function uploadPsychologyAssessment(row) {
     );
   }
 
-  
   // Step 16: Upload files if available
   const filePaths = getFilesForRow(
     row,
@@ -276,9 +270,7 @@ async function uploadPsychologyAssessment(row) {
       {},
       { headers: { Authorization: `Bearer ${JWT_TOKEN}` } }
     );
-    console.log(
-      `🎉 Psychology Assessment submitted for ${row["STUDENT ID"]}`
-    );
+    console.log(`🎉 Psychology Assessment submitted for ${row["STUDENT ID"]}`);
   } catch (err) {
     console.error(
       `❌ Final submission failed`,
@@ -291,12 +283,12 @@ async function runPsychologyAssessmentUpload(
   filePath = "./output/psychology_assessment_with_ids.csv"
 ) {
   const workbook = xlsx.readFile(filePath, {
-      cellText: false,
-      cellDates: true,
-      codepage: 65001,
-    });
-    const sheet = workbook.Sheets[workbook.SheetNames[0]];
-    const rows = xlsx.utils.sheet_to_json(sheet);
+    cellText: false,
+    cellDates: true,
+    codepage: 65001,
+  });
+  const sheet = workbook.Sheets[workbook.SheetNames[0]];
+  const rows = xlsx.utils.sheet_to_json(sheet);
 
   for (const row of rows) {
     await uploadPsychologyAssessment(row);
