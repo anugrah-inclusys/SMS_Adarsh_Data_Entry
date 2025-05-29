@@ -145,14 +145,13 @@ async function runPreVocationalChecklistUpload() {
       createdAt,
     };
     const assessmentId = await uploadInitial(studentId, student, basePayload);
-    await uploadSubmit(assessmentId, student);
     // Step 1-7: data fields
     for (let step = 1; step <= 7; step++) {
       await uploadStep(studentId, step, basePayload);
     }
-
     // Step 8: skills + age group
     await uploadStep(studentId, 8, { age: ageGroup, skills });
+    await uploadSubmit(assessmentId, student);
   }
 
   console.log("🎉 Pre-vocational checklist upload complete.");
