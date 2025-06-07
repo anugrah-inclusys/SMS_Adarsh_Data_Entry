@@ -161,13 +161,13 @@ const { runISSAUpload } = require("./services/uploadISSA");
     // });
     // await runSpecialEducationReportUpload();
 
-    // // Special education assessment-teacher
-    // await injectStudentIds({
-    //   admissionPath: "./data/special_education_assessment.csv",
-    //   enquiryIdsPath: "./output/student_ids.xlsx",
-    //   outputPath: "./output/special_education_assessment_with_ids.csv",
-    // });
-    // await runSpecialEducationAssessmentUpload()
+    // Special education assessment-teacher
+    await injectStudentIds({
+      admissionPath: "./data/special_education_assessment.csv",
+      enquiryIdsPath: "./output/student_ids.xlsx",
+      outputPath: "./output/special_education_assessment_with_ids.csv",
+    });
+    await runSpecialEducationAssessmentUpload()
 
     // // Evaluation form-teacher
     // await injectStudentIds({
@@ -225,13 +225,13 @@ const { runISSAUpload } = require("./services/uploadISSA");
     // });
     // await runLestFileUpload();
 
-    // TDSC -teacher
-    await injectStudentIds({
-      admissionPath: "./data/tdsc.csv",
-      enquiryIdsPath: "./output/student_ids.xlsx",
-      outputPath: "./output/tdsc_with_ids.csv",
-    });
-    await runTdscFileUpload();
+    // // TDSC -teacher
+    // await injectStudentIds({
+    //   admissionPath: "./data/tdsc.csv",
+    //   enquiryIdsPath: "./output/student_ids.xlsx",
+    //   outputPath: "./output/tdsc_with_ids.csv",
+    // });
+    // await runTdscFileUpload();
 
     // // ISSA -teacher
     // await injectStudentIds({

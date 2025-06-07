@@ -39,8 +39,7 @@ function mapStep1(row, student) {
       student?.date_of_birth ||
       "",
     age: row["demographicData.age"] || student?.age || "",
-    examiner: row["issa.demographicData.Examiner"]  ||"",
-    
+    examiner: row["issa.demographicData.Examiner"] || "",
   };
 }
 // Step mapping for sections
@@ -133,8 +132,10 @@ async function runISSAUpload() {
   for (const row of rows) {
     const studentId = (row["STUDENT ID"] || "").trim();
     if (!studentId) {
-      console.warn(`⚠️ No student ID found for ${row["Student Name"]}`);
-      continue;
+      console.warn(
+        `⚠️ Skipping row without student_id: ${row["Student Name"]}`
+      );
+      return;
     }
 
     const student = await fetchStudentDetails(studentId);

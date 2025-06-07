@@ -152,7 +152,7 @@ async function runSensoryChecklistUpload(
       inputs: [
         "Hearing loud sounds",
         "Watching TV at high/low volume",
-        "Background noise when concentrating on a task (music, fan etc.,)",
+        "Background noise when concentrating",
         "Games with rapid verbal instructions",
         "Response to unfamiliar sounds",
         "Making noise for own purpose",
