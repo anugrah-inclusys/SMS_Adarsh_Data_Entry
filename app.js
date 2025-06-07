@@ -137,13 +137,13 @@ const { runISSAUpload } = require("./services/uploadISSA");
     // });
     // await runTechnicalTermUpload();
 
-    // // Technical term report-therapist
-    // await injectStudentIds({
-    //   admissionPath: './data/technicalTermReport.csv',
-    //   enquiryIdsPath: './output/student_ids.xlsx',
-    //   outputPath: './output/technical_term_report_with_ids.csv',
-    // });
-    // await runTechnicalTermReportUpload();
+    // Technical term report-therapist
+    await injectStudentIds({
+      admissionPath: './data/technicalTermReport.csv',
+      enquiryIdsPath: './output/student_ids.xlsx',
+      outputPath: './output/technical_term_report_with_ids.csv',
+    });
+    await runTechnicalTermReportUpload();
 
     // // Special education term assessment-teacher
     // await injectStudentIds({
@@ -161,13 +161,13 @@ const { runISSAUpload } = require("./services/uploadISSA");
     // });
     // await runSpecialEducationReportUpload();
 
-    // Special education assessment-teacher
-    await injectStudentIds({
-      admissionPath: "./data/special_education_assessment.csv",
-      enquiryIdsPath: "./output/student_ids.xlsx",
-      outputPath: "./output/special_education_assessment_with_ids.csv",
-    });
-    await runSpecialEducationAssessmentUpload()
+    // // Special education assessment-teacher
+    // await injectStudentIds({
+    //   admissionPath: "./data/special_education_assessment.csv",
+    //   enquiryIdsPath: "./output/student_ids.xlsx",
+    //   outputPath: "./output/special_education_assessment_with_ids.csv",
+    // });
+    // await runSpecialEducationAssessmentUpload()
 
     // // Evaluation form-teacher
     // await injectStudentIds({
