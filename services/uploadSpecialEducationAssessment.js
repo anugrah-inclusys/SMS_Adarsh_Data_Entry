@@ -33,6 +33,8 @@ async function uploadSpecialEducationAssessment(row) {
     if (!createdAt) {
       createdAt = ""
     }
+        console.log('createdAt',createdAt);
+    
     const res = await axios.post(
       `${API_BASE_URL}/students/special-education-assessment/autosave/1`,
       {

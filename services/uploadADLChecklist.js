@@ -232,7 +232,7 @@ async function runADLChecklistUpload(
         'Dining area',
         'Dining table',
         'Chair',
-        'Identifies utensils (plate, glass, spoon, etc.)',
+        'Identifies utensils plate,glass,spoon',
         'Preparations',
         'Wash hands properly',
         'Wash plates',
