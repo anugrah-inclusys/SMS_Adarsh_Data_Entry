@@ -112,7 +112,7 @@ async function runTdscFileUpload() {
       continue;
     }
 
-    const tdscDate = dateMap[matchedAdmissionId] || new Date().toISOString();
+    const tdscDate = dateMap[matchedAdmissionId];
 
     try {
       await uploadTdscFile(studentData.studentId, filePath, file, tdscDate);
