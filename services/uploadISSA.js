@@ -135,7 +135,7 @@ async function runISSAUpload() {
       console.warn(
         `⚠️ Skipping row without student_id: ${row["Student Name"]}`
       );
-      return;
+      continue;
     }
 
     const student = await fetchStudentDetails(studentId);
