@@ -5,7 +5,7 @@ const fs = require('fs');
 const path = require('path');
 
 const { parseExcelDate } = require('./uploadHelper');
-const { API_BASE_URL, JWT_TOKEN} = require('../config/config');
+const { API_BASE_URL, JWT_TOKEN } = require('../config/config');
 
 async function fetchStudentDetails(studentId) {
   try {
@@ -44,7 +44,7 @@ function mapStep1(row, student) {
       '',
     associatedProblems: row['associatedProblems'] || '',
     medication: row['medication'] || '',
-    createdAt: parseExcelDate(row["createdAt"]) ||  "",
+    createdAt: parseExcelDate(row['createdAt']) || '',
   };
 }
 
@@ -54,52 +54,57 @@ function getStepData(step, row) {
       return {
         classroomactivitiesacademics: {
           presentLevel: row['classroomactivitiesacademics.presentLevel'] || '',
-          goalsAchieved:
-            row['classroomactivitiesacademics.goalsAchieved'] || '',
           shortTermGoal:
             row['classroomactivitiesacademics.shortTermGoal'] || '',
           longTermGoal: row['classroomactivitiesacademics.longTermGoal'] || '',
+          goalsAchieved:
+            row['classroomactivitiesacademics.goalsAchieved'] || '',
+
           remarks: row['classroomactivitiesacademics.remarks'] || '',
         },
       };
     case 3:
       return {
         adl: {
-          remarks: row['adl.remarks'] || '',
-          goalsAchieved: row['adl.goalsAchieved'] || '',
           shortTermGoal: row['adl.shortTermGoal'] || '',
+          goalsAchieved: row['adl.goalsAchieved'] || '',
+          remarks: row['adl.remarks'] || '',
         },
       };
     case 4:
       return {
         sensory: {
-          remarks: row['sensory.remarks'] || '',
-          goalsAchieved: row['sensory.goalsAchieved'] || '',
           shortTermGoal: row['sensory.shortTermGoal'] || '',
+
+          goalsAchieved: row['sensory.goalsAchieved'] || '',
+          remarks: row['sensory.remarks'] || '',
         },
       };
     case 5:
       return {
         socialization: {
-          remarks: row['socialization.remarks'] || '',
-          goalsAchieved: row['socialization.goalsAchieved'] || '',
           shortTermGoal: row['socialization.shortTermGoal'] || '',
+
+          goalsAchieved: row['socialization.goalsAchieved'] || '',
+          remarks: row['socialization.remarks'] || '',
         },
       };
     case 6:
       return {
         lifeSkills: {
-          remarks: row['lifeSkills.remarks'] || '',
-          goalsAchieved: row['lifeSkills.goalsAchieved'] || '',
           shortTermGoal: row['lifeSkills.shortTermGoal'] || '',
+
+          goalsAchieved: row['lifeSkills.goalsAchieved'] || '',
+          remarks: row['lifeSkills.remarks'] || '',
         },
       };
     case 7:
       return {
         preVocation: {
-          remarks: row['preVocation.remarks'] || '',
-          goalsAchieved: row['preVocation.goalsAchieved'] || '',
           shortTermGoal: row['preVocation.shortTermGoal'] || '',
+          goalsAchieved: row['preVocation.goalsAchieved'] || '',
+
+          remarks: row['preVocation.remarks'] || '',
         },
       };
     default:
@@ -112,7 +117,7 @@ async function uploadSpecialEducationReport(row) {
   const term = String(row['term'] || '').trim();
 
   if (!studentId || !term) {
-    console.warn(`⚠️ Skipping row without student_id: ${row["Student Name"]}`);
+    console.warn(`⚠️ Skipping row without student_id: ${row['Student Name']}`);
     return;
   }
 
