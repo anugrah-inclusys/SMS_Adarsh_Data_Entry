@@ -84,7 +84,7 @@ async function uploadGenericSkills(row) {
   }
 
   // Step 2–10 - Autosave
-  for (let step = 2; step <= 11; step++) {
+  for (let step = 2; step < 11; step++) {
     const domain = DOMAIN_MAP[step - 1];
     const stepData = extractStepData(row, domain, step - 1);
     try {
