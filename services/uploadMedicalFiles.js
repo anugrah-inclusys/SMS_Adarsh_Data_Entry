@@ -37,7 +37,7 @@ async function uploadMedicalFile(studentId, filePath, fileName) {
   const form = new FormData();
   form.append("file", fs.createReadStream(filePath));
   form.append("description", fileName);
-  form.append("date", new Date().toISOString());
+  // form.append("date", new Date().toISOString());
 
   try {
     const res = await axios.post(
