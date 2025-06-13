@@ -8,7 +8,6 @@ const {
   parsePhoneNumbers,
   parseToNumber,
   getAdmissionFilesForRow,
-  parseDate,
 } = require("./uploadHelper");
 const { API_BASE_URL, JWT_TOKEN, HEADERS } = require("../config/config");
 const { getUnitClassLookup } = require("./unitClassLookup");
@@ -45,7 +44,7 @@ function mapExcelRowToSteps(row, student) {
       payload: {
         firstName: parsedName.first_name,
         lastName: parsedName.last_name,
-        dob: parseDate(row["DATE OF BIRTH"]),
+        dob: parseExcelDate(row["DATE OF BIRTH"]),
         age: student?.age || "",
         gender: row["GENDER"],
         religion: row["RELIGION&CASTE"]?.split(" - ")[0] || "",
@@ -145,7 +144,7 @@ async function buildSubmissionPayload(row, student) {
   }
   return {
     name: parsedName,
-    date_of_birth: parseDate(row["DATE OF BIRTH"]),
+    date_of_birth: parseExcelDate(row["DATE OF BIRTH"]),
     age: student?.age || "",
     gender: row["GENDER"],
     encryptedFields: {
