@@ -17,7 +17,7 @@ function parseExcelDate(value) {
 }
 
 //DD.MM.YYYY
-function parseDate(value) {
+function parseExcelDate(value) {
   if (!value) return "";
 
   if (typeof value === "number") {

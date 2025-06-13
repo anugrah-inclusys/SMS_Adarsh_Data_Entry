@@ -90,60 +90,24 @@ function mapStep1(row, student, admissionData) {
     dateOfEvaluation:
       parseExcelDate(row['content.additional_details.dateOfEvaluation']) ||
       null,
-    createdAt: parseExcelDate(row['createdAt']) || '',
+    createdAt: parseExcelDate(row["createdAt"]) || "",
   };
 }
 function mapStep2(row, admissionData) {
   return {
-    permHouseName:
-      row['content.PermanentAddress.permHouseName'] ||
-      admissionData?.PermanentAddress?.permHouseName ||
-      '',
-    permStreetName:
-      row['content.PermanentAddress.permStreetName'] ||
-      admissionData?.PermanentAddress?.permStreetName ||
-      '',
-    permCity:
-      row['content.PermanentAddress.permCity'] ||
-      admissionData?.PermanentAddress?.permCity ||
-      '',
-    permDistrict:
-      row['content.PermanentAddress.permDistrict'] ||
-      admissionData?.PermanentAddress?.permDistrict ||
-      '',
-    permState:
-      row['content.PermanentAddress.permState'] ||
-      admissionData?.PermanentAddress?.permState ||
-      '',
-    permPinCode:
-      row['content.PermanentAddress.permPinCode'] ||
-      admissionData?.PermanentAddress?.permPinCode ||
-      '',
-    presHouseName:
-      row['content.PresentAddress.presHouseName'] ||
-      admissionData?.PresentAddress?.presHouseName ||
-      '',
-    presStreetName:
-      row['content.PresentAddress.presStreetName'] ||
-      admissionData?.PresentAddress?.presStreetName ||
-      '',
-    presCity:
-      row['content.PresentAddress.presCity'] ||
-      admissionData?.PresentAddress?.presCity ||
-      '',
-    presDistrict:
-      row['content.PresentAddress.presDistrict'] ||
-      admissionData?.PresentAddress?.presDistrict ||
-      '',
-    presState:
-      row['content.PresentAddress.presState'] ||
-      admissionData?.PresentAddress?.presState ||
-      '',
-    presPinCode:
-      row['content.PresentAddress.presPinCode'] ||
-      admissionData?.PresentAddress?.presPinCode ||
-      '',
-    createdAt: parseExcelDate(row['createdAt']) || '',
+    permHouseName: row["content.PermanentAddress.permHouseName"] || "",
+    permStreetName: row["content.PermanentAddress.permStreetName"] || "",
+    permCity: row["content.PermanentAddress.permCity"] || "",
+    permDistrict: row["content.PermanentAddress.permDistrict"] || "",
+    permState: row["content.PermanentAddress.permState"] || "",
+    permPinCode: row["content.PermanentAddress.permPinCode"] || "",
+    presHouseName: row["content.PresentAddress.presHouseName"] || "",
+    presStreetName: row["content.PresentAddress.presStreetName"] || " ",
+    presCity: row["content.PresentAddress.presCity"] || " ",
+    presDistrict: row["content.PresentAddress.presDistrict"] || " ",
+    presState: row["content.PresentAddress.presState"] || " ",
+    presPinCode: row["content.PresentAddress.presPinCode"] || " ",
+    createdAt: parseExcelDate(row["createdAt"]) || "",
   };
 }
 

@@ -8,7 +8,6 @@ const {
   parseFullName,
   parseToString,
   parsePhoneNumbers,
-  parseDate,
 } = require("./uploadHelper");
 const { API_BASE_URL, JWT_TOKEN } = require("../config/config");
 
@@ -27,7 +26,7 @@ async function uploadEnquiry(row) {
       step: 1,
       payload: {
         name: parsedName,
-        date_of_birth: parseDate(row["DATE OF BIRTH"]),
+        date_of_birth: parseExcelDate(row["DATE OF BIRTH"]),
         gender: row["GENDER"].toLowerCase() || "",
       },
     },
@@ -116,7 +115,7 @@ async function uploadEnquiry(row) {
   const submissionPayload = {
     name: parsedName,
     gender: row["GENDER"] || "",
-    date_of_birth: parseDate(row["DATE OF BIRTH"]),
+    date_of_birth: parseExcelDate(row["DATE OF BIRTH"]),
     contact_info: {
       mobile_number: mobile || "",
       alternate_mobile_number: alternate || "",
@@ -160,7 +159,7 @@ async function uploadEnquiry(row) {
     date_of_admission: parseExcelDate(row["DATE OF JOINING"]),
 
     // //ACE
-    // date_of_admission: parseDate(row["DATE OF JOINING"]),
+    // date_of_admission: parseExcelDate(row["DATE OF JOINING"]),
   };
   try {
     const response = await axios.post(
