@@ -64,7 +64,7 @@ async function uploadGenericSkills(row) {
     const stepData = extractStepData(row, DOMAIN_MAP[0], 0);
     const payload = {
       student_id: student._id,
-            createdAt: parseExcelDate(row["createdAt"]) ||  "",
+      createdAt: parseExcelDate(row["createdAt"]) || "",
       ...stepData,
     };
 
@@ -77,9 +77,14 @@ async function uploadGenericSkills(row) {
     );
 
     formId = res.data.data._id;
-    console.log(`✅ Created generic skills entry for ${studentId} with ID ${formId}`);
+    console.log(
+      `✅ Created generic skills entry for ${studentId} with ID ${formId}`
+    );
   } catch (err) {
-    console.error(`❌ Failed to create generic skills entry`, err.response?.data || err.message);
+    console.error(
+      `❌ Failed to create generic skills entry`,
+      err.response?.data || err.message
+    );
     return;
   }
 
@@ -97,7 +102,10 @@ async function uploadGenericSkills(row) {
       );
       console.log(`✔️ Step ${step} (${domain}) autosaved for ${formId}`);
     } catch (err) {
-      console.error(`❌ Step ${step} (${domain}) failed`, err.response?.data || err.message);
+      console.error(
+        `❌ Step ${step} (${domain}) failed`,
+        err.response?.data || err.message
+      );
     }
   }
 
@@ -117,12 +125,21 @@ async function uploadGenericSkills(row) {
     );
     console.log(`🎉 Submitted generic skills form for ${formId}`);
   } catch (err) {
-    console.error(`❌ Final submission failed`, err.response?.data || err.message);
+    console.error(
+      `❌ Final submission failed`,
+      err.response?.data || err.message
+    );
   }
 }
 
-async function runGenericSkillsUpload(filePath = "./output/generic_tool_with_ids.csv") {
-  const workbook = xlsx.readFile(filePath);
+async function runGenericSkillsUpload(
+  filePath = "./output/generic_tool_with_ids.csv"
+) {
+  const workbook = xlsx.readFile(filePath, {
+    cellText: false,
+    cellDates: true,
+    codepage: 65001,
+  });
   const sheet = workbook.Sheets[workbook.SheetNames[0]];
   const rows = xlsx.utils.sheet_to_json(sheet);
 

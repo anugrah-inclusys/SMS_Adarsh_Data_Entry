@@ -51,8 +51,7 @@ function mapStep1(row, student) {
       row["demographicData.previousSchoolHistory"] === "TRUE" || false,
     history: row["demographicData.history"] || "",
     medication: row["demographicData.medication"] || "",
-   createdAt: parseExcelDate(row["createdAt"]) || ""
-
+    createdAt: parseExcelDate(row["createdAt"]) || "",
   };
 }
 

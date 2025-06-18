@@ -62,7 +62,7 @@ async function uploadEnquiry(row) {
       step: 5,
       payload: {
         assessment: {
-          referred_by: parseToString(row["REFERRED BY"]) || "",
+          referred_by: parseToString(row["Refered By"]) || "",
           preliminary_diagnosis: {
             name: row["DIAGNOSIS"] || "",
           },
@@ -130,7 +130,7 @@ async function uploadEnquiry(row) {
       ...parsedAddress,
     },
     assessment: {
-      referred_by: row["REFERRED BY"] || "",
+      referred_by: row["Refered By"] || "",
       preliminary_diagnosis: {
         name: row["DIAGNOSIS"] || "",
       },
@@ -155,11 +155,7 @@ async function uploadEnquiry(row) {
   // Final approval
   const payload = {
     admission_id: row["ADMN No."],
-    //ACT
     date_of_admission: parseExcelDate(row["DATE OF JOINING"]),
-
-    // //ACE
-    // date_of_admission: parseExcelDate(row["DATE OF JOINING"]),
   };
   try {
     const response = await axios.post(

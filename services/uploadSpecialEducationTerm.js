@@ -1,13 +1,13 @@
-const axios = require('axios');
-const xlsx = require('xlsx');
-const FormData = require('form-data');
+const axios = require("axios");
+const xlsx = require("xlsx");
+const FormData = require("form-data");
 const {
   parseExcelDate,
   parseFullName,
   getFilesForRow,
-} = require('./uploadHelper'); // your helpers
-const { API_BASE_URL, JWT_TOKEN, HEADERS } = require('../config/config');
-const fs = require('fs');
+} = require("./uploadHelper"); // your helpers
+const { API_BASE_URL, JWT_TOKEN, HEADERS } = require("../config/config");
+const fs = require("fs");
 async function fetchStudentDetails(studentId) {
   try {
     const res = await axios.get(
@@ -28,23 +28,23 @@ async function fetchStudentDetails(studentId) {
 
 // Step 1 payload (POST creation)
 function mapStep1(row, student) {
-  const { first_name, last_name } = parseFullName(row['Student Name'] || '');
+  const { first_name, last_name } = parseFullName(row["Student Name"] || "");
   return {
-    student_id: row['student_id'] || student?._id || '',
+    student_id: row["student_id"] || student?._id || "",
     name:
       `${student?.name?.first_name} ${student?.name?.last_name}` ||
       `${first_name} ${last_name}` ||
-      '',
-    age: row['age'] || student?.age || '',
-    dob: parseExcelDate(row['dob']) || student?.date_of_birth || null,
-    dateOfIEP: parseExcelDate(row['dateOfIEP']) || null,
+      "",
+    age: row["age"] || student?.age || "",
+    dob: parseExcelDate(row["dob"]) || student?.date_of_birth || null,
+    dateOfIEP: parseExcelDate(row["dateOfIEP"]) || null,
     provisionalDiagnosis:
-      row['provisionalDiagnosis'] ||
+      row["provisionalDiagnosis"] ||
       student?.assessment?.preliminary_diagnosis?.name ||
-      '',
-    associatedProblems: row['associatedProblems'] || '',
-    medication: row['medication'] || '',
-    createdAt: parseExcelDate(row['createdAt']) || '',
+      "",
+    associatedProblems: row["associatedProblems"] || "",
+    medication: row["medication"] || "",
+    createdAt: parseExcelDate(row["createdAt"]) || "",
   };
 }
 
@@ -52,9 +52,9 @@ function mapStep1(row, student) {
 function mapStep2(row) {
   return {
     classroomactivitiesacademics: {
-      presentLevel: row['classroomactivitiesacademics.presentLevel'] || '',
-      longTermGoal: row['classroomactivitiesacademics.longTermGoal'] || '',
-      shortTermGoal: row['classroomactivitiesacademics.shortTermGoal'] || '',
+      presentLevel: row["classroomactivitiesacademics.presentLevel"] || "",
+      longTermGoal: row["classroomactivitiesacademics.longTermGoal"] || "",
+      shortTermGoal: row["classroomactivitiesacademics.shortTermGoal"] || "",
     },
   };
 }
@@ -62,9 +62,9 @@ function mapStep2(row) {
 function mapStep3(row) {
   return {
     adl: {
-      presentLevel: row['adl.presentLevel'] || '',
-      longTermGoal: row['adl.longTermGoal'] || '',
-      shortTermGoal: row['adl.shortTermGoal'] || '',
+      presentLevel: row["adl.presentLevel"] || "",
+      longTermGoal: row["adl.longTermGoal"] || "",
+      shortTermGoal: row["adl.shortTermGoal"] || "",
     },
   };
 }
@@ -72,9 +72,9 @@ function mapStep3(row) {
 function mapStep4(row) {
   return {
     sensory: {
-      presentLevel: row['sensory.presentLevel'] || '',
-      longTermGoal: row['sensory.longTermGoal'] || '',
-      shortTermGoal: row['sensory.shortTermGoal'] || '',
+      presentLevel: row["sensory.presentLevel"] || "",
+      longTermGoal: row["sensory.longTermGoal"] || "",
+      shortTermGoal: row["sensory.shortTermGoal"] || "",
     },
   };
 }
@@ -82,9 +82,9 @@ function mapStep4(row) {
 function mapStep5(row) {
   return {
     socialization: {
-      presentLevel: row['socialization.presentLevel'] || '',
-      longTermGoal: row['socialization.longTermGoal'] || '',
-      shortTermGoal: row['socialization.shortTermGoal'] || '',
+      presentLevel: row["socialization.presentLevel"] || "",
+      longTermGoal: row["socialization.longTermGoal"] || "",
+      shortTermGoal: row["socialization.shortTermGoal"] || "",
     },
   };
 }
@@ -92,9 +92,9 @@ function mapStep5(row) {
 function mapStep6(row) {
   return {
     lifeskills: {
-      presentLevel: row['lifeSkills.presentLevel'] || '',
-      longTermGoal: row['lifeSkills.longTermGoal'] || '',
-      shortTermGoal: row['lifeSkills.shortTermGoal'] || '',
+      presentLevel: row["lifeSkills.presentLevel"] || "",
+      longTermGoal: row["lifeSkills.longTermGoal"] || "",
+      shortTermGoal: row["lifeSkills.shortTermGoal"] || "",
     },
   };
 }
@@ -102,19 +102,19 @@ function mapStep6(row) {
 function mapStep7(row) {
   return {
     prevocation: {
-      presentLevel: row['preVocation.presentLevel'] || '',
-      longTermGoal: row['preVocation.longTermGoal'] || '',
-      shortTermGoal: row['preVocation.shortTermGoal'] || '',
+      presentLevel: row["preVocation.presentLevel"] || "",
+      longTermGoal: row["preVocation.longTermGoal"] || "",
+      shortTermGoal: row["preVocation.shortTermGoal"] || "",
     },
   };
 }
 
 async function uploadSpecialEducationTerm(row) {
-  const studentId = row['STUDENT ID'];
-  const term = String(row['term'] || '').trim();
+  const studentId = row["STUDENT ID"];
+  const term = String(row["term"] || "").trim();
 
   if (!studentId || !term) {
-    console.warn(`⚠️ Skipping row without student_id: ${row['Student Name']}`);
+    console.warn(`⚠️ Skipping row without student_id: ${row["Student Name"]}`);
     return;
   }
 
@@ -177,13 +177,13 @@ async function uploadSpecialEducationTerm(row) {
   // Step 8: Upload files if available
   const filePaths = getFilesForRow(
     row,
-    'ADMISSION ID',
-    './files/special_education_term'
+    "ADMISSION ID",
+    "./files/special_education_term"
   ); // customize logic if needed
   if (filePaths.length > 0) {
     const form = new FormData();
     for (const filePath of filePaths) {
-      form.append('files', fs.createReadStream(filePath));
+      form.append("files", fs.createReadStream(filePath));
     }
     try {
       await axios.put(
@@ -223,7 +223,7 @@ async function uploadSpecialEducationTerm(row) {
 }
 
 async function runSpecialEducationTermUpload(
-  filePath = './output/special_education_term_with_ids.csv'
+  filePath = "./output/special_education_term_with_ids.csv"
 ) {
   const workbook = xlsx.readFile(filePath, {
     cellText: false,
@@ -237,7 +237,7 @@ async function runSpecialEducationTermUpload(
     await uploadSpecialEducationTerm(row);
   }
 
-  console.log('✅ All Special Education Term assessments processed');
+  console.log("✅ All Special Education Term assessments processed");
 }
 
 module.exports = { runSpecialEducationTermUpload };

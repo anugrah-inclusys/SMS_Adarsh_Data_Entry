@@ -61,7 +61,11 @@ async function uploadLifeSkillsChecklist(row, tabsStructure, term = "term1") {
 
   const { first_name, last_name } = parseFullName(row["Student Name"] || "");
   const ageGroup = row["ageGroup"] || "";
-  const createdAt = parseExcelDate(row["life_skills.createdAt"] || "");
+  const createdAt = parseExcelDate(
+    row["life_skills.createdAt"] ||
+      parseExcelDate(row["dateOfEvaluation"]) ||
+      ""
+  );
 
   const basePayload = {
     student_id: student._id,
@@ -111,7 +115,9 @@ async function uploadLifeSkillsChecklist(row, tabsStructure, term = "term1") {
         headers: { Authorization: `Bearer ${JWT_TOKEN}` },
       }
     );
-    console.log(`🎉 Life skills checklist submitted for ${row["Student Name"]}`);
+    console.log(
+      `🎉 Life skills checklist submitted for ${row["Student Name"]}`
+    );
   } catch (err) {
     console.error(
       `❌ Final submission failed for ${checklistId}`,
@@ -123,7 +129,11 @@ async function uploadLifeSkillsChecklist(row, tabsStructure, term = "term1") {
 async function runLifeSkillsChecklistUpload(
   filePath = "./output/life_skills_checklist_with_ids.csv"
 ) {
-  const workbook = xlsx.readFile(filePath);
+  const workbook = xlsx.readFile(filePath, {
+    cellText: false,
+    cellDates: true,
+    codepage: 65001,
+  });
   const sheet = workbook.Sheets[workbook.SheetNames[0]];
   const rows = xlsx.utils.sheet_to_json(sheet);
 

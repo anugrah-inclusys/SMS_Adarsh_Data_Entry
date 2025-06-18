@@ -5,14 +5,13 @@ const xlsx = require("xlsx");
 const fs = require("fs");
 const path = require("path");
 const FormData = require("form-data");
-const { API_BASE_URL, JWT_TOKEN,HEADERS } = require("../config/config");
+const { API_BASE_URL, JWT_TOKEN, HEADERS } = require("../config/config");
 const {
   getTodayDate,
   excelDateToYMD,
   cleanRangeString,
   getFilesForRow,
 } = require("./uploadHelper");
-
 
 async function uploadSpecialEducationAssessment(row) {
   const studentId = row["STUDENT ID"];
@@ -31,10 +30,10 @@ async function uploadSpecialEducationAssessment(row) {
       createdAt = excelDateToYMD(createdAt);
     }
     if (!createdAt) {
-      createdAt = ""
+      createdAt = "";
     }
-        console.log('createdAt',createdAt);
-    
+    console.log("createdAt", createdAt);
+
     const res = await axios.post(
       `${API_BASE_URL}/students/special-education-assessment/autosave/1`,
       {
@@ -201,9 +200,8 @@ async function uploadSpecialEducationAssessment(row) {
     );
   }
 
-
-   // Step 9: Upload files if available
-   const filePaths = getFilesForRow(
+  // Step 9: Upload files if available
+  const filePaths = getFilesForRow(
     row,
     "ADMISSION ID",
     "./files/special_education_assessment"

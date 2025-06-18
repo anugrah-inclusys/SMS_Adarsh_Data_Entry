@@ -1,7 +1,7 @@
-const axios = require('axios');
-const xlsx = require('xlsx');
-const { parseFullName, parseExcelDate } = require('./uploadHelper');
-const { API_BASE_URL, JWT_TOKEN } = require('../config/config');
+const axios = require("axios");
+const xlsx = require("xlsx");
+const { parseFullName, parseExcelDate } = require("./uploadHelper");
+const { API_BASE_URL, JWT_TOKEN } = require("../config/config");
 
 async function fetchStudentDetails(studentId) {
   try {
@@ -25,11 +25,11 @@ function mapSteps(row, tabsStructure) {
   const steps = Array(8).fill({});
 
   tabsStructure.forEach((tab, index) => {
-    if (tab.name === 'REVIEW AND SUBMIT') return;
+    if (tab.name === "REVIEW AND SUBMIT") return;
     steps[index] = tab.inputs.reduce((acc, input) => {
       acc[input] =
         row[`activities_of_daily_living.${tab.name.toLowerCase()}.${input}`] ||
-        '';
+        "";
       return acc;
     }, {});
   });
@@ -38,17 +38,17 @@ function mapSteps(row, tabsStructure) {
 }
 
 async function uploadADLChecklist(row, tabsStructure) {
-  const studentId = row['STUDENT ID'];
+  const studentId = row["STUDENT ID"];
   if (!studentId) {
-    console.warn(`⚠️ Skipping row without student_id: ${row['Student Name']}`);
+    console.warn(`⚠️ Skipping row without student_id: ${row["Student Name"]}`);
     return;
   }
 
   const student = await fetchStudentDetails(studentId);
   if (!student) return;
 
-  const { first_name, last_name } = parseFullName(row['Student Name'] || '');
-  const createdAt = parseExcelDate(row['activities_of_daily_living.createdAt']);
+  const { first_name, last_name } = parseFullName(row["Student Name"] || "");
+  const createdAt = parseExcelDate(row["activities_of_daily_living.createdAt"]);
   const basePayload = {
     student_id: student._id,
     firstName: first_name,
@@ -119,231 +119,235 @@ async function uploadADLChecklist(row, tabsStructure) {
 }
 
 async function runADLChecklistUpload(
-  filePath = './output/adl_checklist_with_ids.csv'
+  filePath = "./output/adl_checklist_with_ids.csv"
 ) {
-  const workbook = xlsx.readFile(filePath);
+  const workbook = xlsx.readFile(filePath, {
+    cellText: false,
+    cellDates: true,
+    codepage: 65001,
+  });
   const sheet = workbook.Sheets[workbook.SheetNames[0]];
   const rows = xlsx.utils.sheet_to_json(sheet);
 
   // Define tabsStructure locally here or import it
   const tabsStructure = [
     {
-      name: 'BRUSHING',
+      name: "BRUSHING",
       inputs: [
-        'Identify the brush',
-        'Takes brush',
-        'Wet the brush',
-        'Identifies the paste',
-        'Takes paste',
-        'Open the lid',
-        'Apply appropriate quantity of paste on the brush',
-        'Close the lid of the paste tube',
-        'Keep the paste tube back',
-        'Hold the brush properly',
-        'Brush gently',
-        'Spit the paste',
-        'Wash the mouth',
-        'Spit the water',
-        'Clean the tongue and mouth properly',
-        'Wash the brush',
-        'Keep the brush back to the same place',
-        'Wash the face',
-        'Wipe the face',
+        "Identify the brush",
+        "Takes brush",
+        "Wet the brush",
+        "Identifies the paste",
+        "Takes paste",
+        "Open the lid",
+        "Apply appropriate quantity of paste on the brush",
+        "Close the lid of the paste tube",
+        "Keep the paste tube back",
+        "Hold the brush properly",
+        "Brush gently",
+        "Spit the paste",
+        "Wash the mouth",
+        "Spit the water",
+        "Clean the tongue and mouth properly",
+        "Wash the brush",
+        "Keep the brush back to the same place",
+        "Wash the face",
+        "Wipe the face",
       ],
     },
     {
-      name: 'TOILETING',
+      name: "TOILETING",
       inputs: [
-        'Identify the toilet needs',
-        'Indicate the needs',
-        'Identify the correct place for these needs',
-        'Open the door of the toilet',
-        'Enter the toilet',
-        'Close the door',
-        'Remove the clothes including the undergarments',
-        'Keep the clothes aside',
-        'Sit in the right position',
-        'Pass the urine or motion',
-        'Recognizing the toilet needs completed',
+        "Identify the toilet needs",
+        "Indicate the needs",
+        "Identify the correct place for these needs",
+        "Open the door of the toilet",
+        "Enter the toilet",
+        "Close the door",
+        "Remove the clothes including the undergarments",
+        "Keep the clothes aside",
+        "Sit in the right position",
+        "Pass the urine or motion",
+        "Recognizing the toilet needs completed",
         "Wash the areas properly until it's clean",
-        'Flush',
-        'Use the hand wash',
-        'Take the clothing back',
-        'Wear it',
-        'Open the door',
-        'Come out',
+        "Flush",
+        "Use the hand wash",
+        "Take the clothing back",
+        "Wear it",
+        "Open the door",
+        "Come out",
       ],
     },
     {
-      name: 'BATHING',
+      name: "BATHING",
       inputs: [
-        'Identifies oil',
-        'Takes oil',
-        'Oils the hair',
-        'Identifies towel & Clothes to wear after bath',
-        'Takes towel & Clothes to wear after bath',
-        'Identifies bathroom',
-        'Get inside the bathroom',
-        'Close the door',
-        'Keep the towel and dress appropriately',
-        'Remove clothing',
-        'Open the tap / shower',
-        'Pour water on the body',
-        'Identifies soap from the bathroom',
-        'Takes soap',
-        'Apply soap on the body',
-        'Rub the body with water and soap',
-        'Pour water on head',
-        'Identifies shampoo',
-        'Takes shampoo',
-        'Open the lid & take required amount of shampoo',
-        'Apply shampoo on the head',
-        'Clean the head with water',
-        'Take the towel',
-        'Dry the hair',
-        'Dry the body',
-        'Wear the cloth',
-        'Come out from the bathroom',
+        "Identifies oil",
+        "Takes oil",
+        "Oils the hair",
+        "Identifies towel & Clothes to wear after bath",
+        "Takes towel & Clothes to wear after bath",
+        "Identifies bathroom",
+        "Get inside the bathroom",
+        "Close the door",
+        "Keep the towel and dress appropriately",
+        "Remove clothing",
+        "Open the tap / shower",
+        "Pour water on the body",
+        "Identifies soap from the bathroom",
+        "Takes soap",
+        "Apply soap on the body",
+        "Rub the body with water and soap",
+        "Pour water on head",
+        "Identifies shampoo",
+        "Takes shampoo",
+        "Open the lid & take required amount of shampoo",
+        "Apply shampoo on the head",
+        "Clean the head with water",
+        "Take the towel",
+        "Dry the hair",
+        "Dry the body",
+        "Wear the cloth",
+        "Come out from the bathroom",
       ],
     },
     {
-      name: 'DRESSING',
+      name: "DRESSING",
       inputs: [
-        'Identifies dressing room',
-        'Identifies out clothes',
-        'Take clothes',
-        'Close the door of dressing room',
-        'Take our underwear',
-        'Identifies front and back of underwear',
-        'Wear underwear accordingly',
-        'Take our dress',
-        'Identify front, back, inner & outer, sides of dress properly',
-        'Wear dress appropriately including proper buttoning',
-        'Undress',
+        "Identifies dressing room",
+        "Identifies out clothes",
+        "Take clothes",
+        "Close the door of dressing room",
+        "Take our underwear",
+        "Identifies front and back of underwear",
+        "Wear underwear accordingly",
+        "Take our dress",
+        "Identify front, back, inner & outer, sides of dress properly",
+        "Wear dress appropriately including proper buttoning",
+        "Undress",
       ],
     },
     {
-      name: 'EATING',
+      name: "EATING",
       inputs: [
-        'Identifies hunger',
-        'Indicate hunger',
-        'Place awareness',
-        'Kitchen',
-        'Dining area',
-        'Dining table',
-        'Chair',
-        'Identifies utensils plate,glass,spoon',
-        'Preparations',
-        'Wash hands properly',
-        'Wash plates',
-        'Use napkin/towel',
-        'Table manners',
-        'Sit appropriately',
-        'Take required amount of food',
-        'Keep the food in correct position',
-        'Avoid wastage of food',
-        'Maintain proper discipline',
-        'Pick the food with right hand',
-        'Mix the food',
-        'Put the food in mouth properly',
-        'Chew the food',
-        'Swallow the food',
-        'Wash mouth and hands',
-        'Wipe the hands and mouth',
-        'Clean the area',
+        "Identifies hunger",
+        "Indicate hunger",
+        "Place awareness",
+        "Kitchen",
+        "Dining area",
+        "Dining table",
+        "Chair",
+        "Identifies utensils plate,glass,spoon",
+        "Preparations",
+        "Wash hands properly",
+        "Wash plates",
+        "Use napkin/towel",
+        "Table manners",
+        "Sit appropriately",
+        "Take required amount of food",
+        "Keep the food in correct position",
+        "Avoid wastage of food",
+        "Maintain proper discipline",
+        "Pick the food with right hand",
+        "Mix the food",
+        "Put the food in mouth properly",
+        "Chew the food",
+        "Swallow the food",
+        "Wash mouth and hands",
+        "Wipe the hands and mouth",
+        "Clean the area",
       ],
     },
     {
-      name: 'DRINKING',
+      name: "DRINKING",
       inputs: [
-        'Identifies thirst',
-        'Indicate thirst',
-        'Identifies water sources',
-        'With glass: Identifies glass',
-        'With glass: Hold glass',
-        'With glass: Pour water into glass',
-        'With glass: Sip or suck with straw',
-        'With bottle: Identifies bottle',
-        'With bottle: Takes bottle',
-        'With bottle: Fill water in the bottle',
-        'With bottle: Sip or suck the nipple',
-        'With bottle: Close the bottle',
-        'Replace glass/ bottle',
+        "Identifies thirst",
+        "Indicate thirst",
+        "Identifies water sources",
+        "With glass: Identifies glass",
+        "With glass: Hold glass",
+        "With glass: Pour water into glass",
+        "With glass: Sip or suck with straw",
+        "With bottle: Identifies bottle",
+        "With bottle: Takes bottle",
+        "With bottle: Fill water in the bottle",
+        "With bottle: Sip or suck the nipple",
+        "With bottle: Close the bottle",
+        "Replace glass/ bottle",
       ],
     },
     {
-      name: 'GROOMING',
+      name: "GROOMING",
       inputs: [
-        'Wash face gently',
-        'Wipe face',
-        'Identify required make-up products',
-        'Take the products one by one',
-        'Apply required amount of make-up products',
-        'Replace the products properly',
+        "Wash face gently",
+        "Wipe face",
+        "Identify required make-up products",
+        "Take the products one by one",
+        "Apply required amount of make-up products",
+        "Replace the products properly",
         // SKIN CARE
-        'Identify body lotion/perfume',
-        'Take lotion/perfume',
-        'Open the lid/perfume',
-        'Apply accordingly',
-        'Close and replace',
+        "Identify body lotion/perfume",
+        "Take lotion/perfume",
+        "Open the lid/perfume",
+        "Apply accordingly",
+        "Close and replace",
         // HAIR CARE
-        'Identify comb',
-        'Take comb',
-        'Comb the hair properly',
-        'Identify hair gel if required and apply it properly',
-        'Tie the hair properly if required',
+        "Identify comb",
+        "Take comb",
+        "Comb the hair properly",
+        "Identify hair gel if required and apply it properly",
+        "Tie the hair properly if required",
         // SELF-CARE ROUTINE: NAIL CUTTING
-        'Identify nail cutter',
-        'Take nail cutter',
-        'Open and hold it properly',
-        'Trim nails properly',
-        'Clean the area',
-        'Wash hands',
+        "Identify nail cutter",
+        "Take nail cutter",
+        "Open and hold it properly",
+        "Trim nails properly",
+        "Clean the area",
+        "Wash hands",
         // SELF-CARE ROUTINE: SHAVING
-        'Wet the skin',
-        'Identify razor, shaving cream, or gel',
-        'Take shaving cream or gel',
-        'Apply cream',
-        'Shave in the direction that the hair grows',
-        'Rinse after each swipe of razor',
-        'Wash properly',
-        'Clean the razor',
-        'Replace it',
+        "Wet the skin",
+        "Identify razor, shaving cream, or gel",
+        "Take shaving cream or gel",
+        "Apply cream",
+        "Shave in the direction that the hair grows",
+        "Rinse after each swipe of razor",
+        "Wash properly",
+        "Clean the razor",
+        "Replace it",
         // SANITARY NAPKINS
-        'Identify napkin',
-        'Pick the napkin according to the need',
-        'Unwrap the sanitary napkin',
-        'Peel off the center backing and stick on your underwear',
-        'Remove the adhesive from them and wrap the wings around the edges of underwear',
-        'Ensure it stays in proper place',
-        'Wash the hands properly',
+        "Identify napkin",
+        "Pick the napkin according to the need",
+        "Unwrap the sanitary napkin",
+        "Peel off the center backing and stick on your underwear",
+        "Remove the adhesive from them and wrap the wings around the edges of underwear",
+        "Ensure it stays in proper place",
+        "Wash the hands properly",
         // MENSTRUAL CUP: INSERTING
-        'Inserting the cup',
-        'Identify the right menstrual cup for your body',
-        'Take the cup and hold properly',
-        'Wash cup properly',
-        'Squat or raise one leg up on the toilet',
-        'Fold the cup to make it easy to insert',
-        'Insert the cup into the vagina',
-        'Twist the cup to make sure it seals',
+        "Inserting the cup",
+        "Identify the right menstrual cup for your body",
+        "Take the cup and hold properly",
+        "Wash cup properly",
+        "Squat or raise one leg up on the toilet",
+        "Fold the cup to make it easy to insert",
+        "Insert the cup into the vagina",
+        "Twist the cup to make sure it seals",
         // MENSTRUAL CUP: REMOVING
-        'Removing the cup',
-        'Wash your hands',
-        'Sit over a toilet to take the cup',
-        'Pinch the side of the cup to break the seal',
-        'Empty the cup into the toilet',
-        'Wash your cup with soap and water',
-        'Sterilize cup',
+        "Removing the cup",
+        "Wash your hands",
+        "Sit over a toilet to take the cup",
+        "Pinch the side of the cup to break the seal",
+        "Empty the cup into the toilet",
+        "Wash your cup with soap and water",
+        "Sterilize cup",
       ],
     },
-    { name: 'REVIEW AND SUBMIT', inputs: [] },
+    { name: "REVIEW AND SUBMIT", inputs: [] },
   ];
 
   for (const row of rows) {
     await uploadADLChecklist(row, tabsStructure);
   }
 
-  console.log('✅ All ADL checklist records processed');
+  console.log("✅ All ADL checklist records processed");
 }
 
 module.exports = { runADLChecklistUpload };
