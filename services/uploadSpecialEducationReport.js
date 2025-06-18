@@ -1,11 +1,11 @@
-const axios = require('axios');
-const xlsx = require('xlsx');
-const FormData = require('form-data');
-const fs = require('fs');
-const path = require('path');
+const axios = require("axios");
+const xlsx = require("xlsx");
+const FormData = require("form-data");
+const fs = require("fs");
+const path = require("path");
 
-const { parseExcelDate } = require('./uploadHelper');
-const { API_BASE_URL, JWT_TOKEN } = require('../config/config');
+const { parseExcelDate } = require("./uploadHelper");
+const { API_BASE_URL, JWT_TOKEN } = require("../config/config");
 
 async function fetchStudentDetails(studentId) {
   try {
@@ -28,23 +28,23 @@ async function fetchStudentDetails(studentId) {
 // Step 1: Personal Information Mapping
 function mapStep1(row, student) {
   return {
-    student_id: row['student_id'] || student?._id || '',
+    student_id: row["student_id"] || student?._id || "",
     name:
-      row['Student Name'] ||
+      row["Student Name"] ||
       `${student?.name?.first_name} ${student?.name?.last_name}` ||
-      '',
-    dob: parseExcelDate(row['dob']) || student?.date_of_birth || null,
-    age: row['age'] || student?.age || '',
+      "",
+    dob: parseExcelDate(row["dob"]) || student?.date_of_birth || null,
+    age: row["age"] || student?.age || "",
     gender:
-      student?.encryptedFields?.gender || row['gender'] || 'Not specified',
-    dateOfIEP: parseExcelDate(row['dateOfIEP']) || null,
+      student?.encryptedFields?.gender || row["gender"] || "Not specified",
+    dateOfIEP: parseExcelDate(row["dateOfIEP"]) || null,
     provisionalDiagnosis:
       student?.assessment?.preliminary_diagnosis.name ||
-      row['provisionalDiagnosis'] ||
-      '',
-    associatedProblems: row['associatedProblems'] || '',
-    medication: row['medication'] || '',
-    createdAt: parseExcelDate(row['createdAt']) || '',
+      row["provisionalDiagnosis"] ||
+      "",
+    associatedProblems: row["associatedProblems"] || "",
+    medication: row["medication"] || "",
+    createdAt: parseExcelDate(row["createdAt"]) || "",
   };
 }
 
@@ -53,58 +53,58 @@ function getStepData(step, row) {
     case 2:
       return {
         classroomactivitiesacademics: {
-          presentLevel: row['classroomactivitiesacademics.presentLevel'] || '',
+          presentLevel: row["classroomactivitiesacademics.presentLevel"] || "",
           shortTermGoal:
-            row['classroomactivitiesacademics.shortTermGoal'] || '',
-          longTermGoal: row['classroomactivitiesacademics.longTermGoal'] || '',
+            row["classroomactivitiesacademics.shortTermGoal"] || "",
+          longTermGoal: row["classroomactivitiesacademics.longTermGoal"] || "",
           goalsAchieved:
-            row['classroomactivitiesacademics.goalsAchieved'] || '',
+            row["classroomactivitiesacademics.goalsAchieved"] || "",
 
-          remarks: row['classroomactivitiesacademics.remarks'] || '',
+          remarks: row["classroomactivitiesacademics.remarks"] || "",
         },
       };
     case 3:
       return {
         adl: {
-          shortTermGoal: row['adl.shortTermGoal'] || '',
-          goalsAchieved: row['adl.goalsAchieved'] || '',
-          remarks: row['adl.remarks'] || '',
+          shortTermGoal: row["adl.shortTermGoal"] || "",
+          goalsAchieved: row["adl.goalsAchieved"] || "",
+          remarks: row["adl.remarks"] || "",
         },
       };
     case 4:
       return {
         sensory: {
-          shortTermGoal: row['sensory.shortTermGoal'] || '',
+          shortTermGoal: row["sensory.shortTermGoal"] || "",
 
-          goalsAchieved: row['sensory.goalsAchieved'] || '',
-          remarks: row['sensory.remarks'] || '',
+          goalsAchieved: row["sensory.goalsAchieved"] || "",
+          remarks: row["sensory.remarks"] || "",
         },
       };
     case 5:
       return {
         socialization: {
-          shortTermGoal: row['socialization.shortTermGoal'] || '',
+          shortTermGoal: row["socialization.shortTermGoal"] || "",
 
-          goalsAchieved: row['socialization.goalsAchieved'] || '',
-          remarks: row['socialization.remarks'] || '',
+          goalsAchieved: row["socialization.goalsAchieved"] || "",
+          remarks: row["socialization.remarks"] || "",
         },
       };
     case 6:
       return {
         lifeSkills: {
-          shortTermGoal: row['lifeSkills.shortTermGoal'] || '',
+          shortTermGoal: row["lifeSkills.shortTermGoal"] || "",
 
-          goalsAchieved: row['lifeSkills.goalsAchieved'] || '',
-          remarks: row['lifeSkills.remarks'] || '',
+          goalsAchieved: row["lifeSkills.goalsAchieved"] || "",
+          remarks: row["lifeSkills.remarks"] || "",
         },
       };
     case 7:
       return {
         preVocation: {
-          shortTermGoal: row['preVocation.shortTermGoal'] || '',
-          goalsAchieved: row['preVocation.goalsAchieved'] || '',
+          shortTermGoal: row["preVocation.shortTermGoal"] || "",
+          goalsAchieved: row["preVocation.goalsAchieved"] || "",
 
-          remarks: row['preVocation.remarks'] || '',
+          remarks: row["preVocation.remarks"] || "",
         },
       };
     default:
@@ -113,11 +113,11 @@ function getStepData(step, row) {
 }
 
 async function uploadSpecialEducationReport(row) {
-  const studentId = row['STUDENT ID'];
-  const term = String(row['term'] || '').trim();
+  const studentId = row["STUDENT ID"];
+  const term = String(row["term"] || "").trim();
 
   if (!studentId || !term) {
-    console.warn(`⚠️ Skipping row without student_id: ${row['Student Name']}`);
+    console.warn(`⚠️ Skipping row without student_id: ${row["Student Name"]}`);
     return;
   }
 
@@ -218,7 +218,7 @@ async function uploadSpecialEducationReport(row) {
 }
 
 async function runSpecialEducationReportUpload(
-  filePath = './output/special_education_report_with_ids.csv'
+  filePath = "./output/special_education_report_with_ids.csv"
 ) {
   const workbook = xlsx.readFile(filePath, {
     cellText: false,
@@ -232,7 +232,7 @@ async function runSpecialEducationReportUpload(
     await uploadSpecialEducationReport(row);
   }
 
-  console.log('✅ All Special Education Reports processed');
+  console.log("✅ All Special Education Reports processed");
 }
 
 module.exports = { runSpecialEducationReportUpload };

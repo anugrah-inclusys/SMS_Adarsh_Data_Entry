@@ -125,7 +125,11 @@ async function submitISSA(finalPayload, assessmentId, row) {
 
 // Main runner
 async function runISSAUpload() {
-  const workbook = xlsx.readFile(EXCEL_FILE);
+  const workbook = xlsx.readFile(EXCEL_FILE, {
+    cellText: false,
+    cellDates: true,
+    codepage: 65001,
+  });
   const sheet = workbook.Sheets[workbook.SheetNames[0]];
   const rows = xlsx.utils.sheet_to_json(sheet);
 

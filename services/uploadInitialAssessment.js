@@ -51,6 +51,7 @@ function mapStep1(row, student) {
       row["demographicData.previousSchoolHistory"] === "TRUE" || false,
     history: row["demographicData.history"] || "",
     medication: row["demographicData.medication"] || "",
+    referedBy: row["referedBy"] || "",
     createdAt: parseExcelDate(row["createdAt"]) || " ",
   };
 }
@@ -298,7 +299,9 @@ async function uploadInitialAssessment(row) {
         headers: { Authorization: `Bearer ${JWT_TOKEN}` },
       }
     );
-    console.log(`🎉 Initial Assessment submitted for ${student.name.first_name}`);
+    console.log(
+      `🎉 Initial Assessment submitted for ${student.name.first_name}`
+    );
   } catch (err) {
     console.error(
       `❌ Final Submission failed`,

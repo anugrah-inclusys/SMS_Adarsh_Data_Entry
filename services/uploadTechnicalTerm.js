@@ -1,14 +1,14 @@
-const axios = require('axios');
-const xlsx = require('xlsx');
-const FormData = require('form-data');
-const fs = require('fs');
+const axios = require("axios");
+const xlsx = require("xlsx");
+const FormData = require("form-data");
+const fs = require("fs");
 
 const {
   parseExcelDate,
   parseFullName,
   getFilesForRow,
-} = require('./uploadHelper');
-const { API_BASE_URL, JWT_TOKEN, HEADERS } = require('../config/config');
+} = require("./uploadHelper");
+const { API_BASE_URL, JWT_TOKEN, HEADERS } = require("../config/config");
 
 async function fetchStudentDetails(studentId) {
   try {
@@ -30,57 +30,57 @@ async function fetchStudentDetails(studentId) {
 
 // Step 1 mapping
 function mapStep1(row, student) {
-  const { first_name, last_name } = parseFullName(row['Student Name'] || '');
+  const { first_name, last_name } = parseFullName(row["Student Name"] || "");
   return {
-    student_id: row['student_id'] || student?._id || '',
+    student_id: row["student_id"] || student?._id || "",
     name:
       `${student?.name?.first_name} ${student?.name?.last_name}` ||
       `${first_name} ${last_name}` ||
-      '',
-    age: row['age'] || student?.age || '',
-    dob: parseExcelDate(row['dob']) || student?.date_of_birth || null,
+      "",
+    age: row["age"] || student?.age || "",
+    dob: parseExcelDate(row["dob"]) || student?.date_of_birth || null,
   };
 }
 
 // Step 2 mapping
 function mapStep2(row, student) {
   return {
-    student_id: row['student_id'] || student?._id || '',
-    createdAt: parseExcelDate(row['createdAt']) || '',
+    student_id: row["student_id"] || student?._id || "",
+    createdAt: parseExcelDate(row["createdAt"]) || "",
     psychology: {
-      presentLevel: row['psychology.presentLevel'] || '',
-      longTermGoal: row['psychology.longTermGoal'] || '',
-      shortTermGoal: row['psychology.shortTermGoal'] || '',
-      completed_at: parseExcelDate(row['psychology.completed_at']) || '',
+      presentLevel: row["psychology.presentLevel"] || "",
+      longTermGoal: row["psychology.longTermGoal"] || "",
+      shortTermGoal: row["psychology.shortTermGoal"] || "",
+      completed_at: parseExcelDate(row["psychology.completed_at"]) || "",
     },
     physiotherapy: {
-      presentLevel: row['physiotherapy.presentLevel'] || '',
-      longTermGoal: row['physiotherapy.longTermGoal'] || '',
-      shortTermGoal: row['physiotherapy.shortTermGoal'] || '',
-      completed_at: parseExcelDate(row['physiotherapy.completed_at']) || '',
+      presentLevel: row["physiotherapy.presentLevel"] || "",
+      longTermGoal: row["physiotherapy.longTermGoal"] || "",
+      shortTermGoal: row["physiotherapy.shortTermGoal"] || "",
+      completed_at: parseExcelDate(row["physiotherapy.completed_at"]) || "",
     },
     speechtherapy: {
-      presentLevel: row['speechtherapy.presentLevel'] || '',
-      longTermGoal: row['speechtherapy.longTermGoal'] || '',
-      shortTermGoal: row['speechtherapy.shortTermGoal'] || '',
-      completed_at: parseExcelDate(row['speechtherapy.completed_at']) || '',
+      presentLevel: row["speechtherapy.presentLevel"] || "",
+      longTermGoal: row["speechtherapy.longTermGoal"] || "",
+      shortTermGoal: row["speechtherapy.shortTermGoal"] || "",
+      completed_at: parseExcelDate(row["speechtherapy.completed_at"]) || "",
     },
     occupationaltherapy: {
-      presentLevel: row['occupationaltherapy.presentLevel'] || '',
-      longTermGoal: row['occupationaltherapy.longTermGoal'] || '',
-      shortTermGoal: row['occupationaltherapy.shortTermGoal'] || '',
+      presentLevel: row["occupationaltherapy.presentLevel"] || "",
+      longTermGoal: row["occupationaltherapy.longTermGoal"] || "",
+      shortTermGoal: row["occupationaltherapy.shortTermGoal"] || "",
       completed_at:
-        parseExcelDate(row['occupationaltherapy.completed_at']) || '',
+        parseExcelDate(row["occupationaltherapy.completed_at"]) || "",
     },
   };
 }
 
 async function uploadTechnicalTerm(row) {
-  const studentId = row['STUDENT ID'];
-  const term = String(row['term'] || '').trim();
+  const studentId = row["STUDENT ID"];
+  const term = String(row["term"] || "").trim();
 
   if (!studentId || !term) {
-    console.warn(`⚠️ Skipping row without student_id: ${row['Student Name']}`);
+    console.warn(`⚠️ Skipping row without student_id: ${row["Student Name"]}`);
     return;
   }
 
@@ -113,13 +113,13 @@ async function uploadTechnicalTerm(row) {
   // Step 2: File Upload
   const filePaths = getFilesForRow(
     row,
-    'ADMISSION ID',
-    './files/technical_term'
+    "ADMISSION ID",
+    "./files/technical_term"
   );
   if (filePaths.length > 0) {
     const form = new FormData();
     for (const filePath of filePaths) {
-      form.append('files', fs.createReadStream(filePath));
+      form.append("files", fs.createReadStream(filePath));
     }
     try {
       await axios.put(
@@ -159,7 +159,7 @@ async function uploadTechnicalTerm(row) {
 }
 
 async function runTechnicalTermUpload(
-  filePath = './output/technical_term_assessment_with_ids.csv'
+  filePath = "./output/technical_term_assessment_with_ids.csv"
 ) {
   const workbook = xlsx.readFile(filePath, {
     cellText: false,
@@ -173,7 +173,7 @@ async function runTechnicalTermUpload(
     await uploadTechnicalTerm(row);
   }
 
-  console.log('✅ All Technical Term Assessments processed');
+  console.log("✅ All Technical Term Assessments processed");
 }
 
 module.exports = { runTechnicalTermUpload };

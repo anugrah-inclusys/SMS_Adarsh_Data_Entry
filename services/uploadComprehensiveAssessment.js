@@ -35,21 +35,21 @@ async function uploadComprehensiveAssessment(row) {
     return;
   }
 
-    // Resolve unit/class IDs from name (Step 10)
-    const { unitMap, classMap } = await getUnitClassLookup();
-    const unitName = (row["content.unit_id"] || "").trim().toLowerCase();
-    const className = (row["content.class_id"] || "").trim().toLowerCase();
-    const unit_id = unitMap[unitName] || "";
-    const class_id = classMap[`${unitName}|${className}`] || "";
-    const student = await fetchStudentDetails(studentId);
-    if (!student) return;
-  
-    // console.log("🚀 Step 10 Payload:", {
-    //   unit_id,
-    //   class_id,
-    //   provisional_diagnosis: row["content.provisional_diagnosis"] || "",
-    //   remarks: row["content.remarks"] || "",
-    // });
+  // Resolve unit/class IDs from name (Step 10)
+  const { unitMap, classMap } = await getUnitClassLookup();
+  const unitName = (row["content.unit_id"] || "").trim().toLowerCase();
+  const className = (row["content.class_id"] || "").trim().toLowerCase();
+  const unit_id = unitMap[unitName] || "";
+  const class_id = classMap[`${unitName}|${className}`] || "";
+  const student = await fetchStudentDetails(studentId);
+  if (!student) return;
+
+  // console.log("🚀 Step 10 Payload:", {
+  //   unit_id,
+  //   class_id,
+  //   provisional_diagnosis: row["content.provisional_diagnosis"] || "",
+  //   remarks: row["content.remarks"] || "",
+  // });
 
   let assessmentId = "";
 
@@ -75,8 +75,6 @@ async function uploadComprehensiveAssessment(row) {
     console.error(`❌ Step 1 failed`, err.response?.data || err.message);
     return;
   }
-
-
 
   const steps = [
     {
@@ -231,14 +229,13 @@ async function runComprehensiveAssessmentUpload(
     return;
   }
 
- const workbook = xlsx.readFile(filePath, {
-      cellText: false,
-      cellDates: true,
-      codepage: 65001,
-    });
-    const sheet = workbook.Sheets[workbook.SheetNames[0]];
-    const rows = xlsx.utils.sheet_to_json(sheet);
-
+  const workbook = xlsx.readFile(filePath, {
+    cellText: false,
+    cellDates: true,
+    codepage: 65001,
+  });
+  const sheet = workbook.Sheets[workbook.SheetNames[0]];
+  const rows = xlsx.utils.sheet_to_json(sheet);
 
   for (const row of rows) {
     await uploadComprehensiveAssessment(row);
