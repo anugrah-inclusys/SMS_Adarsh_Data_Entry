@@ -224,6 +224,7 @@ async function runADLChecklistUpload(
         "Identify front, back, inner & outer, sides of dress properly",
         "Wear dress appropriately including proper buttoning",
         "Undress",
+        "Pull over the dress one by one including unbuttoning"
       ],
     },
     {
