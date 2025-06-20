@@ -30,6 +30,7 @@ function mapStep1(row) {
     createdAt: parseExcelDate(row["createdAt"]) || "",
     psychology: {
       presentLevel: row["psychology.presentLevel"] || "",
+      longTermGoal: row["psychology.longTermGoal"] || "",
       shortTermGoal: row["psychology.shortTermGoal"] || "",
       goalsAchieved: row["psychology.goalsAchieved"] || "",
       remarks: row["psychology.remarks"] || "",
@@ -37,6 +38,7 @@ function mapStep1(row) {
     },
     physiotherapy: {
       presentLevel: row["physiotherapy.presentLevel"] || "",
+      longTermGoal: row["physiotherapy.longTermGoal"] || "",
       shortTermGoal: row["physiotherapy.shortTermGoal"] || "",
       goalsAchieved: row["physiotherapy.goalsAchieved"] || "",
       remarks: row["physiotherapy.remarks"] || "",
@@ -44,6 +46,7 @@ function mapStep1(row) {
     },
     speechtherapy: {
       presentLevel: row["speechtherapy.presentLevel"] || "",
+      longTermGoal: row["speechtherapy.longTermGoal"] || "",
       shortTermGoal: row["speechtherapy.shortTermGoal"] || "",
       goalsAchieved: row["speechtherapy.goalsAchieved"] || "",
       remarks: row["speechtherapy.remarks"] || "",
@@ -51,6 +54,7 @@ function mapStep1(row) {
     },
     occupationaltherapy: {
       presentLevel: row["occupationaltherapy.presentLevel"] || "",
+      longTermGoal: row["occupationaltherapy.longTermGoal"] || "",
       shortTermGoal: row["occupationaltherapy.shortTermGoal"] || "",
       goalsAchieved: row["occupationaltherapy.goalsAchieved"] || "",
       remarks: row["occupationaltherapy.remarks"] || "",

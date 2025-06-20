@@ -54,9 +54,9 @@ function getStepData(step, row) {
       return {
         classroomactivitiesacademics: {
           presentLevel: row["classroomactivitiesacademics.presentLevel"] || "",
+          longTermGoal: row["classroomactivitiesacademics.longTermGoal"] || "",
           shortTermGoal:
             row["classroomactivitiesacademics.shortTermGoal"] || "",
-          longTermGoal: row["classroomactivitiesacademics.longTermGoal"] || "",
           goalsAchieved:
             row["classroomactivitiesacademics.goalsAchieved"] || "",
 
@@ -66,6 +66,8 @@ function getStepData(step, row) {
     case 3:
       return {
         adl: {
+          presentLevel: row["adl.presentLevel"] || "",
+          longTermGoal: row["adl.longTermGoal"] || "",
           shortTermGoal: row["adl.shortTermGoal"] || "",
           goalsAchieved: row["adl.goalsAchieved"] || "",
           remarks: row["adl.remarks"] || "",
@@ -74,6 +76,8 @@ function getStepData(step, row) {
     case 4:
       return {
         sensory: {
+          presentLevel: row["sensory.presentLevel"] || "",
+          longTermGoal: row["sensory.longTermGoal"] || "",
           shortTermGoal: row["sensory.shortTermGoal"] || "",
 
           goalsAchieved: row["sensory.goalsAchieved"] || "",
@@ -83,6 +87,8 @@ function getStepData(step, row) {
     case 5:
       return {
         socialization: {
+          presentLevel: row["socialization.presentLevel"] || "",
+          longTermGoal: row["socialization.longTermGoal"] || "",
           shortTermGoal: row["socialization.shortTermGoal"] || "",
 
           goalsAchieved: row["socialization.goalsAchieved"] || "",
@@ -92,6 +98,8 @@ function getStepData(step, row) {
     case 6:
       return {
         lifeSkills: {
+          presentLevel: row["lifeSkills.presentLevel"] || "",
+          longTermGoal: row["lifeSkills.longTermGoal"] || "",
           shortTermGoal: row["lifeSkills.shortTermGoal"] || "",
 
           goalsAchieved: row["lifeSkills.goalsAchieved"] || "",
@@ -101,6 +109,8 @@ function getStepData(step, row) {
     case 7:
       return {
         preVocation: {
+          presentLevel: row["preVocation.presentLevel"] || "",
+          longTermGoal: row["preVocation.longTermGoal"] || "",
           shortTermGoal: row["preVocation.shortTermGoal"] || "",
           goalsAchieved: row["preVocation.goalsAchieved"] || "",
 
