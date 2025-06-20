@@ -51,24 +51,28 @@ function mapStep2(row, student) {
       presentLevel: row["psychology.presentLevel"] || "",
       longTermGoal: row["psychology.longTermGoal"] || "",
       shortTermGoal: row["psychology.shortTermGoal"] || "",
+      remarks: row["psychology.remarks"] || "",
       completed_at: parseExcelDate(row["psychology.completed_at"]) || "",
     },
     physiotherapy: {
       presentLevel: row["physiotherapy.presentLevel"] || "",
       longTermGoal: row["physiotherapy.longTermGoal"] || "",
       shortTermGoal: row["physiotherapy.shortTermGoal"] || "",
+      remarks: row["physiotherapy.remarks"] || "",
       completed_at: parseExcelDate(row["physiotherapy.completed_at"]) || "",
     },
     speechtherapy: {
       presentLevel: row["speechtherapy.presentLevel"] || "",
       longTermGoal: row["speechtherapy.longTermGoal"] || "",
       shortTermGoal: row["speechtherapy.shortTermGoal"] || "",
+      remarks: row["speechtherapy.remarks"] || "",
       completed_at: parseExcelDate(row["speechtherapy.completed_at"]) || "",
     },
     occupationaltherapy: {
       presentLevel: row["occupationaltherapy.presentLevel"] || "",
       longTermGoal: row["occupationaltherapy.longTermGoal"] || "",
       shortTermGoal: row["occupationaltherapy.shortTermGoal"] || "",
+      remarks: row["occupationaltherapy.remarks"] || "",
       completed_at:
         parseExcelDate(row["occupationaltherapy.completed_at"]) || "",
     },

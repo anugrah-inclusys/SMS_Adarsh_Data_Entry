@@ -55,6 +55,7 @@ function mapStep2(row) {
       presentLevel: row["classroomactivitiesacademics.presentLevel"] || "",
       longTermGoal: row["classroomactivitiesacademics.longTermGoal"] || "",
       shortTermGoal: row["classroomactivitiesacademics.shortTermGoal"] || "",
+      remarks: row["classroomactivitiesacademics.remarks"] || "",
     },
   };
 }
@@ -65,6 +66,7 @@ function mapStep3(row) {
       presentLevel: row["adl.presentLevel"] || "",
       longTermGoal: row["adl.longTermGoal"] || "",
       shortTermGoal: row["adl.shortTermGoal"] || "",
+      remarks: row["adl.remarks"] || "",
     },
   };
 }
@@ -75,6 +77,7 @@ function mapStep4(row) {
       presentLevel: row["sensory.presentLevel"] || "",
       longTermGoal: row["sensory.longTermGoal"] || "",
       shortTermGoal: row["sensory.shortTermGoal"] || "",
+      remarks: row["sensory.remarks"] || "",
     },
   };
 }
@@ -85,6 +88,7 @@ function mapStep5(row) {
       presentLevel: row["socialization.presentLevel"] || "",
       longTermGoal: row["socialization.longTermGoal"] || "",
       shortTermGoal: row["socialization.shortTermGoal"] || "",
+      remarks: row["socialization.remarks"] || "",
     },
   };
 }
@@ -95,6 +99,7 @@ function mapStep6(row) {
       presentLevel: row["lifeSkills.presentLevel"] || "",
       longTermGoal: row["lifeSkills.longTermGoal"] || "",
       shortTermGoal: row["lifeSkills.shortTermGoal"] || "",
+      remarks: row["lifeSkills.remarks"] || "",
     },
   };
 }
@@ -105,6 +110,7 @@ function mapStep7(row) {
       presentLevel: row["preVocation.presentLevel"] || "",
       longTermGoal: row["preVocation.longTermGoal"] || "",
       shortTermGoal: row["preVocation.shortTermGoal"] || "",
+      remarks: row["preVocation.remarks"] || "",
     },
   };
 }
