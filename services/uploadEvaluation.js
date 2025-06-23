@@ -75,6 +75,7 @@ function mapStep1(row, student, admissionData) {
     annualFamilyIncome: row["content.family_details.annualFamilyIncome"] || "",
     primaryCaretaker: row["content.family_details.primaryCaretaker"] || "",
     otherCareTaker: row["content.family_details.otherCareTaker"] || "",
+    referredBy: row["content.family_details.referredBy"] || "",
     phoneNumberResidence:
       row["content.additional_details.phoneNumberResidence"] || "",
     mobileNumber: row["content.additional_details.mobileNumber"] || "",
