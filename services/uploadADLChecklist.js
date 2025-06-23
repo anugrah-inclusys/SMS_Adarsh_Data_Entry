@@ -232,8 +232,7 @@ async function runADLChecklistUpload(
       inputs: [
         "Identifies hunger",
         "Indicate hunger",
-        "Place awareness",
-        "Kitchen",
+        "Place awareness Kitchen",
         "Dining area",
         "Dining table",
         "Chair",
